@@ -3,6 +3,12 @@
 
 /** Ionic CSS Variables **/
 :root {
+  --theme-bg: #ccc;
+  --theme-border: black;
+  --theme-button: #ddd;
+  --theme-card: white;
+  --theme-text: black;
+
   /** primary **/
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;
@@ -83,6 +89,12 @@
    */
 
   body {
+    --theme-bg: #222;
+    --theme-border: white;
+    --theme-button: #333;
+    --theme-card: black;
+    --theme-text: white;
+
     --ion-color-primary: #428cff;
     --ion-color-primary-rgb: 66,140,255;
     --ion-color-primary-contrast: #ffffff;
