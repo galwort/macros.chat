@@ -6,7 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  meal: string = '';
 
   constructor() {}
 
+  adjustTextareaHeight(event: any) {
+    const textarea = event.target;
+    textarea.style.height = (textarea.scrollHeight + 8) + 'px';
+  }
 }
