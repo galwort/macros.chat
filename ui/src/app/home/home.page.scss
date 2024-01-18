@@ -36,4 +36,16 @@
       resize: none;
       overflow: auto;
   }
+
+  ion-button {
+      margin-top: 40px;
+      --background: var(--theme-button);
+      font-weight: bold;
+      font-size: 2rem;
+      color: var(--theme-text);
+      --border-color: var(--theme-border);
+      --border-style: solid;
+      --border-width: 4px;
+      --box-shadow: none;
+  }
 }
