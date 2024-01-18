@@ -1,7 +1,6 @@
 <ion-content>
   <div class="centered-content">
-    <h1>What did you eat?</h1>
-    <textarea [(ngModel)]="meal" (input)="adjustTextareaHeight($event)"></textarea>
+    <textarea placeholder="What did you eat?" [(ngModel)]="meal" (input)="adjustTextareaHeight($event)"></textarea>
     <ion-button shape="round" size="small" (click)="submitMeal()">Submit</ion-button>
   </div>
 </ion-content>
