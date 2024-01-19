@@ -11,20 +11,8 @@
         margin-bottom: 40px;
     }
 
-    textarea {
-        background: transparent;
-        color: var(--primary);
-        border: var(--primary);
-        border-style: solid;
-        border-radius: 2.5rem;
-        border-width: 4px;
-        font-size: 2rem;
-        text-align: center;
-        padding: 10px;
+    ion-textarea {
         max-width: 300px;
-        height: 67.2px;
-        resize: none;
-        overflow: auto;
     }
 
     ion-button {

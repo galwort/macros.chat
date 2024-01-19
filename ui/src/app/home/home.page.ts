@@ -11,12 +11,6 @@ export class HomePage {
 
   constructor(private http: HttpClient) {}
 
-  adjustTextareaHeight(event: any) {
-    const textarea = event.target;
-    textarea.style.height = '2em';
-    textarea.style.height = (textarea.scrollHeight + 8) + 'px';
-  }
-
   submitMeal() {
     this.http.post<any>('http://localhost:8000/process_meal/', { text: this.meal })
       .subscribe({
