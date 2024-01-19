@@ -2,9 +2,12 @@
   <div class="centered-content">
     <img src="assets/strawberry.png" alt="Strawberry!" id="logo">
     <ion-item>
-      <ion-textarea placeholder="What did you eat?" [autoGrow]="true" [(ngModel)]="meal">
-      </ion-textarea>
+      <ion-textarea
+        placeholder="What did you eat?"
+        [autoGrow]="true"
+        [(ngModel)]="meal"
+      ></ion-textarea>
+      <ion-icon name="arrow-up" slot="end" (click)="submitMeal()"></ion-icon>
     </ion-item>
-    <ion-button shape="round" size="small" (click)="submitMeal()">Submit</ion-button>
   </div>
 </ion-content>
