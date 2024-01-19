@@ -4,14 +4,28 @@
     align-items: center;
     justify-content: center;
     min-height: 100%;
-    background-color: var(--background);
+    background-color: var(--theme-background);
 
     img {
         height: 130px;
         margin-bottom: 40px;
     }
 
-    ion-textarea {
-        max-width: 300px;
+    ion-item {
+        --background: var(--theme-secondary);
+        --color: var(--theme-primary);
+        --border-radius: 10px;
+        --border-color: var(--theme-primary);
+        --border-width: 5px;
+
+        ion-textarea {
+            max-width: 300px;
+        }
+
+        ion-icon {
+            font-size: 30px;
+            margin-right: 10px;
+            color: var(--theme-primary)
+        }
     }
 }
