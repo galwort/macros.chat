@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import DatalabelsPlugin from 'chartjs-plugin-datalabels';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
@@ -17,7 +16,6 @@ export class HomePage {
   
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
-  // Pie
   public pieChartOptions: ChartConfiguration['options'] = {
     plugins: {
       legend: {
@@ -27,15 +25,15 @@ export class HomePage {
     },
   };
   public pieChartData: ChartData<'pie', number[], string | string[]> = {
-    labels: [['Download', 'Sales'], ['In', 'Store', 'Sales'], 'Mail Sales'],
+    labels: ['Carbs', 'Fats', 'Proteins'],
     datasets: [
       {
-        data: [300, 500, 100],
+        data: [50, 20, 30],
       },
     ],
   };
   public pieChartType: ChartType = 'pie';
-  public pieChartPlugins = [DatalabelsPlugin];
+
   constructor(private http: HttpClient) {}
 
   submitMeal() {
