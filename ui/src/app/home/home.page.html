@@ -13,9 +13,16 @@
 
   <div *ngIf="mealSubmitted">
     <h2>Nutrients</h2>
-    <p>Carbs: {{ nutrients.carbs }}</p>
-    <p>Fats: {{ nutrients.fats }}</p>
-    <p>Proteins: {{ nutrients.proteins }}</p>
-    <p>Calories: {{ nutrients.calories }}</p>
+    <div style="display: block">
+      <canvas
+        baseChart
+        class="chart"
+        [data]="pieChartData"
+        [type]="pieChartType"
+        [options]="pieChartOptions"
+        [plugins]="pieChartPlugins"
+      >
+      </canvas>
+    </div>
   </div>
 </ion-content>
