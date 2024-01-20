@@ -12,14 +12,21 @@ export class HomePage {
   constructor(private http: HttpClient) {}
 
   submitMeal() {
-    this.http.post<any>('http://localhost:8000/process_meal/', { text: this.meal })
-      .subscribe({
-        next: (response) => {
-          console.log(response);
-        },
-        error: (error) => {
-          console.error('There was an error!', error);
-        }
-      });
+    const nutrients = {
+      carbs: 50,
+      fats: 20,
+      proteins: 30,
+      calories: 400
+    };
+    // this.http.post<any>('http://localhost:8000/process_meal/', { text: this.meal })
+    //   .subscribe({
+    //     next: (response) => {
+    //       console.log(response);
+    //     },
+    //     error: (error) => {
+    //       console.error('There was an error!', error);
+    //     }
+    //   }
+    // );
   }
 }
