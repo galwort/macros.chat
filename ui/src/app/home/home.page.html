@@ -1,5 +1,5 @@
 <ion-content>
-  <div class="centered-content">
+  <div *ngIf="!mealSubmitted" class="centered-content">
     <img src="assets/strawberry.png" alt="Strawberry!" id="logo">
     <ion-item>
       <ion-textarea
@@ -9,5 +9,13 @@
       ></ion-textarea>
       <ion-icon name="arrow-up" slot="end" (click)="submitMeal()"></ion-icon>
     </ion-item>
+  </div>
+
+  <div *ngIf="mealSubmitted">
+    <h2>Nutrients</h2>
+    <p>Carbs: {{ nutrients.carbs }}</p>
+    <p>Fats: {{ nutrients.fats }}</p>
+    <p>Proteins: {{ nutrients.proteins }}</p>
+    <p>Calories: {{ nutrients.calories }}</p>
   </div>
 </ion-content>
