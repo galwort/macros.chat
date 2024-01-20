@@ -20,7 +20,26 @@ export class HomePage {
     plugins: {
       legend: {
         display: true,
-        position: 'top',
+        position: 'bottom',
+        labels: {
+          padding: 30,
+        },
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context: any) {
+            let label = context.label || '';
+            if (label) {
+              label += ': ';
+            }
+            if (context.parsed) {
+              label += context.parsed + 'g';
+            }
+            return label;
+          },
+          title: items => (''),
+        },
+        displayColors: false,
       },
     },
   };

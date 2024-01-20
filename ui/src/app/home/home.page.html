@@ -10,9 +10,7 @@
       <ion-icon name="arrow-up" slot="end" (click)="submitMeal()"></ion-icon>
     </ion-item>
   </div>
-
-  <div *ngIf="mealSubmitted">
-    <h2>Nutrients</h2>
+  <div *ngIf="mealSubmitted" class="centered-content">
     <div style="display: block">
       <canvas
         baseChart
