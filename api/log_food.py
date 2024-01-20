@@ -11,6 +11,31 @@ def clean_response(response):
     matches = search(pattern, response)
     return matches.group(0)
 
+def gen_summary(food_description):
+    gpt = models.OpenAI("gpt-4-1106-preview", echo=False)
+
+    with system():
+        lm = (
+            gpt
+            + "You are an assistant providing a shortened summary "
+            + "given the description of a meal, "
+            + "consistently offering only the shortened summary "
+            + "without any additional explanation or context. "
+            + "You will respond to all queries with only the summary. "
+            + "You are programmed to consistently avoid elaborating "
+            + "on the reasons behind your summarizations, "
+            + "focusing solely on delivering only the summary. "
+            + "Your communication will be concise."
+        )
+
+    with user():
+        lm += food_description
+
+    with assistant():
+        lm += gen("response")
+
+    return lm["response"]
+
 def gen_nutrients(food_description, nutrient="calories"):
     nutrients = ["carbs", "fats", "proteins", "calories", "all"]
     if nutrient not in nutrients:
@@ -59,7 +84,10 @@ def gen_nutrients(food_description, nutrient="calories"):
 
 def main():
     print("What did you eat?")
-    nutrients = gen_nutrients(input())
+    meal = input()
+    summary = gen_summary(meal)
+    nutrients = gen_nutrients(meal)
+    print(summary)
     print(nutrients)
 
 if __name__ == "__main__":
