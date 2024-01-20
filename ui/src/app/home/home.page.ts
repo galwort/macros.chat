@@ -13,10 +13,10 @@ export class HomePage {
   mealSubmitted: boolean = false;
   nutrients: any = null;
 
-  
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   public pieChartOptions: ChartConfiguration['options'] = {
+    borderColor: window.getComputedStyle(document.documentElement).getPropertyValue('--theme-primary'),
     plugins: {
       legend: {
         display: true,
@@ -25,6 +25,7 @@ export class HomePage {
           padding: 20,
           boxWidth: 10,
           boxHeight: 10,
+          color: window.getComputedStyle(document.documentElement).getPropertyValue('--theme-primary'),
           font: {
             size: 15,
             weight: 'bold',
@@ -54,6 +55,11 @@ export class HomePage {
     datasets: [
       {
         data: [50, 20, 30],
+        backgroundColor: [
+          window.getComputedStyle(document.documentElement).getPropertyValue('--theme-accent'),
+          window.getComputedStyle(document.documentElement).getPropertyValue('--theme-secondary'),
+          window.getComputedStyle(document.documentElement).getPropertyValue('--theme-tertiary'),
+        ],
       },
     ],
   };
