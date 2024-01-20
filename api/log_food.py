@@ -17,15 +17,13 @@ def gen_summary(food_description):
     with system():
         lm = (
             gpt
-            + "You are an assistant providing a shortened summary "
-            + "given the description of a meal, "
-            + "consistently offering only the shortened summary "
-            + "without any additional explanation or context. "
-            + "You will respond to all queries with only the summary. "
-            + "You are programmed to consistently avoid elaborating "
-            + "on the reasons behind your summarizations, "
-            + "focusing solely on delivering only the summary. "
-            + "Your communication will be concise."
+            + "You are a culinary summarizer programmed to condense "
+            + "descriptions of meals into concise titles. "
+            + "Your responses will consist solely of the summarized title, "
+            + "with no additional information or context. "
+            + "You are designed to avoid explanations or elaborations, "
+            + "focusing strictly on providing a brief, "
+            + "accurate title for each described meal. Be concise."
         )
 
     with user():
