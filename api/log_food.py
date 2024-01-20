@@ -83,9 +83,8 @@ def gen_nutrients(food_description, nutrient="calories"):
 def main():
     print("What did you eat?")
     meal = input()
-    summary = gen_summary(meal)
     nutrients = gen_nutrients(meal)
-    print(summary)
+    nutrients["summary"] = gen_summary(meal)
     print(nutrients)
 
 if __name__ == "__main__":
