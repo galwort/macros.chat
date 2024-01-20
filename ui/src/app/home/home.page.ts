@@ -22,7 +22,13 @@ export class HomePage {
         display: true,
         position: 'bottom',
         labels: {
-          padding: 30,
+          padding: 20,
+          boxWidth: 10,
+          boxHeight: 10,
+          font: {
+            size: 15,
+            weight: 'bold',
+          },
         },
       },
       tooltip: {
