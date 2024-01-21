@@ -27,10 +27,13 @@
             font-size: 30px;
             margin-right: 10px;
             color: var(--theme-primary);
+            padding: 3px;
 
             &:hover {
                 cursor: pointer;
                 color: var(--theme-accent);
+                background-color: var(--theme-background);
+                border-radius: 20%;
             }
         }
     }
