@@ -11,7 +11,7 @@ import { BaseChartDirective } from 'ng2-charts';
 export class HomePage {
   meal: string = '';
   mealSubmitted: boolean = false;
-  nutrients: { carbs: number; fats: number; proteins: number; calories: number; } | undefined;
+  nutrients: { carbs: number; fats: number; proteins: number; calories: number; summary: string } = { carbs: 0, fats: 0, proteins: 0, calories: 0 , summary: ''};
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
@@ -73,7 +73,8 @@ export class HomePage {
         carbs: 50,
         fats: 20,
         proteins: 30,
-        calories: 400
+        calories: 400,
+        summary: 'Chicken Noodle Soup'
       };
       this.mealSubmitted = true;
       this.updateChartData();

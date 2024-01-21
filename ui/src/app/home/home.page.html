@@ -11,8 +11,8 @@
     </ion-item>
   </div>
   <div *ngIf="mealSubmitted" class="centered-content">
-    <h1>Chicken Noodle Soup</h1>
-    <h3>200 Calories</h3>
+    <h1>{{ nutrients.summary }}</h1>
+    <h3>{{ nutrients.calories }} Calories</h3>
     <div style="display: block">
       <canvas
         baseChart
