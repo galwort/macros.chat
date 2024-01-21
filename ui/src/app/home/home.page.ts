@@ -11,7 +11,7 @@ import { BaseChartDirective } from 'ng2-charts';
 export class HomePage {
   meal: string = '';
   mealSubmitted: boolean = false;
-  nutrients: any = null;
+  nutrients: { carbs: number; fats: number; proteins: number; calories: number; } | undefined;
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
@@ -54,7 +54,7 @@ export class HomePage {
     labels: ['Carbs', 'Fats', 'Proteins'],
     datasets: [
       {
-        data: [50, 20, 30],
+        data: [],
         backgroundColor: [
           window.getComputedStyle(document.documentElement).getPropertyValue('--theme-accent'),
           window.getComputedStyle(document.documentElement).getPropertyValue('--theme-secondary'),
@@ -76,6 +76,7 @@ export class HomePage {
         calories: 400
       };
       this.mealSubmitted = true;
+      this.updateChartData();
     }, 1000);
     // this.http.post<any>('http://localhost:8000/process_meal/', { text: this.meal })
     //   .subscribe({
@@ -87,5 +88,11 @@ export class HomePage {
     //     }
     //   }
     // );
+  }
+
+  private updateChartData() {
+    if (this.nutrients) {
+      this.pieChartData.datasets[0].data = [this.nutrients.carbs, this.nutrients.fats, this.nutrients.proteins];
+    }
   }
 }
