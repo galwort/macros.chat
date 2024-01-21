@@ -34,4 +34,17 @@
             }
         }
     }
+
+    h1 {
+        color: var(--theme-primary);
+        font-weight: bold;
+        margin-bottom: 2.5px;
+
+    }
+
+    h3 {
+        color: var(--theme-primary);
+        margin-top: 2.5px;
+        margin-bottom: 20px;
+    }
 }
