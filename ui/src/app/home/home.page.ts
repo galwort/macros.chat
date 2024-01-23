@@ -74,7 +74,6 @@ export class HomePage {
           this.nutrients = response;
           this.mealSubmitted = true;
           this.updateChartData();
-          console.log(response);
         },
         error: (error) => {
           console.error('There was an error!', error);
