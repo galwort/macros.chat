@@ -68,27 +68,19 @@ export class HomePage {
   constructor(private http: HttpClient) {}
 
   submitMeal() {
-    setTimeout(() => {
-      this.nutrients = {
-        carbs: 50,
-        fats: 20,
-        proteins: 30,
-        calories: 400,
-        summary: 'Chicken Noodle Soup'
-      };
-      this.mealSubmitted = true;
-      this.updateChartData();
-    }, 1000);
-    // this.http.post<any>('http://localhost:8000/process_meal/', { text: this.meal })
-    //   .subscribe({
-    //     next: (response) => {
-    //       console.log(response);
-    //     },
-    //     error: (error) => {
-    //       console.error('There was an error!', error);
-    //     }
-    //   }
-    // );
+    this.http.post<any>('http://localhost:8000/process_meal/', { text: this.meal })
+      .subscribe({
+        next: (response) => {
+          this.nutrients = response;
+          this.mealSubmitted = true;
+          this.updateChartData();
+          console.log(response);
+        },
+        error: (error) => {
+          console.error('There was an error!', error);
+        }
+      }
+    );
   }
 
   private updateChartData() {

@@ -9,7 +9,11 @@ OPENAI_API_KEY = getenv("OPENAI_API_KEY")
 def clean_response(response):
     pattern = r"[0-9]+"
     matches = search(pattern, response)
-    return matches.group(0)
+    if matches:
+        return matches.group(0)
+    else:
+        raise ValueError("No numeric value found in the response.")
+
 
 def gen_summary(food_description):
     gpt = models.OpenAI("gpt-4-1106-preview", echo=False)
