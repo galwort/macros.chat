@@ -20,9 +20,9 @@ app.add_middleware(
 @app.post("/process_meal/")
 async def process_meal(meal: MealInput):
     try:
-        nutrients_json = gen_nutrients(meal.text)
-        nutrients = loads(nutrients_json)
-        nutrients["summary"] = gen_summary(meal.text)
+        nutrients = loads(gen_nutrients(meal.text))
+        summary = loads(gen_summary(meal.text))
+        nutrients.update(summary)
         return nutrients
     except Exception as e:
         logging.error(f"Error processing meal: {e}")

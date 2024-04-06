@@ -7,7 +7,7 @@ def gen_summary(food_description):
     system_message = "You are a food name summarizer. " + \
         "When given a description of a meal, " + \
         "your job is to condense the description into a concise title. " + \
-        "Reply in JSON format with the word 'Description' as the key " + \
+        "Reply in JSON format with the word 'summary' as the key " + \
         "and the summary as the value. The summary should be short, " + \
         "as if it was an item on a menu."
     
@@ -59,7 +59,8 @@ def main():
     print("What did you eat?")
     meal = input()
     nutrients = loads(gen_nutrients(meal))
-    nutrients["summary"] = gen_summary(meal)
+    summary = loads(gen_summary(meal))
+    nutrients.update(summary)
     print(nutrients)
 
 if __name__ == "__main__":
