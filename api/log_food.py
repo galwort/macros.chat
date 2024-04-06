@@ -1,20 +1,8 @@
-from dotenv import load_dotenv
-from guidance import assistant, gen, models, system, user
 from json import loads
 from openai import OpenAI
-from os import getenv
-from re import search
 
 client = OpenAI()
 
-def clean_response(response):
-    pattern = r"[0-9]+"
-    matches = search(pattern, response)
-    if matches:
-        return matches.group(0)
-    else:
-        raise ValueError("No numeric value found in the response.")
-    
 def gen_summary(food_description):
     system_message = "You are a food name summarizer. " + \
         "When given a description of a meal, " + \
