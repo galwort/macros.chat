@@ -11,12 +11,21 @@ import { BaseChartDirective } from 'ng2-charts';
 export class HomePage {
   meal: string = '';
   mealSubmitted: boolean = false;
-  nutrients: { carbs: number; fats: number; proteins: number; calories: number; summary: string } = { carbs: 0, fats: 0, proteins: 0, calories: 0 , summary: ''};
+  nutrients: {
+    carbs: number;
+    fats: number;
+    proteins: number;
+    calories: number;
+    summary: string;
+  } = { carbs: 0, fats: 0, proteins: 0, calories: 0, summary: '' };
+  isLoading: boolean = false;
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   public pieChartOptions: ChartConfiguration['options'] = {
-    borderColor: window.getComputedStyle(document.documentElement).getPropertyValue('--theme-primary'),
+    borderColor: window
+      .getComputedStyle(document.documentElement)
+      .getPropertyValue('--theme-primary'),
     plugins: {
       legend: {
         display: true,
@@ -25,7 +34,9 @@ export class HomePage {
           padding: 20,
           boxWidth: 10,
           boxHeight: 10,
-          color: window.getComputedStyle(document.documentElement).getPropertyValue('--theme-primary'),
+          color: window
+            .getComputedStyle(document.documentElement)
+            .getPropertyValue('--theme-primary'),
           font: {
             size: 15,
             weight: 'bold',
@@ -44,7 +55,7 @@ export class HomePage {
             }
             return label;
           },
-          title: items => (''),
+          title: (items) => '',
         },
         displayColors: false,
       },
@@ -56,9 +67,15 @@ export class HomePage {
       {
         data: [],
         backgroundColor: [
-          window.getComputedStyle(document.documentElement).getPropertyValue('--theme-accent'),
-          window.getComputedStyle(document.documentElement).getPropertyValue('--theme-secondary'),
-          window.getComputedStyle(document.documentElement).getPropertyValue('--theme-tertiary'),
+          window
+            .getComputedStyle(document.documentElement)
+            .getPropertyValue('--theme-accent'),
+          window
+            .getComputedStyle(document.documentElement)
+            .getPropertyValue('--theme-secondary'),
+          window
+            .getComputedStyle(document.documentElement)
+            .getPropertyValue('--theme-tertiary'),
         ],
       },
     ],
@@ -67,24 +84,31 @@ export class HomePage {
 
   constructor(private http: HttpClient) {}
 
-  submitMeal() {
-    this.http.post<any>('http://localhost:8000/process_meal/', { text: this.meal })
+  submitMeal(event: Event): void {
+    this.isLoading = true;
+    event.preventDefault();
+    this.http
+      .post<any>('http://localhost:8000/process_meal/', { text: this.meal })
       .subscribe({
         next: (response) => {
           this.nutrients = response;
           this.mealSubmitted = true;
           this.updateChartData();
+          this.isLoading = false;
         },
         error: (error) => {
           console.error('There was an error!', error);
-        }
-      }
-    );
+        },
+      });
   }
 
   private updateChartData() {
     if (this.nutrients) {
-      this.pieChartData.datasets[0].data = [this.nutrients.carbs, this.nutrients.fats, this.nutrients.proteins];
+      this.pieChartData.datasets[0].data = [
+        this.nutrients.carbs,
+        this.nutrients.fats,
+        this.nutrients.proteins,
+      ];
     }
   }
 }

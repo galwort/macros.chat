@@ -6,9 +6,14 @@
         placeholder="What did you eat?"
         [autoGrow]="true"
         [(ngModel)]="meal"
-        (keyup.enter)="submitMeal()"
+        (keyup.enter)="submitMeal($event)"
+        [disabled]="isLoading"
       ></ion-textarea>
-      <ion-icon name="arrow-up" slot="end" (click)="submitMeal()"></ion-icon>
+      <ion-icon
+        name="arrow-up"
+        slot="end"
+        (click)="submitMeal($event)"
+      ></ion-icon>
     </ion-item>
   </div>
   <div *ngIf="mealSubmitted" class="centered-content">
