@@ -1,10 +1,10 @@
 from dotenv import load_dotenv
 from guidance import assistant, gen, models, system, user
+from openai import OpenAI
 from os import getenv
 from re import search
 
-load_dotenv()
-OPENAI_API_KEY = getenv("OPENAI_API_KEY")
+client = OpenAI()
 
 def clean_response(response):
     pattern = r"[0-9]+"
@@ -13,30 +13,32 @@ def clean_response(response):
         return matches.group(0)
     else:
         raise ValueError("No numeric value found in the response.")
-
-
+    
 def gen_summary(food_description):
-    gpt = models.OpenAI("gpt-4-1106-preview", echo=False)
+    system_message = "You are a food name summarizer. " + \
+        "When given a description of a meal, " + \
+        "your job is to condense the description into a concise title. " + \
+        "Reply in JSON format with the word 'Description' as the key " + \
+        "and the summary as the value. The summary should be short, " + \
+        "as if it was an item on a menu."
+    
+    messages = [{"role": "system", "content": system_message}]
 
-    with system():
-        lm = (
-            gpt
-            + "You are a culinary summarizer programmed to condense "
-            + "descriptions of meals into concise titles. "
-            + "Your responses will consist solely of the summarized title, "
-            + "with no additional information or context. "
-            + "You are designed to avoid explanations or elaborations, "
-            + "focusing strictly on providing a brief, "
-            + "accurate title for each described meal. Be concise."
-        )
+    user_message = {
+        "role": "user",
+        "content": food_description
+    }
 
-    with user():
-        lm += food_description
+    messages.append(user_message)
 
-    with assistant():
-        lm += gen("response")
+    response = client.chat.completions.create(
+        model="gpt-4-1106-preview",
+        response_format={ "type": "json_object" },
+        messages=messages
+    )
 
-    return lm["response"]
+    return response.choices[0].message.content
+
 
 def gen_nutrients(food_description, nutrient="calories"):
     nutrients = ["carbs", "fats", "proteins", "calories", "all"]
