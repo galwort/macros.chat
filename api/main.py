@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from json import loads
 from log_food import gen_nutrients, gen_summary
 from pydantic import BaseModel
 import logging
@@ -19,7 +20,8 @@ app.add_middleware(
 @app.post("/process_meal/")
 async def process_meal(meal: MealInput):
     try:
-        nutrients = gen_nutrients(meal.text, "all")
+        nutrients_json = gen_nutrients(meal.text)
+        nutrients = loads(nutrients_json)
         nutrients["summary"] = gen_summary(meal.text)
         return nutrients
     except Exception as e:
