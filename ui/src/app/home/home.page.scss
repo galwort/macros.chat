@@ -1,53 +1,52 @@
 .centered-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100%;
-    background-color: var(--theme-background);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  background-color: var(--theme-background);
 
-    img {
-        height: 130px;
-        margin-bottom: 40px;
+  img {
+    height: 130px;
+    margin-bottom: 40px;
+  }
+
+  ion-item {
+    --background: var(--theme-secondary);
+    --color: var(--theme-primary);
+    --border-radius: 10px;
+    --border-color: var(--theme-primary);
+    --border-width: 2px;
+
+    ion-textarea {
+      max-width: 300px;
+      margin-bottom: 10px;
     }
 
-    ion-item {
-        --background: var(--theme-secondary);
-        --color: var(--theme-primary);
-        --border-radius: 10px;
-        --border-color: var(--theme-primary);
-        --border-width: 5px;
+    ion-icon {
+      font-size: 30px;
+      margin-right: 10px;
+      color: var(--theme-primary);
+      padding: 3px;
 
-        ion-textarea {
-            max-width: 300px;
-            margin-bottom: 10px;
-        }
-
-        ion-icon {
-            font-size: 30px;
-            margin-right: 10px;
-            color: var(--theme-primary);
-            padding: 3px;
-
-            &:hover {
-                cursor: pointer;
-                color: var(--theme-accent);
-                background-color: var(--theme-background);
-                border-radius: 20%;
-            }
-        }
+      &:hover {
+        cursor: pointer;
+        color: var(--theme-accent);
+        background-color: var(--theme-background);
+        border-radius: 20%;
+      }
     }
+  }
 
-    h1 {
-        color: var(--theme-primary);
-        font-weight: bold;
-        margin-bottom: 2.5px;
+  h1 {
+    color: var(--theme-primary);
+    font-weight: bold;
+    margin-bottom: 2.5px;
+  }
 
-    }
-
-    h3 {
-        color: var(--theme-primary);
-        margin-top: 2.5px;
-        margin-bottom: 20px;
-    }
+  h3 {
+    color: var(--theme-primary);
+    margin-top: 2.5px;
+    margin-bottom: 20px;
+  }
 }
