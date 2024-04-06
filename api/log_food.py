@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 from guidance import assistant, gen, models, system, user
+from json import loads
 from openai import OpenAI
 from os import getenv
 from re import search
@@ -69,7 +70,7 @@ def gen_nutrients(food_description):
 def main():
     print("What did you eat?")
     meal = input()
-    nutrients = gen_nutrients(meal)
+    nutrients = loads(gen_nutrients(meal))
     nutrients["summary"] = gen_summary(meal)
     print(nutrients)
 
