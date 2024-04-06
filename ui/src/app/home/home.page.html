@@ -1,11 +1,12 @@
 <ion-content>
   <div *ngIf="!mealSubmitted" class="centered-content">
-    <img src="assets/strawberry.png" alt="Strawberry!" id="logo">
+    <img src="assets/strawberry.png" alt="Strawberry!" id="logo" />
     <ion-item>
       <ion-textarea
         placeholder="What did you eat?"
         [autoGrow]="true"
         [(ngModel)]="meal"
+        (keyup.enter)="submitMeal()"
       ></ion-textarea>
       <ion-icon name="arrow-up" slot="end" (click)="submitMeal()"></ion-icon>
     </ion-item>
