@@ -28,20 +28,7 @@ export class HomePage {
       .getPropertyValue('--theme-primary'),
     plugins: {
       legend: {
-        display: true,
-        position: 'bottom',
-        labels: {
-          padding: 20,
-          boxWidth: 10,
-          boxHeight: 10,
-          color: window
-            .getComputedStyle(document.documentElement)
-            .getPropertyValue('--theme-primary'),
-          font: {
-            size: 15,
-            weight: 'bold',
-          },
-        },
+        display: false,
       },
       tooltip: {
         callbacks: {
