@@ -24,9 +24,9 @@ jobs:
       - name: npm install, build, and test
         run: |
           cd ui
-          npm install
-          npm run build --if-present
-          npm run test --if-present
+          npm install --verbose
+          npm run build --if-present --verbose
+          npm run test --if-present --verbose
 
       - name: Zip artifact for deployment
         run: zip release.zip ./ui/* -r
