@@ -3,7 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from json import loads
 from log_food import gen_nutrients, gen_summary
 from pydantic import BaseModel
-import logging
 
 app = FastAPI()
 class MealInput(BaseModel):
@@ -25,5 +24,4 @@ async def process_meal(meal: MealInput):
         nutrients.update(summary)
         return nutrients
     except Exception as e:
-        logging.error(f"Error processing meal: {e}")
         raise HTTPException(status_code=500, detail=str(e))
