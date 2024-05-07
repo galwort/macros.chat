@@ -1,7 +1,7 @@
 import azure.functions as func
 from json import dumps, loads
 from pydantic import BaseModel
-from log_food import gen_nutrients, gen_summary
+from .log_food import gen_nutrients, gen_summary
 
 class MealInput(BaseModel):
     text: str
