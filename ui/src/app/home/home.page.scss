@@ -5,6 +5,7 @@
   justify-content: center;
   min-height: 100%;
   background-color: var(--theme-background);
+  padding: 10px;
 
   img {
     height: 130px;
@@ -42,6 +43,7 @@
     color: var(--theme-primary);
     font-weight: bold;
     margin-bottom: 2.5px;
+    text-align: center;
   }
 
   h3 {
