@@ -1,7 +1,12 @@
+from azure.identity import DefaultAzureCredential
+from azure.keyvault.secrets import SecretClient
 from json import loads
 from openai import OpenAI
 
-client = OpenAI()
+vault_url = "https://kv-macroschat.vault.azure.net/"
+credential = DefaultAzureCredential()
+secret_client = SecretClient(vault_url=vault_url, credential=credential)
+client = OpenAI(api_key=secret_client.get_secret("OAIKey").value)
 
 def gen_summary(food_description):
     system_message = "You are a food name summarizer. " + \
