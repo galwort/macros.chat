@@ -5,7 +5,7 @@
   justify-content: center;
   min-height: 100%;
   background-color: var(--theme-background);
-  padding: 10px;
+  padding: 10vw;
 
   img {
     height: 130px;
@@ -50,6 +50,10 @@
     color: var(--theme-primary);
     margin-top: 2.5px;
     margin-bottom: 20px;
+  }
+
+  canvas {
+    width: 60vw;
   }
 }
 
