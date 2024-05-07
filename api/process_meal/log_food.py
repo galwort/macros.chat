@@ -3,7 +3,7 @@ from azure.keyvault.secrets import SecretClient
 from json import loads
 from openai import OpenAI
 
-vault_url = "https://kv-macroschat.vault.azure.net/"
+vault_url = "https://kv-galwort.vault.azure.net/"
 credential = DefaultAzureCredential()
 secret_client = SecretClient(vault_url=vault_url, credential=credential)
 client = OpenAI(api_key=secret_client.get_secret("OAIKey").value)
