@@ -75,7 +75,9 @@ export class HomePage {
     this.isLoading = true;
     event.preventDefault();
     this.http
-      .post<any>('http://localhost:8000/process_meal/', { text: this.meal })
+      .post<any>('https://fa-macroschat.azurewebsites.net/api/process_meal?', {
+        text: this.meal,
+      })
       .subscribe({
         next: (response) => {
           this.nutrients = response;
