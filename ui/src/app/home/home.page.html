@@ -9,7 +9,9 @@
         (keyup.enter)="submitMeal($event)"
         [disabled]="isLoading"
       ></ion-textarea>
+      <ion-spinner *ngIf="isLoading" name="crescent" slot="end"></ion-spinner>
       <ion-icon
+        *ngIf="!isLoading"
         name="arrow-up"
         slot="end"
         (click)="submitMeal($event)"

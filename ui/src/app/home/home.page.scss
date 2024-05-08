@@ -37,6 +37,16 @@
         border-radius: 20%;
       }
     }
+
+    ion-spinner {
+      width: 36px;
+      height: 36px;
+      margin-right: 9px;
+      margin-left: 17px;
+      color: var(--theme-accent);
+      background-color: var(--theme-background);
+      border-radius: 20%;
+    }
   }
 
   h1 {
