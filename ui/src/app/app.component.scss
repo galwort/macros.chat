@@ -1,0 +1,15 @@
+ion-toolbar {
+  --background: var(--theme-background);
+  --color: var(--theme-text);
+  height: 8vh;
+
+  ion-icon {
+    color: var(--theme-text);
+    font-size: 5vh;
+    padding: 1vh;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
