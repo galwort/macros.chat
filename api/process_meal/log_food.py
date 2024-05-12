@@ -73,7 +73,7 @@ def gen_nutrients(food_description):
 def main():
     print("What did you eat?")
     meal = input()
-    nutrients = loads(gen_nutrients(meal))
+    nutrients = gen_nutrients(meal)
     summary = loads(gen_summary(meal))
     nutrients.update(summary)
     print(nutrients)
