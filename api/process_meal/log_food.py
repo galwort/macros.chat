@@ -43,6 +43,8 @@ def gen_nutrients(food_description):
         + "Reply in JSON format with the following keys: "
         + "'carbs', 'fats', 'proteins', and 'calories'."
         + "The values should only be numerical."
+        + "If you are unable to generate the nutrients, "
+        + "include an 'error' key in the JSON with a brief reason why."
     )
 
     messages = [{"role": "system", "content": system_message}]
@@ -57,7 +59,15 @@ def gen_nutrients(food_description):
         messages=messages,
     )
 
-    return response.choices[0].message.content
+    try:
+        nutrients = response.choices[0].message.content
+        nutrients = loads(nutrients)
+    except (KeyError, ValueError):
+        nutrients = {
+            "error": "Unable to generate nutrients. Please provide more information about the meal."
+        }
+
+    return nutrients
 
 
 def main():
