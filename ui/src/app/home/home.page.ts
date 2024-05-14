@@ -112,6 +112,10 @@ export class HomePage {
     }
   }
 
+  closeErrorPopover() {
+    this.showErrorPopover = false;
+  }
+
   openLink(link: string) {
     window.open(link, '_blank');
   }

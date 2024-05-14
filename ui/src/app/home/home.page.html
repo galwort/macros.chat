@@ -81,7 +81,10 @@
       </div>
     </div>
   </div>
-  <ion-popover [isOpen]="showErrorPopover">
+  <ion-popover
+    [isOpen]="showErrorPopover"
+    (ionPopoverDidDismiss)="closeErrorPopover()"
+  >
     <ng-template>
       <ion-content class="ion-padding">{{ errorMessage }}</ion-content>
     </ng-template>
