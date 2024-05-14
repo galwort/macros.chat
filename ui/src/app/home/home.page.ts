@@ -19,6 +19,8 @@ export class HomePage {
     summary: string;
   } = { carbs: 0, fats: 0, proteins: 0, calories: 0, summary: '' };
   isLoading: boolean = false;
+  errorMessage: string = '';
+  showErrorPopover: boolean = false;
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
@@ -80,12 +82,21 @@ export class HomePage {
       })
       .subscribe({
         next: (response) => {
-          this.nutrients = response;
-          this.mealSubmitted = true;
-          this.updateChartData();
-          this.isLoading = false;
+          if (response.error) {
+            this.errorMessage = response.error;
+            this.showErrorPopover = true;
+            this.isLoading = false;
+          } else {
+            this.nutrients = response;
+            this.mealSubmitted = true;
+            this.updateChartData();
+            this.isLoading = false;
+          }
         },
         error: (error) => {
+          this.errorMessage = 'An unexpected error occurred. Please try again.';
+          this.showErrorPopover = true;
+          this.isLoading = false;
           console.error('There was an error!', error);
         },
       });
