@@ -2,9 +2,16 @@
   <ion-header class="ion-no-border">
     <ion-toolbar>
       <ion-icon
+        *ngIf="!mealSubmitted"
         name="information-circle-outline"
         slot="start"
         id="open-popover"
+      ></ion-icon>
+      <ion-icon
+        *ngIf="mealSubmitted"
+        name="refresh"
+        slot="start"
+        (click)="mealSubmitted = false"
       ></ion-icon>
       <ion-popover [keepContentsMounted]="true" trigger="open-popover">
         <ng-template>
