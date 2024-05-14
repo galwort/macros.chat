@@ -28,6 +28,14 @@ ion-toolbar {
     margin-bottom: 40px;
   }
 
+  ion-spinner {
+    height: 130px;
+    width: 130px;
+    margin-bottom: 40px;
+    color: #1a2f3a;
+    background-color: var(--theme-background);
+  }
+
   ion-item {
     --background: var(--theme-secondary);
     --color: var(--theme-primary);
@@ -52,16 +60,6 @@ ion-toolbar {
         background-color: var(--theme-background);
         border-radius: 20%;
       }
-    }
-
-    ion-spinner {
-      width: 36px;
-      height: 36px;
-      margin-right: 9px;
-      margin-left: 17px;
-      color: var(--theme-accent);
-      background-color: var(--theme-background);
-      border-radius: 20%;
     }
   }
 
