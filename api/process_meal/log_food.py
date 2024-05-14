@@ -1,7 +1,7 @@
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
-from json import loads
 from openai import OpenAI
+from json import loads, dumps
 
 vault_url = "https://kv-galwort.vault.azure.net/"
 credential = DefaultAzureCredential()
@@ -20,9 +20,7 @@ def gen_summary(food_description):
     )
 
     messages = [{"role": "system", "content": system_message}]
-
     user_message = {"role": "user", "content": food_description}
-
     messages.append(user_message)
 
     response = client.chat.completions.create(
@@ -48,9 +46,7 @@ def gen_nutrients(food_description):
     )
 
     messages = [{"role": "system", "content": system_message}]
-
     user_message = {"role": "user", "content": food_description}
-
     messages.append(user_message)
 
     response = client.chat.completions.create(
@@ -67,17 +63,4 @@ def gen_nutrients(food_description):
             "error": "Unable to generate nutrients. Please provide more information about the meal."
         }
 
-    return nutrients
-
-
-def main():
-    print("What did you eat?")
-    meal = input()
-    nutrients = gen_nutrients(meal)
-    summary = loads(gen_summary(meal))
-    nutrients.update(summary)
-    print(nutrients)
-
-
-if __name__ == "__main__":
-    main()
+    return dumps(nutrients)
