@@ -100,4 +100,8 @@ export class HomePage {
       ];
     }
   }
+
+  openLink(link: string) {
+    window.open(link, '_blank');
+  }
 }

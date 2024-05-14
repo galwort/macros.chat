@@ -7,8 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   constructor() {}
-
-  openLink(link: string) {
-    window.open(link, '_blank');
-  }
 }

@@ -1,4 +1,28 @@
 <ion-content>
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-icon
+        name="information-circle-outline"
+        slot="start"
+        id="open-popover"
+      ></ion-icon>
+      <ion-popover [keepContentsMounted]="true" trigger="open-popover">
+        <ng-template>
+          <ion-content class="ion-padding"
+            >Simply describe your meal in as much detail as you'd like, from a
+            simple sandwich to an elaborate three-course meal, and macronutrient
+            information will be generated for you</ion-content
+          >
+        </ng-template>
+      </ion-popover>
+      <ion-icon
+        name="logo-github"
+        slot="end"
+        alt="github"
+        (click)="openLink('https://github.com/galwort/macros.chat')"
+      ></ion-icon>
+    </ion-toolbar>
+  </ion-header>
   <div *ngIf="!mealSubmitted" class="centered-content">
     <img src="assets/strawberry.png" alt="Strawberry!" id="logo" />
     <ion-item>
