@@ -50,7 +50,7 @@ def gen_nutrients(food_description):
     messages.append(user_message)
 
     response = client.chat.completions.create(
-        model="gpt-4-1106-preview",
+        model="gpt-4o",
         response_format={"type": "json_object"},
         messages=messages,
     )
