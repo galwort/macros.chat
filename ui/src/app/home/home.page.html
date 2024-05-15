@@ -43,7 +43,7 @@
         placeholder="What did you eat?"
         [autoGrow]="true"
         [(ngModel)]="meal"
-        (keyup.enter)="submitMeal($event)"
+        (keydown.enter)="submitMeal($event)"
         [disabled]="isLoading"
       ></ion-textarea>
       <ion-icon
