@@ -11,7 +11,7 @@
         *ngIf="mealSubmitted"
         name="refresh"
         slot="start"
-        (click)="mealSubmitted = false"
+        (click)="refresh()"
       ></ion-icon>
       <ion-popover [keepContentsMounted]="true" trigger="open-popover">
         <ng-template>
