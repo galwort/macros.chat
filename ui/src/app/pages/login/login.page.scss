@@ -1,7 +1,6 @@
 ion-toolbar {
-  --background: var(--theme-background);
-  --color: var(--theme-text);
-  height: 8vh;
+  --background: transparent;
+  position: absolute;
 
   img {
     height: 30px;
@@ -13,26 +12,20 @@ ion-toolbar {
   }
 }
 
-.centered-content {
+.split-screen {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 92vh;
+  height: 100%;
+}
+
+.left-side {
+  flex: 1;
+  background-color: #1a2f3a;
+  max-width: 40vw;
+  overflow: auto;
+}
+
+.right-side {
+  flex: 1;
   background-color: var(--theme-background);
-  padding: 10vw;
-  padding-bottom: 150px;
-
-  h1 {
-    color: var(--theme-primary);
-    font-weight: bold;
-    margin-bottom: 2.5px;
-    text-align: center;
-  }
-
-  h3 {
-    color: var(--theme-primary);
-    margin-top: 2.5px;
-    margin-bottom: 20px;
-  }
+  overflow: auto;
 }
