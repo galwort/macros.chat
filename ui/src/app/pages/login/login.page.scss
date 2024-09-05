@@ -33,14 +33,17 @@ ion-toolbar {
   overflow: auto;
 
   ion-card {
-    border-radius: 15px;
+    color: var(--theme-primary);
+    border-radius: 10px;
+    border-color: var(--theme-primary);
+    border-width: 2px;
     width: 80%;
     max-width: 25vw;
     min-width: 300px;
     box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.5);
 
     ion-card-header {
-      --background: var(--theme-container-bg-dark);
+      --background: var(--theme-secondary);
 
       ion-card-title {
         text-align: center;
@@ -51,10 +54,10 @@ ion-toolbar {
     }
 
     ion-card-content {
-      background-color: var(--theme-container-bg-dark);
+      background-color: var(--theme-secondary);
 
       ion-item {
-        --background: var(--theme-container-bg-dark);
+        --background: var(--theme-secondary);
 
         ion-label,
         ion-input {
@@ -63,7 +66,7 @@ ion-toolbar {
       }
 
       ion-button {
-        color: var(--theme-container-bg-dark);
+        color: var(--theme-secondary);
         --background: white;
         font-weight: bold;
         margin-top: 30px;
