@@ -11,6 +11,43 @@
   </ion-header>
   <div class="split-screen">
     <div class="left-side"></div>
-    <div class="right-side"></div>
+    <div class="right-side">
+      <ion-card style="border-radius: 15px">
+        <ion-card-header>
+          <ion-card-title>Login</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <form id="loginForm">
+            <ion-item>
+              <ion-label position="floating">Email</ion-label>
+              <ion-input type="email" id="email" name="email"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Password</ion-label>
+              <ion-input
+                type="password"
+                id="password"
+                name="password"
+              ></ion-input>
+            </ion-item>
+            <ion-button type="submit" expand="block" id="loginButton"
+              >Login</ion-button
+            >
+            <ion-button type="submit" expand="block" id="loginButton">
+              <img
+                src="https://developers.google.com/identity/images/g-logo.png"
+                alt="Google Logo"
+              />
+              <span>Login with Google</span>
+            </ion-button>
+            <div class="account-text">
+              <ion-text
+                ><a routerLink="/register">Create an account</a></ion-text
+              >
+            </div>
+          </form>
+        </ion-card-content>
+      </ion-card>
+    </div>
   </div>
 </ion-content>
