@@ -22,7 +22,11 @@
           </ion-content>
         </ng-template>
       </ion-popover>
-      <ion-icon name="person-circle-outline" slot="end"></ion-icon>
+      <ion-icon
+        name="person-circle-outline"
+        slot="end"
+        (click)="navigateTo('login')"
+      ></ion-icon>
     </ion-toolbar>
   </ion-header>
   <div *ngIf="!mealSubmitted" class="centered-content">

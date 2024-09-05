@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -71,7 +72,7 @@ export class HomePage {
   };
   public pieChartType: ChartType = 'pie';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   submitMeal(event: Event): void {
     this.isLoading = true;
@@ -119,5 +120,9 @@ export class HomePage {
   refresh() {
     this.mealSubmitted = false;
     this.meal = '';
+  }
+
+  navigateTo(page: string) {
+    this.router.navigate([`/${page}`]);
   }
 }
