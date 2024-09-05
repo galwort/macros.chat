@@ -116,10 +116,6 @@ export class HomePage {
     this.showErrorPopover = false;
   }
 
-  openLink(link: string) {
-    window.open(link, '_blank');
-  }
-
   refresh() {
     this.mealSubmitted = false;
     this.meal = '';
