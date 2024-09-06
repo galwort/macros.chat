@@ -39,17 +39,6 @@ ion-toolbar {
     max-width: 25vw;
     min-width: 300px;
 
-    ion-card-header {
-      --background: var(--theme-secondary);
-
-      ion-card-title {
-        text-align: center;
-        color: var(--theme-primary);
-        font-weight: bold;
-        font-size: 1.5rem;
-      }
-    }
-
     ion-card-content {
       background-color: var(--theme-secondary);
 
@@ -70,24 +59,6 @@ ion-toolbar {
         --background: var(--theme-primary);
         font-weight: bold;
         margin-top: 30px;
-      }
-
-      .account-text {
-        color: var(--theme-primary);
-        text-decoration: underline;
-        text-align: center;
-        margin-top: 20px;
-
-        ion-text {
-          a {
-            color: var(--theme-primary);
-          }
-        }
-      }
-
-      #loginButton img {
-        height: 20px;
-        margin-right: 10px;
       }
     }
   }
