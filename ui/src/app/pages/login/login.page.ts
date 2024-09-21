@@ -24,4 +24,8 @@ export class LoginPage {
         console.error(error);
       });
   }
+
+  navigateTo(page: string) {
+    this.router.navigate([`/${page}`]);
+  }
 }
