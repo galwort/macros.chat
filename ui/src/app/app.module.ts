@@ -16,6 +16,8 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from '../environments/environment';
 
+import firebase from 'firebase/compat/app';
+
 @NgModule({
   declarations: [AppComponent],
   bootstrap: [AppComponent],
@@ -31,4 +33,8 @@ import { environment } from '../environments/environment';
     provideHttpClient(withInterceptorsFromDi()),
   ],
 })
-export class AppModule {}
+export class AppModule {
+  constructor() {
+    firebase.initializeApp(environment.firebaseConfig);
+  }
+}

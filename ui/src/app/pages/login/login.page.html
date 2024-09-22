@@ -17,7 +17,7 @@
           <ion-card-title>Login</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          <form id="loginForm">
+          <form id="loginForm" (ngSubmit)="onSubmit()">
             <ion-item>
               <ion-label position="floating">Email</ion-label>
               <ion-input type="email" id="email" name="email"></ion-input>
@@ -33,15 +33,13 @@
             <ion-button type="submit" expand="block" id="loginButton"
               >Login</ion-button
             >
-            <ion-button type="submit" expand="block" id="loginButton">
-              <span>Login with Google</span>
-            </ion-button>
-            <div class="account-text">
-              <ion-text
-                ><a routerLink="/register">Create an account</a></ion-text
-              >
-            </div>
           </form>
+          <ion-button expand="block" (click)="googleLogin()">
+            <span>Login with Google</span>
+          </ion-button>
+          <div class="account-text">
+            <ion-text><a routerLink="/register">Create an account</a></ion-text>
+          </div>
         </ion-card-content>
       </ion-card>
     </div>
