@@ -17,7 +17,6 @@ export class LoginPage {
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
-        console.log(user);
         this.router.navigate(['/']);
       })
       .catch((error) => {
