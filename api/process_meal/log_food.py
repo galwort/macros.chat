@@ -24,7 +24,7 @@ def gen_summary(food_description):
     messages.append(user_message)
 
     response = client.chat.completions.create(
-        model="gpt-4o",
+        model="gpt-4o-mini",
         response_format={"type": "json_object"},
         messages=messages,
     )
