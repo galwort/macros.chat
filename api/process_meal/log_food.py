@@ -39,7 +39,9 @@ def gen_nutrients(food_description):
         + "your job is to reply with numerical values "
         + "for the three macronutrients and calories. "
         + "Reply in JSON format with the following keys: "
-        + "'carbs', 'fats', 'proteins', and 'calories'."
+        + "'carbs', 'fats', 'proteins', and 'calories'. "
+        + "If the description is vague or lacks details, "
+        + "assume an average serving size and a standard type of the food. "
         + "The values should only be numerical."
         + "If you are unable to generate the nutrients, "
         + "include an 'error' key in the JSON with a brief reason why."
@@ -50,7 +52,7 @@ def gen_nutrients(food_description):
     messages.append(user_message)
 
     response = client.chat.completions.create(
-        model="gpt-4o",
+        model="gpt-4o-mini",
         response_format={"type": "json_object"},
         messages=messages,
     )
