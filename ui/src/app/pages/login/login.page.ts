@@ -18,7 +18,7 @@ export class LoginPage {
       .then((result) => {
         const user = result.user;
         console.log(user);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/']);
       })
       .catch((error) => {
         console.error(error);
