@@ -11,7 +11,6 @@ export class LoginPage {
   constructor(private router: Router) {}
 
   googleLogin() {
-    console.log('Google login clicked');
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
@@ -19,16 +18,10 @@ export class LoginPage {
         const user = result.user;
         this.router.navigate(['/']);
       })
-      .catch((error) => {
-        console.error(error);
-      });
+      .catch((error) => {});
   }
 
   navigateTo(page: string) {
     this.router.navigate([`/${page}`]);
-  }
-
-  onSubmit() {
-    console.log('Form submitted');
   }
 }
