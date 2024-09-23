@@ -3,6 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { Router } from '@angular/router';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { environment } from 'src/environments/environment';
+
+export const app = initializeApp(environment.firebaseConfig);
+export const db = getFirestore(app);
 
 @Component({
   selector: 'app-home',
@@ -82,7 +88,7 @@ export class HomePage {
         text: this.meal,
       })
       .subscribe({
-        next: (response) => {
+        next: async (response) => {
           if (response.error) {
             this.errorMessage = response.error;
             this.showErrorPopover = true;
@@ -92,13 +98,24 @@ export class HomePage {
             this.mealSubmitted = true;
             this.updateChartData();
             this.isLoading = false;
+
+            try {
+              await addDoc(collection(db, 'meals'), {
+                prompt: this.meal,
+                carbs: this.nutrients.carbs,
+                fats: this.nutrients.fats,
+                proteins: this.nutrients.proteins,
+                calories: this.nutrients.calories,
+                summary: this.nutrients.summary,
+                timestamp: new Date().toISOString(),
+              });
+            } catch (e) {}
           }
         },
         error: (error) => {
           this.errorMessage = 'An unexpected error occurred. Please try again.';
           this.showErrorPopover = true;
           this.isLoading = false;
-          console.error('There was an error!', error);
         },
       });
   }
