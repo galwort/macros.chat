@@ -26,6 +26,11 @@ ion-toolbar {
   .meal-list {
     display: inline-block;
     animation: scroll 60s linear infinite;
+
+    &:has(.meal-item:hover) {
+      animation-play-state: paused;
+      cursor: pointer;
+    }
   }
 
   .meal-item {
@@ -46,15 +51,27 @@ ion-toolbar {
   }
 
   .color-one {
-    color: #ff6347;
+    color: rgba(255, 99, 71, 0.4);
+
+    &:hover {
+      color: rgba(255, 99, 71, 1);
+    }
   }
 
   .color-two {
-    color: #4682b4;
+    color: rgba(70, 130, 180, 0.4);
+
+    &:hover {
+      color: rgba(70, 130, 180, 1);
+    }
   }
 
   .color-three {
-    color: #32cd32;
+    color: rgba(50, 205, 50, 0.4);
+
+    &:hover {
+      color: rgba(50, 205, 50, 1);
+    }
   }
 }
 
