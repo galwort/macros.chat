@@ -26,6 +26,14 @@ export class LoginPage implements OnInit {
     const mealCollection = collection(db, 'meals');
     const mealSnapshot = await getDocs(mealCollection);
     this.meals = mealSnapshot.docs.map((doc) => doc.data());
+    this.shuffleArray(this.meals);
+  }
+
+  shuffleArray(array: any[]) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
   }
 
   getColorClass(index: number): string {
