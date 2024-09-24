@@ -19,9 +19,60 @@ ion-toolbar {
 
 .left-side {
   flex: 1;
-  background-color: #1a2f3a;
-  max-width: 40vw;
-  overflow: auto;
+  background-color: var(--theme-background);
+  max-width: 60vw;
+  overflow: hidden;
+
+  .meal-list {
+    display: inline-block;
+    animation: scroll 60s linear infinite;
+
+    &:has(.meal-item:hover) {
+      animation-play-state: paused;
+      cursor: pointer;
+    }
+  }
+
+  .meal-item {
+    display: inline-block;
+    padding: 5px;
+    white-space: nowrap;
+    margin-right: 10px;
+    font-weight: bold;
+  }
+
+  @keyframes scroll {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-50%);
+    }
+  }
+
+  .color-one {
+    color: rgba(255, 99, 71, 0.4);
+
+    &:hover {
+      color: rgba(255, 99, 71, 1);
+    }
+  }
+
+  .color-two {
+    color: rgba(70, 130, 180, 0.4);
+
+    &:hover {
+      color: rgba(70, 130, 180, 1);
+    }
+  }
+
+  .color-three {
+    color: rgba(50, 205, 50, 0.4);
+
+    &:hover {
+      color: rgba(50, 205, 50, 1);
+    }
+  }
 }
 
 .right-side {
