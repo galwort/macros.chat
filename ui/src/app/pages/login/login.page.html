@@ -11,14 +11,23 @@
   </ion-header>
   <div class="split-screen">
     <div class="left-side">
-      <div class="meal-list">
-        <span
-          *ngFor="let meal of meals; let i = index;"
-          [ngClass]="getColorClass(i)"
-          class="meal-item"
-        >
-          {{ meal.summary }}
-        </span>
+      <div class="scroll-container">
+        <div class="meal-list">
+          <span
+            *ngFor="let meal of meals; let i = index;"
+            [ngClass]="getColorClass(i)"
+            class="meal-item"
+          >
+            {{ meal.summary }}
+          </span>
+          <span
+            *ngFor="let meal of meals; let i = index;"
+            [ngClass]="getColorClass(i)"
+            class="meal-item"
+          >
+            {{ meal.summary }}
+          </span>
+        </div>
       </div>
     </div>
     <div class="right-side">

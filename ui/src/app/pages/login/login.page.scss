@@ -24,17 +24,25 @@ ion-toolbar {
   overflow: hidden;
 
   .meal-list {
-    display: flex;
-    flex-wrap: wrap;
-    white-space: normal;
-    gap: 10px;
+    display: inline-block;
+    animation: scroll 6s linear infinite;
   }
 
   .meal-item {
-    color: white;
-    font-size: 0.75rem;
+    display: inline-block;
+    padding: 5px;
+    white-space: nowrap;
+    margin-right: 10px;
     font-weight: bold;
-    display: inline;
+  }
+
+  @keyframes scroll {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-50%);
+    }
   }
 
   .color-one {
