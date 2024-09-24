@@ -19,9 +19,34 @@ ion-toolbar {
 
 .left-side {
   flex: 1;
-  background-color: #1a2f3a;
+  background-color: var(--theme-background);
   max-width: 40vw;
-  overflow: auto;
+  overflow: hidden;
+
+  .meal-list {
+    display: block;
+    white-space: normal;
+    color: white;
+  }
+
+  .meal-item {
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    display: inline;
+  }
+
+  .color-one {
+    color: #ff6347;
+  }
+
+  .color-two {
+    color: #4682b4;
+  }
+
+  .color-three {
+    color: #32cd32;
+  }
 }
 
 .right-side {

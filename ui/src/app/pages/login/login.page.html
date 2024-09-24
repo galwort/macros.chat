@@ -10,7 +10,17 @@
     </ion-toolbar>
   </ion-header>
   <div class="split-screen">
-    <div class="left-side"></div>
+    <div class="left-side">
+      <div class="meal-list">
+        <span
+          *ngFor="let meal of meals; let i = index;"
+          [ngClass]="getColorClass(i)"
+          class="meal-item"
+        >
+          {{ meal.summary }}
+        </span>
+      </div>
+    </div>
     <div class="right-side">
       <ion-card style="border-radius: 15px">
         <ion-card-header>
