@@ -6,19 +6,24 @@ const routes: Routes = [
     path: '',
     loadChildren: () =>
       import('./pages/home/home.module').then((m) => m.HomePageModule),
-  },  {
+  },
+  {
     path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () =>
+      import('./pages/login/login.module').then((m) => m.LoginPageModule),
   },
   {
     path: 'register',
-    loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
+    loadChildren: () =>
+      import('./pages/register/register.module').then(
+        (m) => m.RegisterPageModule
+      ),
   },
   {
-    path: 'meal',
-    loadChildren: () => import('./pages/meal/meal.module').then( m => m.MealPageModule)
+    path: ':mealId',
+    loadChildren: () =>
+      import('./pages/meal/meal.module').then((m) => m.MealPageModule),
   },
-
 ];
 
 @NgModule({

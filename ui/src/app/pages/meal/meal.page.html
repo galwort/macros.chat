@@ -1,13 +1,37 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>meal</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+<ion-content>
+  <ion-header class="ion-no-border">
     <ion-toolbar>
-      <ion-title size="large">meal</ion-title>
+      <ion-buttons slot="start">
+        <ion-button (click)="navigateToHome()">
+          <ion-icon name="home"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>{{ nutrients.summary }}</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <div *ngIf="isLoading" class="centered-content">
+    <ion-spinner name="circles"></ion-spinner>
+  </div>
+
+  <div *ngIf="!isLoading && !errorMessage" class="centered-content">
+    <h3>{{ nutrients.calories }} Calories</h3>
+    <div style="display: block">
+      <canvas
+        baseChart
+        class="chart"
+        [data]="pieChartData"
+        [type]="pieChartType"
+        [options]="pieChartOptions"
+      ></canvas>
+    </div>
+    <!-- Legend -->
+    <div class="legend-container">
+      <!-- Legend items as in home.page.html -->
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="centered-content">
+    <p>{{ errorMessage }}</p>
+  </div>
 </ion-content>
