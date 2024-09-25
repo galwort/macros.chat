@@ -1,20 +1,16 @@
 <ion-content>
   <ion-header class="ion-no-border">
     <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-button (click)="navigateToHome()">
-          <ion-icon name="home"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-      <ion-title>{{ nutrients.summary }}</ion-title>
+      <img
+        src="assets/strawberry.png"
+        alt="Home"
+        id="logo"
+        (click)="navigateTo('')"
+      />
     </ion-toolbar>
   </ion-header>
-
-  <div *ngIf="isLoading" class="centered-content">
-    <ion-spinner name="circles"></ion-spinner>
-  </div>
-
   <div *ngIf="!isLoading && !errorMessage" class="centered-content">
+    <h1>{{ nutrients.summary }}</h1>
     <h3>{{ nutrients.calories }} Calories</h3>
     <div style="display: block">
       <canvas
@@ -25,13 +21,19 @@
         [options]="pieChartOptions"
       ></canvas>
     </div>
-    <!-- Legend -->
     <div class="legend-container">
-      <!-- Legend items as in home.page.html -->
+      <div class="legend-item">
+        <div class="color-box" style="background-color: #4ca7c8"></div>
+        <div class="label">Carbs</div>
+      </div>
+      <div class="legend-item">
+        <div class="color-box" style="background-color: #f3f5eb"></div>
+        <div class="label">Fats</div>
+      </div>
+      <div class="legend-item">
+        <div class="color-box" style="background-color: #ff6b6b"></div>
+        <div class="label">Proteins</div>
+      </div>
     </div>
-  </div>
-
-  <div *ngIf="errorMessage" class="centered-content">
-    <p>{{ errorMessage }}</p>
   </div>
 </ion-content>

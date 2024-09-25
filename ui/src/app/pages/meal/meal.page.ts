@@ -30,7 +30,6 @@ export class MealPage implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   public pieChartOptions: ChartConfiguration['options'] = {
-    // Same as in home.page.ts
     borderColor: window
       .getComputedStyle(document.documentElement)
       .getPropertyValue('--theme-primary'),
@@ -122,7 +121,7 @@ export class MealPage implements OnInit {
     }
   }
 
-  navigateToHome() {
-    this.router.navigate(['/home']);
+  navigateTo(page: string) {
+    this.router.navigate([`/${page}`]);
   }
 }
