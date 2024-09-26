@@ -69,6 +69,6 @@ export class HomePage {
   }
 
   navigateTo(page: string) {
-    this.router.navigate([`/${page}`]);
+    this.router.navigateByUrl(`/${page}`);
   }
 }
