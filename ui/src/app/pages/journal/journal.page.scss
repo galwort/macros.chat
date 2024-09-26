@@ -1,38 +1,24 @@
 .layout {
   display: flex;
   height: 100%;
+  background-color: var(--theme-background);
 }
 
 .sidebar {
   width: 60px;
-  height: 100%;
-  background-color: var(--theme-background);
-}
-
-ion-toolbar {
-  --background: var(--theme-primary);
   margin: 5px;
-  border-radius: 20px;
   height: calc(100% - 10px);
+  background: var(--theme-primary);
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 20px;
-
-  img {
-    height: 30px;
-    margin-bottom: 20px;
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
 }
 
-.main-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+#logo {
+  height: 30px;
+  cursor: pointer;
 }
 
 .main-content {
