@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
@@ -15,6 +20,8 @@ export const db = getFirestore(app);
 })
 export class LoginPage implements OnInit {
   meals: any[] = [];
+  email: string = '';
+  password: string = '';
 
   constructor(private router: Router) {}
 
@@ -42,6 +49,18 @@ export class LoginPage implements OnInit {
   getColorClass(index: number): string {
     const colorClasses = ['color-one', 'color-two', 'color-three'];
     return colorClasses[index % 3];
+  }
+
+  emailLogin() {
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, this.email, this.password)
+      .then((result) => {
+        const user = result.user;
+        this.router.navigate(['/']);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   googleLogin() {
