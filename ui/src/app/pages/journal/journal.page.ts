@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-journal',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./journal.page.scss'],
 })
 export class JournalPage implements OnInit {
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
-  constructor() { }
+  ngOnInit() {}
 
-  ngOnInit() {
+  navigateTo(page: string) {
+    this.router.navigateByUrl(`/${page}`);
   }
-
 }
