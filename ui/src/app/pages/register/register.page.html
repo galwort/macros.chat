@@ -17,6 +17,7 @@
             *ngFor="let meal of meals; let i = index;"
             [ngClass]="getColorClass(i)"
             class="meal-item"
+            (click)="navigateTo(meal.id)"
           >
             {{ meal.summary }}
           </span>
@@ -24,6 +25,7 @@
             *ngFor="let meal of meals; let i = index;"
             [ngClass]="getColorClass(i)"
             class="meal-item"
+            (click)="navigateTo(meal.id)"
           >
             {{ meal.summary }}
           </span>

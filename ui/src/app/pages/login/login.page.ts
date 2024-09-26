@@ -25,7 +25,10 @@ export class LoginPage implements OnInit {
   async loadMeals() {
     const mealCollection = collection(db, 'meals');
     const mealSnapshot = await getDocs(mealCollection);
-    this.meals = mealSnapshot.docs.map((doc) => doc.data());
+    this.meals = mealSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
     this.shuffleArray(this.meals);
   }
 
