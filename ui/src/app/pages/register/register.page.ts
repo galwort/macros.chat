@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { initializeApp } from 'firebase/app';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
 
@@ -13,6 +14,8 @@ export const db = getFirestore(app);
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage implements OnInit {
+  email: string = '';
+  password: string = '';
   meals: any[] = [];
 
   constructor(private router: Router) {}
@@ -41,6 +44,17 @@ export class RegisterPage implements OnInit {
   getColorClass(index: number): string {
     const colorClasses = ['color-one', 'color-two', 'color-three'];
     return colorClasses[index % 3];
+  }
+
+  register() {
+    const auth = getAuth();
+    createUserWithEmailAndPassword(auth, this.email, this.password)
+      .then((result) => {
+        this.router.navigate(['/login']);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   navigateTo(page: string) {
