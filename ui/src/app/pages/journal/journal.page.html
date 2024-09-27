@@ -8,6 +8,23 @@
         (click)="navigateTo('')"
       />
     </div>
-    <div class="main-content"></div>
+    <div class="main-content">
+      <div class="filter-container">
+        <ion-item lines="none">
+          <ion-datetime-button datetime="filterDate"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime
+                id="filterDate"
+                presentation="date"
+                [(ngModel)]="dateSelected"
+                (ionChange)="onDateChange()"
+              >
+              </ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </ion-item>
+      </div>
+    </div>
   </div>
 </ion-content>
