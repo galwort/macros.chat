@@ -5,6 +5,7 @@ import { initializeApp } from 'firebase/app';
 import { environment } from 'src/environments/environment';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 export const app = initializeApp(environment.firebaseConfig);
 export const db = getFirestore(app);
@@ -18,6 +19,7 @@ export class MealPage implements OnInit {
   mealId: string = '';
   isLoading: boolean = true;
   errorMessage: string = '';
+  isUserLoggedIn: boolean = false;
 
   nutrients: {
     carbs: number;
@@ -80,8 +82,16 @@ export class MealPage implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
+    this.checkUserLoginStatus();
     this.mealId = this.route.snapshot.paramMap.get('mealId')!;
     this.fetchMealData();
+  }
+
+  checkUserLoginStatus() {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      this.isUserLoggedIn = !!user;
+    });
   }
 
   async fetchMealData() {
@@ -119,6 +129,10 @@ export class MealPage implements OnInit {
       ];
       this.chart?.update();
     }
+  }
+
+  logFood() {
+    console.log('Food logged!');
   }
 
   navigateTo(page: string) {

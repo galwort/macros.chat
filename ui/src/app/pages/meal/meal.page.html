@@ -35,5 +35,13 @@
         <div class="label">Proteins</div>
       </div>
     </div>
+    <ion-button
+      *ngIf="isUserLoggedIn"
+      (click)="logFood()"
+      expand="block"
+      class="log-food-button"
+    >
+      Log Food
+    </ion-button>
   </div>
 </ion-content>
