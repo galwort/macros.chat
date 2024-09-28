@@ -105,11 +105,12 @@ ion-toolbar {
       font-size: 14px;
     }
   }
+}
 
-  .log-food-button {
-    margin-top: 20px;
-    background-color: var(--theme-primary);
-    color: white;
-    border-radius: 5px;
-  }
+ion-button {
+  --background: var(--theme-primary);
+  --color: var(--theme-background);
+  --border-radius: 10px;
+  font-weight: bold;
+  margin-top: 17px;
 }
