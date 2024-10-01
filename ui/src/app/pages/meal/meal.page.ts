@@ -1,18 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  collection,
-  addDoc,
-} from 'firebase/firestore';
+import { FormControl, FormGroup } from '@angular/forms';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 import { environment } from 'src/environments/environment';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { ModalController, ToastController } from '@ionic/angular';
 
 export const app = initializeApp(environment.firebaseConfig);
 export const db = getFirestore(app);
@@ -23,12 +17,18 @@ export const db = getFirestore(app);
   styleUrls: ['./meal.page.scss'],
 })
 export class MealPage implements OnInit {
+  mealForm = new FormGroup({
+    userId: new FormControl(''),
+    mealId: new FormControl(''),
+    mealTimestamp: new FormControl(''),
+    timestamp: new FormControl(''),
+  });
+
   mealId: string = '';
   isLoading: boolean = true;
   errorMessage: string = '';
   isUserLoggedIn: boolean = false;
-  isDateTimePickerOpen: boolean = false;
-  selectedDateTime: string = new Date().toISOString();
+  datetimeSelected: string = new Date().toISOString();
 
   nutrients: {
     carbs: number;
@@ -88,17 +88,18 @@ export class MealPage implements OnInit {
   };
   public pieChartType: ChartType = 'pie';
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private modalController: ModalController,
-    private toastController: ToastController
-  ) {}
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
     this.checkUserLoginStatus();
     this.mealId = this.route.snapshot.paramMap.get('mealId')!;
     this.fetchMealData();
+
+    const currentTimestamp = new Date().toISOString();
+    this.datetimeSelected = currentTimestamp;
+    this.mealForm.patchValue({
+      mealTimestamp: currentTimestamp,
+    });
   }
 
   checkUserLoginStatus() {
@@ -145,60 +146,17 @@ export class MealPage implements OnInit {
     }
   }
 
-  openDateTimePicker() {
-    this.isDateTimePickerOpen = true;
-  }
+  onDateChange(event: any) {
+    const selectedDate = event.detail.value;
 
-  cancelDateTimePicker() {
-    this.isDateTimePickerOpen = false;
-  }
-
-  dateTimeChanged(event: any) {
-    this.selectedDateTime = event.detail.value;
-  }
-
-  async confirmDateTime() {
-    this.isDateTimePickerOpen = false;
-    await this.logFoodToFirestore();
-  }
-
-  async logFoodToFirestore() {
-    try {
-      const auth = getAuth();
-      const user = auth.currentUser;
-
-      if (!user) {
-        await this.presentToast('User not logged in', 'danger');
-        return;
-      }
-
-      const journalCollection = collection(db, 'journal');
-      const newEntry = {
-        userId: user.uid,
-        foodId: this.mealId,
-        timestamp: new Date().toISOString(),
-        eatenAt: this.selectedDateTime,
-      };
-
-      await addDoc(journalCollection, newEntry);
-      await this.presentToast('Food logged successfully!', 'success');
-    } catch (error) {
-      console.error('Error logging food:', error);
-      await this.presentToast(
-        'Error logging food. Please try again.',
-        'danger'
-      );
+    if (typeof selectedDate === 'string') {
+      this.mealForm.patchValue({ mealTimestamp: selectedDate });
+      this.datetimeSelected = selectedDate;
     }
   }
 
-  async presentToast(message: string, color: 'success' | 'danger') {
-    const toast = await this.toastController.create({
-      message: message,
-      duration: 2000,
-      color: color,
-      position: 'bottom',
-    });
-    toast.present();
+  logFood() {
+    console.log('Food logged!');
   }
 
   navigateTo(page: string) {
