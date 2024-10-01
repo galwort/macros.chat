@@ -39,7 +39,7 @@ export class HomePage {
             let mealId = nutrients.summary
               .toLowerCase()
               .replace(/&/g, 'and')
-              .replace(/[\'\(\)]/g, '')
+              .replace(/[\'\(\),]/g, '')
               .replace(/\s+/g, '-');
             try {
               await setDoc(doc(db, 'meals', mealId), {
