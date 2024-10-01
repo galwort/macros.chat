@@ -36,6 +36,7 @@ export class MealPage implements OnInit {
   errorMessage: string = '';
   isUserLoggedIn: boolean = false;
   datetimeSelected: string = new Date().toISOString();
+  mealTimestamp = this.mealForm.value.mealTimestamp as string;
 
   nutrients: {
     carbs: number;
@@ -102,7 +103,7 @@ export class MealPage implements OnInit {
     this.mealId = this.route.snapshot.paramMap.get('mealId')!;
     this.fetchMealData();
 
-    const currentTimestamp = new Date().toISOString();
+    const currentTimestamp = this.getLocalISOString(new Date());
     this.datetimeSelected = currentTimestamp;
     this.mealForm.patchValue({
       mealTimestamp: currentTimestamp,
@@ -153,6 +154,31 @@ export class MealPage implements OnInit {
     }
   }
 
+  getLocalISOString(date: Date): string {
+    const tzo = -date.getTimezoneOffset(),
+      dif = tzo >= 0 ? '+' : '-',
+      pad = (num: number) =>
+        (Math.abs(num) < 10 ? '0' : '') + Math.floor(Math.abs(num));
+
+    return (
+      date.getFullYear() +
+      '-' +
+      pad(date.getMonth() + 1) +
+      '-' +
+      pad(date.getDate()) +
+      'T' +
+      pad(date.getHours()) +
+      ':' +
+      pad(date.getMinutes()) +
+      ':' +
+      pad(date.getSeconds()) +
+      dif +
+      pad(tzo / 60) +
+      ':' +
+      pad(tzo % 60)
+    );
+  }
+
   onDateChange(event: any) {
     const selectedDate = event.detail.value;
 
@@ -171,13 +197,23 @@ export class MealPage implements OnInit {
         const userId = user.uid;
         const mealId = this.mealId;
         const mealTimestamp = this.mealForm.value.mealTimestamp;
+
+        if (!mealTimestamp) {
+          console.error('mealTimestamp is undefined');
+          return;
+        }
+
         const logTimestamp = Timestamp.now();
+
+        const mealTimestampDate = new Date(mealTimestamp);
+        const mealTimestampLocal = mealTimestampDate.toLocaleString();
 
         const journalRef = collection(db, 'journal');
         await addDoc(journalRef, {
           userId: userId,
           mealId: mealId,
           mealTimestamp: mealTimestamp,
+          mealTimestampLocal: mealTimestampLocal,
           timestamp: logTimestamp,
         });
 
