@@ -33,33 +33,6 @@ ion-toolbar {
     background-color: var(--theme-background);
   }
 
-  ion-item {
-    --background: var(--theme-secondary);
-    --color: var(--theme-primary);
-    --border-radius: 10px;
-    --border-color: var(--theme-primary);
-    --border-width: 2px;
-
-    ion-textarea {
-      max-width: 300px;
-      margin-bottom: 10px;
-    }
-
-    ion-icon {
-      font-size: 30px;
-      margin-right: 10px;
-      color: var(--theme-primary);
-      padding: 3px;
-
-      &:hover {
-        cursor: pointer;
-        color: var(--theme-accent);
-        background-color: var(--theme-background);
-        border-radius: 20%;
-      }
-    }
-  }
-
   h1 {
     color: var(--theme-primary);
     font-weight: bold;
@@ -105,10 +78,24 @@ ion-toolbar {
   }
 }
 
+ion-item {
+  --background: var(--theme-background);
+  --border-radius: 10px;
+  margin-top: 10px;
+
+  ion-datetime-button::part(native) {
+    background: var(--theme-primary);
+    color: var(--theme-background);
+    border-radius: 10px;
+    font-weight: bold;
+  }
+}
+
 ion-button {
   --background: var(--theme-primary);
   --color: var(--theme-background);
   --border-radius: 10px;
   font-weight: bold;
   margin-top: 17px;
+  --box-shadow: none;
 }
