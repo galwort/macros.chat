@@ -21,6 +21,10 @@ export class HomePage {
 
   constructor(private http: HttpClient, private router: Router) {}
 
+  ionViewWillEnter() {
+    this.meal = '';
+  }
+
   submitMeal(event: Event): void {
     this.isLoading = true;
     event.preventDefault();
