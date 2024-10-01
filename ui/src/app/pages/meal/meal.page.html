@@ -62,6 +62,8 @@
         </ng-template>
       </ion-modal>
     </ion-item>
-    <ion-button *ngIf="isUserLoggedIn" expand="block"> Log Food </ion-button>
+    <ion-button *ngIf="isUserLoggedIn" expand="block" (click)="logFood()">
+      Log Meal
+    </ion-button>
   </div>
 </ion-content>

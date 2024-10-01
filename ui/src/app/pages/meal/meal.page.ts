@@ -1,7 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  addDoc,
+  collection,
+  Timestamp,
+} from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 import { environment } from 'src/environments/environment';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
@@ -155,9 +162,33 @@ export class MealPage implements OnInit {
     }
   }
 
-  logFood() {
-    console.log('Food logged!');
-  }
+  logFood = async () => {
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (user) {
+        const userId = user.uid;
+        const mealId = this.mealId;
+        const mealTimestamp = this.mealForm.value.mealTimestamp;
+        const logTimestamp = Timestamp.now();
+
+        const journalRef = collection(db, 'journal');
+        await addDoc(journalRef, {
+          userId: userId,
+          mealId: mealId,
+          mealTimestamp: mealTimestamp,
+          timestamp: logTimestamp,
+        });
+
+        console.log('Food successfully logged!');
+      } else {
+        console.error('User is not logged in.');
+      }
+    } catch (error) {
+      console.error('Error logging food:', error);
+    }
+  };
 
   navigateTo(page: string) {
     this.router.navigateByUrl(`/${page}`);
