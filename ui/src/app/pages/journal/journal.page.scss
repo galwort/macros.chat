@@ -59,3 +59,31 @@
     margin-bottom: 20px;
   }
 }
+
+.table-wrapper {
+  padding: 0 10rem;
+}
+
+.table-container {
+  padding: 2rem;
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    th,
+    td {
+      padding: 8px;
+    }
+    th {
+      text-align: left;
+      color: var(--theme-primary);
+    }
+    tr {
+      border-bottom: 1px solid #ddd;
+    }
+    tr:hover {
+      font-weight: bold;
+      color: var(--theme-secondary);
+      cursor: pointer;
+    }
+  }
+}

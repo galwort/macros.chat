@@ -25,6 +25,26 @@
           </ion-modal>
         </ion-item>
       </div>
+      <div class="table-wrapper">
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Meal Name</th>
+                <th>Calories</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let entry of journalEntries">
+                <td>{{ entry.mealName }}</td>
+                <td>{{ entry.calories }}</td>
+                <td>{{ entry.formattedMealDate }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </ion-content>

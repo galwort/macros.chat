@@ -23,6 +23,7 @@ export const db = getFirestore(app);
 })
 export class JournalPage implements OnInit {
   public dateSelected: string = new Date().toISOString();
+  public journalEntries: any[] = [];
 
   constructor(private router: Router) {}
 
@@ -52,8 +53,8 @@ export class JournalPage implements OnInit {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const userId = user.uid;
-
         const selectedDate = new Date(this.dateSelected);
+        this.journalEntries = [];
 
         try {
           const journalRef = collection(db, 'journal');
@@ -66,16 +67,19 @@ export class JournalPage implements OnInit {
             for (const journalDoc of querySnapshot.docs) {
               const journalData = journalDoc.data();
               const mealTimestampLocal = journalData['mealTimestampLocal'];
-
               const mealDate = new Date(mealTimestampLocal);
 
               if (this.isSameDate(mealDate, selectedDate)) {
-                console.log('Journal Entry:', journalData);
-
                 const mealRef = doc(db, 'meals', journalData['mealId']);
                 const mealSnap = await getDoc(mealRef);
                 if (mealSnap.exists()) {
-                  console.log('Meal Data:', mealSnap.data());
+                  const mealData = mealSnap.data();
+
+                  this.journalEntries.push({
+                    mealName: mealData['name'],
+                    calories: mealData['calories'],
+                    formattedMealDate: mealDate.toLocaleDateString(),
+                  });
                 } else {
                   console.log(
                     'No meal found for mealId:',
