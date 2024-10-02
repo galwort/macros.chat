@@ -36,6 +36,15 @@ export class JournalPage implements OnInit {
 
   onDateChange() {
     console.log(this.dateSelected);
+    this.fetchJournalEntries();
+  }
+
+  isSameDate(date1: Date, date2: Date): boolean {
+    return (
+      date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate()
+    );
   }
 
   async fetchJournalEntries() {
@@ -43,23 +52,39 @@ export class JournalPage implements OnInit {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const userId = user.uid;
+
+        const selectedDate = new Date(this.dateSelected);
+
         try {
           const journalRef = collection(db, 'journal');
           const q = query(journalRef, where('userId', '==', userId));
           const querySnapshot = await getDocs(q);
 
-          querySnapshot.forEach(async (journalDoc) => {
-            const journalData = journalDoc.data();
-            console.log('Journal Entry:', journalData);
+          if (querySnapshot.empty) {
+            console.log('No journal entries found for the user.');
+          } else {
+            for (const journalDoc of querySnapshot.docs) {
+              const journalData = journalDoc.data();
+              const mealTimestampLocal = journalData['mealTimestampLocal'];
 
-            const mealRef = doc(db, 'meals', journalData['mealId']);
-            const mealSnap = await getDoc(mealRef);
-            if (mealSnap.exists()) {
-              console.log('Meal Data:', mealSnap.data());
-            } else {
-              console.log('No meal found for mealId:', journalData['mealId']);
+              const mealDate = new Date(mealTimestampLocal);
+
+              if (this.isSameDate(mealDate, selectedDate)) {
+                console.log('Journal Entry:', journalData);
+
+                const mealRef = doc(db, 'meals', journalData['mealId']);
+                const mealSnap = await getDoc(mealRef);
+                if (mealSnap.exists()) {
+                  console.log('Meal Data:', mealSnap.data());
+                } else {
+                  console.log(
+                    'No meal found for mealId:',
+                    journalData['mealId']
+                  );
+                }
+              }
             }
-          });
+          }
         } catch (error) {
           console.error('Error fetching journal entries:', error);
         }
