@@ -48,12 +48,10 @@ export class JournalPage implements OnInit {
           const q = query(journalRef, where('userId', '==', userId));
           const querySnapshot = await getDocs(q);
 
-          // Loop through journal entries
           querySnapshot.forEach(async (journalDoc) => {
             const journalData = journalDoc.data();
             console.log('Journal Entry:', journalData);
 
-            // Fetch corresponding meal from meals collection
             const mealRef = doc(db, 'meals', journalData['mealId']);
             const mealSnap = await getDoc(mealRef);
             if (mealSnap.exists()) {
