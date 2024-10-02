@@ -37,6 +37,8 @@ export class MealPage implements OnInit {
   isUserLoggedIn: boolean = false;
   datetimeSelected: string = new Date().toISOString();
   mealTimestamp = this.mealForm.value.mealTimestamp as string;
+  isLoggingFood: boolean = false;
+  logButtonText: string = 'Log Food';
 
   nutrients: {
     carbs: number;
@@ -189,6 +191,9 @@ export class MealPage implements OnInit {
   }
 
   logFood = async () => {
+    this.isLoggingFood = true;
+    this.logButtonText = 'Logging...';
+
     try {
       const auth = getAuth();
       const user = auth.currentUser;
@@ -216,13 +221,15 @@ export class MealPage implements OnInit {
           mealTimestampLocal: mealTimestampLocal,
           timestamp: logTimestamp,
         });
-
-        console.log('Food successfully logged!');
+        this.logButtonText = 'Logged';
       } else {
         console.error('User is not logged in.');
       }
     } catch (error) {
-      console.error('Error logging food:', error);
+      this.logButtonText = 'Log Failed 😔';
+    } finally {
+      this.isLoggingFood = false;
+      setTimeout(() => (this.logButtonText = 'Log Food'), 2000);
     }
   };
 
