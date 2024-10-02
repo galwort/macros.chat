@@ -76,9 +76,15 @@ export class JournalPage implements OnInit {
                   const mealData = mealSnap.data();
 
                   this.journalEntries.push({
-                    mealName: mealData['name'],
+                    summary: mealData['summary'],
                     calories: mealData['calories'],
-                    formattedMealDate: mealDate.toLocaleDateString(),
+                    carbs: mealData['carbs'],
+                    proteins: mealData['proteins'],
+                    fats: mealData['fats'],
+                    formattedMealTime: mealDate.toLocaleTimeString([], {
+                      hour: 'numeric',
+                      minute: '2-digit',
+                    }),
                   });
                 } else {
                   console.log(

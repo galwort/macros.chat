@@ -32,14 +32,20 @@
               <tr>
                 <th>Meal Name</th>
                 <th>Calories</th>
-                <th>Date</th>
+                <th>Carbs</th>
+                <th>Protein</th>
+                <th>Fats</th>
+                <th>Time</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let entry of journalEntries">
-                <td>{{ entry.mealName }}</td>
+                <td>{{ entry.summary }}</td>
                 <td>{{ entry.calories }}</td>
-                <td>{{ entry.formattedMealDate }}</td>
+                <td>{{ entry.carbs }}</td>
+                <td>{{ entry.proteins }}</td>
+                <td>{{ entry.fats }}</td>
+                <td>{{ entry.formattedMealTime }}</td>
               </tr>
             </tbody>
           </table>
