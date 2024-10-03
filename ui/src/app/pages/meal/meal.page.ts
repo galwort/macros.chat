@@ -81,7 +81,7 @@ export class MealPage implements OnInit {
     datasets: [
       {
         data: [],
-        backgroundColor: ['#4682b4', '#f3f5eb', '#ff6347'],
+        backgroundColor: ['#4682b4', '#ffd700', '#ff6347'],
       },
     ],
   };
