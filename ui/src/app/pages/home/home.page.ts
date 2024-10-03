@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, setDoc, doc } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
+import { getAuth, onAuthStateChanged } from 'firebase/auth'; // Import Firebase Auth
 
 export const app = initializeApp(environment.firebaseConfig);
 export const db = getFirestore(app);
@@ -18,11 +19,29 @@ export class HomePage {
   isLoading: boolean = false;
   errorMessage: string = '';
   showErrorPopover: boolean = false;
+  isUserLoggedIn: boolean = false; // Track user login status
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {
+    this.checkUserLoginStatus();
+  }
 
   ionViewWillEnter() {
     this.meal = '';
+  }
+
+  checkUserLoginStatus() {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      this.isUserLoggedIn = !!user; // Set login status based on whether a user is authenticated
+    });
+  }
+
+  handleIconClick() {
+    if (this.isUserLoggedIn) {
+      this.router.navigateByUrl('/journal'); // Navigate to journal page if logged in
+    } else {
+      this.router.navigateByUrl('/login'); // Navigate to login page if not logged in
+    }
   }
 
   submitMeal(event: Event): void {
@@ -70,9 +89,5 @@ export class HomePage {
 
   closeErrorPopover() {
     this.showErrorPopover = false;
-  }
-
-  navigateTo(page: string) {
-    this.router.navigateByUrl(`/${page}`);
   }
 }
