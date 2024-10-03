@@ -13,7 +13,7 @@ import { initializeApp } from 'firebase/app';
 import { environment } from 'src/environments/environment';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 
 export const app = initializeApp(environment.firebaseConfig);
 export const db = getFirestore(app);
@@ -35,6 +35,7 @@ export class MealPage implements OnInit {
   isLoading: boolean = true;
   errorMessage: string = '';
   isUserLoggedIn: boolean = false;
+  userProfileImage: string | null = null;
   datetimeSelected: string = new Date().toISOString();
   mealTimestamp = this.mealForm.value.mealTimestamp as string;
   isLoggingFood: boolean = false;
@@ -102,9 +103,23 @@ export class MealPage implements OnInit {
 
   checkUserLoginStatus() {
     const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      this.isUserLoggedIn = !!user;
+    onAuthStateChanged(auth, (user: User | null) => {
+      if (user) {
+        this.isUserLoggedIn = true;
+        this.userProfileImage = user.photoURL;
+      } else {
+        this.isUserLoggedIn = false;
+        this.userProfileImage = null;
+      }
     });
+  }
+
+  handleIconClick() {
+    if (this.isUserLoggedIn) {
+      this.router.navigateByUrl('/journal');
+    } else {
+      this.router.navigateByUrl('/login');
+    }
   }
 
   async fetchMealData() {

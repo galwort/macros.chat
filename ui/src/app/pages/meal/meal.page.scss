@@ -14,6 +14,19 @@ ion-toolbar {
       cursor: pointer;
     }
   }
+
+  .user-profile-image {
+    width: 4vh;
+    height: 4vh;
+    margin-right: 1.5vh;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+
+    &:hover {
+      border: 2px solid var(--theme-accent);
+    }
+  }
 }
 
 .centered-content {

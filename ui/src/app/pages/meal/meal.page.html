@@ -7,6 +7,21 @@
         id="logo"
         (click)="navigateTo('')"
       />
+      <ion-icon
+        *ngIf="!isUserLoggedIn"
+        name="person-circle-outline"
+        slot="end"
+        (click)="handleIconClick()"
+      ></ion-icon>
+
+      <img
+        *ngIf="isUserLoggedIn && userProfileImage"
+        [src]="userProfileImage"
+        alt="User Profile"
+        class="user-profile-image"
+        (click)="handleIconClick()"
+        slot="end"
+      />
     </ion-toolbar>
   </ion-header>
 
