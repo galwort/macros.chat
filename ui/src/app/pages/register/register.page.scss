@@ -73,6 +73,14 @@ ion-toolbar {
       color: #ff6347;
     }
   }
+
+  .fats {
+    color: #ffd70066;
+
+    &:hover {
+      color: #ffd700;
+    }
+  }
 }
 
 .right-side {

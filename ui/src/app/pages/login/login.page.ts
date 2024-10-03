@@ -47,8 +47,8 @@ export class LoginPage implements OnInit {
   }
 
   getColorClass(index: number): string {
-    const colorClasses = ['calories', 'carbs', 'protein'];
-    return colorClasses[index % 3];
+    const colorClasses = ['calories', 'carbs', 'protein', 'fats'];
+    return colorClasses[index % 4];
   }
 
   emailLogin() {
