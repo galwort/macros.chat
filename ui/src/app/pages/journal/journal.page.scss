@@ -109,16 +109,20 @@
         cursor: pointer;
       }
 
-      &:hover .color-one {
-        background-color: rgba(255, 99, 71, 1);
+      &:hover .calories {
+        background-color: #32cd32;
       }
 
-      &:hover .color-two {
-        background-color: rgba(70, 130, 180, 1);
+      &:hover .carbs {
+        background-color: #4682b4;
       }
 
-      &:hover .color-three {
-        background-color: rgba(50, 205, 50, 1);
+      &:hover .protein {
+        background-color: #ff6347;
+      }
+
+      &:hover .fats {
+        background-color: #f3f5eb;
       }
 
       &:hover td:first-child {
@@ -134,14 +138,18 @@
   }
 }
 
-.color-one {
-  background-color: rgba(255, 99, 71, 0.4);
+.calories {
+  background-color: #32cd3266;
 }
 
-.color-two {
-  background-color: rgba(70, 130, 180, 0.4);
+.carbs {
+  background-color: #4682b466;
 }
 
-.color-three {
-  background-color: rgba(50, 205, 50, 0.4);
+.protein {
+  background-color: #ff634766;
+}
+
+.fats {
+  background-color: #f3f5eb66;
 }

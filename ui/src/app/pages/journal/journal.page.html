@@ -41,10 +41,10 @@
             <tbody>
               <tr *ngFor="let entry of journalEntries">
                 <td>{{ entry.summary }}</td>
-                <td>{{ entry.calories }}</td>
-                <td class="color-two">{{ entry.carbs }}</td>
-                <td class="color-one">{{ entry.proteins }}</td>
-                <td class="color-three">{{ entry.fats }}</td>
+                <td class="calories">{{ entry.calories }}</td>
+                <td class="carbs">{{ entry.carbs }}</td>
+                <td class="protein">{{ entry.proteins }}</td>
+                <td class="fat">{{ entry.fats }}</td>
                 <td>{{ entry.formattedMealTime }}</td>
               </tr>
             </tbody>

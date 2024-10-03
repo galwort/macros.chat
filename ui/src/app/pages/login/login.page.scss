@@ -50,27 +50,27 @@ ion-toolbar {
     }
   }
 
-  .color-one {
-    color: rgba(255, 99, 71, 0.4);
+  .calories {
+    color: #32cd3266;
 
     &:hover {
-      color: rgba(255, 99, 71, 1);
+      color: #32cd32;
     }
   }
 
-  .color-two {
-    color: rgba(70, 130, 180, 0.4);
+  .carbs {
+    color: #4682b466;
 
     &:hover {
-      color: rgba(70, 130, 180, 1);
+      color: #4682b4;
     }
   }
 
-  .color-three {
-    color: rgba(50, 205, 50, 0.4);
+  .protein {
+    color: #ff634766;
 
     &:hover {
-      color: rgba(50, 205, 50, 1);
+      color: #ff6347;
     }
   }
 }

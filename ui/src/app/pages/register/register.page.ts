@@ -42,7 +42,7 @@ export class RegisterPage implements OnInit {
   }
 
   getColorClass(index: number): string {
-    const colorClasses = ['color-one', 'color-two', 'color-three'];
+    const colorClasses = ['calories', 'carbs', 'protein'];
     return colorClasses[index % 3];
   }
 

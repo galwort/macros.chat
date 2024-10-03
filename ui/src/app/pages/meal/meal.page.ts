@@ -51,9 +51,7 @@ export class MealPage implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
   public pieChartOptions: ChartConfiguration['options'] = {
-    borderColor: window
-      .getComputedStyle(document.documentElement)
-      .getPropertyValue('--theme-primary'),
+    borderColor: '#030607',
     plugins: {
       legend: {
         display: false,
@@ -82,17 +80,7 @@ export class MealPage implements OnInit {
     datasets: [
       {
         data: [],
-        backgroundColor: [
-          window
-            .getComputedStyle(document.documentElement)
-            .getPropertyValue('--theme-accent'),
-          window
-            .getComputedStyle(document.documentElement)
-            .getPropertyValue('--theme-secondary'),
-          window
-            .getComputedStyle(document.documentElement)
-            .getPropertyValue('--theme-tertiary'),
-        ],
+        backgroundColor: ['#4682b4', '#f3f5eb', '#ff6347'],
       },
     ],
   };
