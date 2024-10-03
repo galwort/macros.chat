@@ -84,20 +84,19 @@ export class JournalPage implements OnInit {
                 if (mealSnap.exists()) {
                   const mealData = mealSnap.data();
 
-                  // Add to journal entries
                   this.journalEntries.push({
                     summary: mealData['summary'],
                     calories: mealData['calories'],
                     carbs: mealData['carbs'],
                     proteins: mealData['proteins'],
                     fats: mealData['fats'],
+                    mealTimestampLocal: mealTimestampLocal,
                     formattedMealTime: mealDate.toLocaleTimeString([], {
                       hour: 'numeric',
                       minute: '2-digit',
                     }),
                   });
 
-                  // Add to totals
                   this.totalCalories += mealData['calories'];
                   this.totalCarbs += mealData['carbs'];
                   this.totalProteins += mealData['proteins'];
@@ -110,6 +109,11 @@ export class JournalPage implements OnInit {
                 }
               }
             }
+            this.journalEntries.sort(
+              (a, b) =>
+                new Date(a.mealTimestampLocal).getTime() -
+                new Date(b.mealTimestampLocal).getTime()
+            );
           }
         } catch (error) {
           console.error('Error fetching journal entries:', error);
