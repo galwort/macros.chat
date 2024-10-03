@@ -24,6 +24,10 @@ export const db = getFirestore(app);
 export class JournalPage implements OnInit {
   public dateSelected: string = new Date().toISOString();
   public journalEntries: any[] = [];
+  public totalCalories: number = 0;
+  public totalCarbs: number = 0;
+  public totalProteins: number = 0;
+  public totalFats: number = 0;
 
   constructor(private router: Router) {}
 
@@ -56,6 +60,11 @@ export class JournalPage implements OnInit {
         const selectedDate = new Date(this.dateSelected);
         this.journalEntries = [];
 
+        this.totalCalories = 0;
+        this.totalCarbs = 0;
+        this.totalProteins = 0;
+        this.totalFats = 0;
+
         try {
           const journalRef = collection(db, 'journal');
           const q = query(journalRef, where('userId', '==', userId));
@@ -75,6 +84,7 @@ export class JournalPage implements OnInit {
                 if (mealSnap.exists()) {
                   const mealData = mealSnap.data();
 
+                  // Add to journal entries
                   this.journalEntries.push({
                     summary: mealData['summary'],
                     calories: mealData['calories'],
@@ -86,6 +96,12 @@ export class JournalPage implements OnInit {
                       minute: '2-digit',
                     }),
                   });
+
+                  // Add to totals
+                  this.totalCalories += mealData['calories'];
+                  this.totalCarbs += mealData['carbs'];
+                  this.totalProteins += mealData['proteins'];
+                  this.totalFats += mealData['fats'];
                 } else {
                   console.log(
                     'No meal found for mealId:',
