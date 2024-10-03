@@ -65,45 +65,69 @@
   table {
     width: 100%;
     border-collapse: collapse;
+
     th,
     td {
       padding: 8px;
     }
+
     th {
       text-align: left;
       color: var(--theme-primary);
     }
+
     tr {
-      border-bottom: 1px solid var(--theme-primary);
-    }
-    tr:hover {
-      font-weight: bold;
-      color: var(--theme-accent);
-      cursor: pointer;
+      position: relative;
+
+      &:after {
+        content: "";
+        position: absolute;
+        left: 10px;
+        right: 10px;
+        bottom: 0;
+        height: 1px;
+        background-color: var(--theme-primary);
+      }
+
+      &:hover {
+        background-color: var(--theme-primary);
+        color: var(--theme-secondary);
+        cursor: pointer;
+      }
+
+      &:hover .color-one {
+        background-color: rgba(255, 99, 71, 1);
+      }
+
+      &:hover .color-two {
+        background-color: rgba(70, 130, 180, 1);
+      }
+
+      &:hover .color-three {
+        background-color: rgba(50, 205, 50, 1);
+      }
+
+      &:hover td:first-child {
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+      }
+
+      &:hover td:last-child {
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+      }
     }
   }
 }
 
 .color-one {
   background-color: rgba(255, 99, 71, 0.4);
-
-  &:hover {
-    background-color: rgba(255, 99, 71, 1);
-  }
 }
 
 .color-two {
   background-color: rgba(70, 130, 180, 0.4);
-
-  &:hover {
-    background-color: rgba(70, 130, 180, 1);
-  }
 }
 
 .color-three {
   background-color: rgba(50, 205, 50, 0.4);
-
-  &:hover {
-    background-color: rgba(50, 205, 50, 1);
-  }
 }
