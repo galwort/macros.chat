@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, setDoc, doc } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
-import { getAuth, onAuthStateChanged } from 'firebase/auth'; // Import Firebase Auth
+import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 
 export const app = initializeApp(environment.firebaseConfig);
 export const db = getFirestore(app);
@@ -19,7 +19,8 @@ export class HomePage {
   isLoading: boolean = false;
   errorMessage: string = '';
   showErrorPopover: boolean = false;
-  isUserLoggedIn: boolean = false; // Track user login status
+  isUserLoggedIn: boolean = false;
+  userProfileImage: string | null = null;
 
   constructor(private http: HttpClient, private router: Router) {
     this.checkUserLoginStatus();
@@ -31,16 +32,22 @@ export class HomePage {
 
   checkUserLoginStatus() {
     const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      this.isUserLoggedIn = !!user; // Set login status based on whether a user is authenticated
+    onAuthStateChanged(auth, (user: User | null) => {
+      if (user) {
+        this.isUserLoggedIn = true;
+        this.userProfileImage = user.photoURL;
+      } else {
+        this.isUserLoggedIn = false;
+        this.userProfileImage = null;
+      }
     });
   }
 
   handleIconClick() {
     if (this.isUserLoggedIn) {
-      this.router.navigateByUrl('/journal'); // Navigate to journal page if logged in
+      this.router.navigateByUrl('/journal');
     } else {
-      this.router.navigateByUrl('/login'); // Navigate to login page if not logged in
+      this.router.navigateByUrl('/login');
     }
   }
 
