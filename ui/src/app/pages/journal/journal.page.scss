@@ -41,6 +41,7 @@
         background-color: transparent;
         font-size: min(5vw, 2em);
         font-weight: bold;
+        color: var(--theme-primary);
         padding: 12px;
       }
     }
@@ -134,6 +135,11 @@
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
       }
+    }
+
+    tfoot tr {
+      font-weight: bold;
+      color: var(--theme-primary);
     }
   }
 }
