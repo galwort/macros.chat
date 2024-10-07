@@ -11,6 +11,6 @@ app = func.FunctionApp()
     run_on_startup=False,
     use_monitor=False,
 )
-def refresh(ping: func.TimerRequest) -> None:
+def main(ping: func.TimerRequest) -> None:
     current_time = datetime.now()
     info(f"Pinged at {current_time}")
