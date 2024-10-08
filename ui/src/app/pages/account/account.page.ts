@@ -34,6 +34,11 @@ export class AccountPage {
     });
   }
 
+  logout() {
+    const auth = getAuth();
+    auth.signOut();
+  }
+
   navigateTo(page: string) {
     this.router.navigateByUrl(`/${page}`);
   }
