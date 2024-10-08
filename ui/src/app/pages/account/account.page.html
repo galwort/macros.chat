@@ -16,13 +16,17 @@
   </ion-header>
   <div class="main-content">
     <h1>Account Settings</h1>
-    <img
-      *ngIf="userProfileImage"
-      [src]="userProfileImage"
-      alt="User Profile"
-      class="user-profile-image"
-    />
-    <h2>{{ userName }}</h2>
-    <h3>{{ userEmailAddress }}</h3>
+    <div class="user-info">
+      <img
+        *ngIf="userProfileImage"
+        [src]="userProfileImage"
+        alt="User Profile"
+        class="user-profile-image"
+      />
+      <div class="user-details">
+        <h2>{{ userName }}</h2>
+        <h3>{{ userEmailAddress }}</h3>
+      </div>
+    </div>
   </div>
 </ion-content>
