@@ -15,6 +15,17 @@ ion-toolbar {
     }
   }
 
+  ion-icon {
+    color: var(--theme-primary);
+    font-size: 5vh;
+    padding: 1vh;
+
+    &:hover {
+      cursor: pointer;
+      color: var(--theme-accent);
+    }
+  }
+
   .user-profile-image {
     width: 4vh;
     height: 4vh;
