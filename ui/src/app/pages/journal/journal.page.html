@@ -61,6 +61,16 @@
           </table>
         </div>
       </div>
+
+      <div class="chart-container">
+        <canvas
+          baseChart
+          class="chart"
+          [data]="pieChartData"
+          [type]="pieChartType"
+          [options]="pieChartOptions"
+        ></canvas>
+      </div>
     </div>
   </div>
 </ion-content>

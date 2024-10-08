@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   getFirestore,
@@ -12,6 +12,8 @@ import {
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { environment } from 'src/environments/environment';
+import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
 
 export const app = initializeApp(environment.firebaseConfig);
 export const db = getFirestore(app);
@@ -22,6 +24,43 @@ export const db = getFirestore(app);
   styleUrls: ['./journal.page.scss'],
 })
 export class JournalPage implements OnInit {
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+
+  public pieChartOptions: ChartConfiguration['options'] = {
+    borderColor: '#030607',
+    plugins: {
+      legend: {
+        display: true,
+      },
+      tooltip: {
+        callbacks: {
+          label: function (context: any) {
+            let label = context.label || '';
+            if (label) {
+              label += ': ';
+            }
+            if (context.parsed) {
+              label += context.parsed + 'g';
+            }
+            return label;
+          },
+          title: () => '',
+        },
+        displayColors: false,
+      },
+    },
+  };
+
+  public pieChartData: ChartData<'pie', number[], string | string[]> = {
+    labels: ['Carbs', 'Fats', 'Proteins'],
+    datasets: [
+      {
+        data: [0, 0, 0],
+        backgroundColor: ['#4682b4', '#ffd700', '#ff6347'],
+      },
+    ],
+  };
+  public pieChartType: ChartType = 'pie';
   public dateSelected: string = new Date().toISOString();
   public journalEntries: any[] = [];
   public totalCalories: number = 0;
@@ -114,6 +153,7 @@ export class JournalPage implements OnInit {
                 new Date(a.mealTimestampLocal).getTime() -
                 new Date(b.mealTimestampLocal).getTime()
             );
+            this.updateChartData();
           }
         } catch (error) {
           console.error('Error fetching journal entries:', error);
@@ -122,6 +162,15 @@ export class JournalPage implements OnInit {
         console.error('User is not logged in.');
       }
     });
+  }
+
+  private updateChartData() {
+    this.pieChartData.datasets[0].data = [
+      this.totalCarbs,
+      this.totalFats,
+      this.totalProteins,
+    ];
+    this.chart?.update();
   }
 
   navigateTo(page: string) {

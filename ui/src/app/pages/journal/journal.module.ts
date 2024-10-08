@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { JournalPageRoutingModule } from './journal-routing.module';
 
 import { JournalPage } from './journal.page';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    JournalPageRoutingModule
+    JournalPageRoutingModule,
+    NgChartsModule,
   ],
-  declarations: [JournalPage]
+  declarations: [JournalPage],
 })
 export class JournalPageModule {}
