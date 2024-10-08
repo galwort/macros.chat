@@ -43,6 +43,10 @@ export class HomePage {
     });
   }
 
+  navigateTo(page: string) {
+    this.router.navigateByUrl(`/${page}`);
+  }
+
   handleIconClick() {
     if (this.isUserLoggedIn) {
       this.router.navigateByUrl('/account');

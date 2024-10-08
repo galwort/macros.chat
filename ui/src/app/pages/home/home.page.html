@@ -16,6 +16,12 @@
         </ng-template>
       </ion-popover>
       <ion-icon
+        *ngIf="isUserLoggedIn"
+        name="journal-outline"
+        slot="end"
+        (click)="navigateTo('journal')"
+      ></ion-icon>
+      <ion-icon
         *ngIf="!isUserLoggedIn"
         name="person-circle-outline"
         slot="end"
