@@ -30,7 +30,7 @@ export class JournalPage implements OnInit {
     borderColor: '#030607',
     plugins: {
       legend: {
-        display: true,
+        display: false,
       },
       tooltip: {
         callbacks: {
