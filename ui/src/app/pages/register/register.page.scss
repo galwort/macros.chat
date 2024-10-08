@@ -10,6 +10,17 @@ ion-toolbar {
       cursor: pointer;
     }
   }
+
+  ion-icon {
+    color: var(--theme-primary);
+    font-size: 5vh;
+    padding: 1vh;
+
+    &:hover {
+      cursor: pointer;
+      color: var(--theme-accent);
+    }
+  }
 }
 
 .split-screen {
