@@ -37,6 +37,7 @@ export class AccountPage {
   logout() {
     const auth = getAuth();
     auth.signOut();
+    this.navigateTo('');
   }
 
   navigateTo(page: string) {
