@@ -25,14 +25,15 @@ const routes: Routes = [
       import('./pages/journal/journal.module').then((m) => m.JournalPageModule),
   },
   {
+    path: 'account',
+    loadChildren: () =>
+      import('./pages/account/account.module').then((m) => m.AccountPageModule),
+  },
+  {
     path: ':mealId',
     loadChildren: () =>
       import('./pages/meal/meal.module').then((m) => m.MealPageModule),
-  },  {
-    path: 'account',
-    loadChildren: () => import('./pages/account/account.module').then( m => m.AccountPageModule)
   },
-
 ];
 
 @NgModule({
