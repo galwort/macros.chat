@@ -45,7 +45,7 @@ export class HomePage {
 
   handleIconClick() {
     if (this.isUserLoggedIn) {
-      this.router.navigateByUrl('/journal');
+      this.router.navigateByUrl('/account');
     } else {
       this.router.navigateByUrl('/login');
     }
