@@ -7,12 +7,6 @@
         id="logo"
         (click)="navigateTo('')"
       />
-      <img
-        [src]="userProfileImage"
-        alt="User Profile"
-        class="user-profile-image"
-        (click)="navigateTo('account')"
-      />
       <i class="fa-solid fa-circle-info" slot="start" id="open-popover"></i>
       <i
         class="fa-solid"
@@ -29,6 +23,12 @@
           </ion-content>
         </ng-template>
       </ion-popover>
+      <img
+        [src]="userProfileImage"
+        alt="User Profile"
+        class="user-profile-image"
+        (click)="navigateTo('account')"
+      />
     </div>
     <div class="main-content">
       <div class="filter-container">
