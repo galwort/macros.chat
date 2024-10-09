@@ -187,13 +187,12 @@ export class JournalPage implements OnInit {
   }
 
   private calculatePercentages() {
-    // Calculate percentages for each entry
     for (const entry of this.journalEntries) {
       const totalGrams = entry.carbs + entry.proteins + entry.fats;
       if (totalGrams > 0) {
-        entry.carbsPercent = (entry.carbs / totalGrams) * 100;
-        entry.proteinsPercent = (entry.proteins / totalGrams) * 100;
-        entry.fatsPercent = (entry.fats / totalGrams) * 100;
+        entry.carbsPercent = Math.round((entry.carbs / totalGrams) * 100);
+        entry.proteinsPercent = Math.round((entry.proteins / totalGrams) * 100);
+        entry.fatsPercent = Math.round((entry.fats / totalGrams) * 100);
       } else {
         entry.carbsPercent = 0;
         entry.proteinsPercent = 0;
@@ -201,12 +200,13 @@ export class JournalPage implements OnInit {
       }
     }
 
-    // Calculate percentages for totals
     const totalGrams = this.totalCarbs + this.totalProteins + this.totalFats;
     if (totalGrams > 0) {
-      this.totalCarbsPercent = (this.totalCarbs / totalGrams) * 100;
-      this.totalProteinsPercent = (this.totalProteins / totalGrams) * 100;
-      this.totalFatsPercent = (this.totalFats / totalGrams) * 100;
+      this.totalCarbsPercent = Math.round((this.totalCarbs / totalGrams) * 100);
+      this.totalProteinsPercent = Math.round(
+        (this.totalProteins / totalGrams) * 100
+      );
+      this.totalFatsPercent = Math.round((this.totalFats / totalGrams) * 100);
     } else {
       this.totalCarbsPercent = 0;
       this.totalProteinsPercent = 0;
