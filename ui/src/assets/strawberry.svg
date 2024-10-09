@@ -18,7 +18,7 @@
       @media (prefers-color-scheme: dark) {
         :root {
           --outline: #f3f5eb;
-          --skin: transparent;
+          --skin: #1a2f3a;
         }
       }
     </style>
