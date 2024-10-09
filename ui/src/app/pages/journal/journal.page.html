@@ -18,7 +18,11 @@
         slot="start"
         id="open-popover"
       ></ion-icon>
-      <i class="fa-solid fa-hashtag"></i>
+      <i
+        class="fa-solid"
+        [ngClass]="displayMode === 'numbers' ? 'fa-hashtag' : 'fa-percent'"
+        (click)="toggleDisplayMode()"
+      ></i>
       <ion-popover [keepContentsMounted]="true" trigger="open-popover">
         <ng-template>
           <ion-content class="ion-padding">
@@ -54,9 +58,15 @@
               <tr>
                 <th>Meal Name</th>
                 <th>Calories</th>
-                <th>Carbs</th>
-                <th>Protein</th>
-                <th>Fats</th>
+                <th>
+                  Carbs {{ displayMode === 'percentages' ? '(%)' : '(g)' }}
+                </th>
+                <th>
+                  Protein {{ displayMode === 'percentages' ? '(%)' : '(g)' }}
+                </th>
+                <th>
+                  Fats {{ displayMode === 'percentages' ? '(%)' : '(g)' }}
+                </th>
                 <th>Time</th>
                 <th></th>
               </tr>
@@ -66,9 +76,30 @@
                 <tr (click)="entry.showPrompt = !entry.showPrompt">
                   <td>{{ entry.summary }}</td>
                   <td class="calories">{{ entry.calories }}</td>
-                  <td class="carbs">{{ entry.carbs }}</td>
-                  <td class="protein">{{ entry.proteins }}</td>
-                  <td class="fats">{{ entry.fats }}</td>
+                  <td class="carbs">
+                    <ng-container *ngIf="displayMode === 'numbers'">
+                      {{ entry.carbs }}
+                    </ng-container>
+                    <ng-container *ngIf="displayMode === 'percentages'">
+                      {{ entry.carbsPercent | number: '1.0-1' }}%
+                    </ng-container>
+                  </td>
+                  <td class="protein">
+                    <ng-container *ngIf="displayMode === 'numbers'">
+                      {{ entry.proteins }}
+                    </ng-container>
+                    <ng-container *ngIf="displayMode === 'percentages'">
+                      {{ entry.proteinsPercent | number: '1.0-1' }}%
+                    </ng-container>
+                  </td>
+                  <td class="fats">
+                    <ng-container *ngIf="displayMode === 'numbers'">
+                      {{ entry.fats }}
+                    </ng-container>
+                    <ng-container *ngIf="displayMode === 'percentages'">
+                      {{ entry.fatsPercent | number: '1.0-1' }}%
+                    </ng-container>
+                  </td>
                   <td>{{ entry.formattedMealTime }}</td>
                   <td class="delete-cell">
                     <ion-icon
@@ -87,9 +118,30 @@
               <tr>
                 <td><strong>Total</strong></td>
                 <td>{{ totalCalories }}</td>
-                <td>{{ totalCarbs }}</td>
-                <td>{{ totalProteins }}</td>
-                <td>{{ totalFats }}</td>
+                <td>
+                  <ng-container *ngIf="displayMode === 'numbers'">
+                    {{ totalCarbs }}
+                  </ng-container>
+                  <ng-container *ngIf="displayMode === 'percentages'">
+                    {{ totalCarbsPercent | number: '1.0-1' }}%
+                  </ng-container>
+                </td>
+                <td>
+                  <ng-container *ngIf="displayMode === 'numbers'">
+                    {{ totalProteins }}
+                  </ng-container>
+                  <ng-container *ngIf="displayMode === 'percentages'">
+                    {{ totalProteinsPercent | number: '1.0-1' }}%
+                  </ng-container>
+                </td>
+                <td>
+                  <ng-container *ngIf="displayMode === 'numbers'">
+                    {{ totalFats }}
+                  </ng-container>
+                  <ng-container *ngIf="displayMode === 'percentages'">
+                    {{ totalFatsPercent | number: '1.0-1' }}%
+                  </ng-container>
+                </td>
                 <td></td>
                 <td></td>
               </tr>

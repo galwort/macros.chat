@@ -69,8 +69,12 @@ export class JournalPage implements OnInit {
   public totalCarbs: number = 0;
   public totalProteins: number = 0;
   public totalFats: number = 0;
+  public totalCarbsPercent: number = 0;
+  public totalProteinsPercent: number = 0;
+  public totalFatsPercent: number = 0;
   public userProfileImage: string | null = null;
   public expandedRowIndex: number | null = null;
+  public displayMode: 'numbers' | 'percentages' = 'numbers';
 
   constructor(private router: Router) {}
 
@@ -148,6 +152,9 @@ export class JournalPage implements OnInit {
                     }),
                     prompt: mealData['prompt'],
                     showPrompt: false,
+                    carbsPercent: 0,
+                    proteinsPercent: 0,
+                    fatsPercent: 0,
                   });
 
                   this.totalCalories += mealData['calories'];
@@ -167,6 +174,7 @@ export class JournalPage implements OnInit {
                 new Date(a.mealTimestampLocal).getTime() -
                 new Date(b.mealTimestampLocal).getTime()
             );
+            this.calculatePercentages();
             this.updateChartData();
           }
         } catch (error) {
@@ -178,8 +186,41 @@ export class JournalPage implements OnInit {
     });
   }
 
+  private calculatePercentages() {
+    // Calculate percentages for each entry
+    for (const entry of this.journalEntries) {
+      const totalGrams = entry.carbs + entry.proteins + entry.fats;
+      if (totalGrams > 0) {
+        entry.carbsPercent = (entry.carbs / totalGrams) * 100;
+        entry.proteinsPercent = (entry.proteins / totalGrams) * 100;
+        entry.fatsPercent = (entry.fats / totalGrams) * 100;
+      } else {
+        entry.carbsPercent = 0;
+        entry.proteinsPercent = 0;
+        entry.fatsPercent = 0;
+      }
+    }
+
+    // Calculate percentages for totals
+    const totalGrams = this.totalCarbs + this.totalProteins + this.totalFats;
+    if (totalGrams > 0) {
+      this.totalCarbsPercent = (this.totalCarbs / totalGrams) * 100;
+      this.totalProteinsPercent = (this.totalProteins / totalGrams) * 100;
+      this.totalFatsPercent = (this.totalFats / totalGrams) * 100;
+    } else {
+      this.totalCarbsPercent = 0;
+      this.totalProteinsPercent = 0;
+      this.totalFatsPercent = 0;
+    }
+  }
+
   toggleRow(index: number) {
     this.expandedRowIndex = this.expandedRowIndex === index ? null : index;
+  }
+
+  toggleDisplayMode() {
+    this.displayMode =
+      this.displayMode === 'numbers' ? 'percentages' : 'numbers';
   }
 
   async deleteEntry(entry: any, event: any) {
@@ -194,6 +235,7 @@ export class JournalPage implements OnInit {
       this.totalProteins -= entry.proteins;
       this.totalFats -= entry.fats;
 
+      this.calculatePercentages();
       this.updateChartData();
     } catch (error) {
       console.error('Error deleting journal entry:', error);
