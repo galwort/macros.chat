@@ -7,18 +7,18 @@
         id="logo"
         (click)="navigateTo('')"
       />
-      <ion-icon
+      <i
         *ngIf="isUserLoggedIn"
-        name="journal-outline"
+        class="fa-solid fa-book"
         slot="end"
         (click)="navigateTo('journal')"
-      ></ion-icon>
-      <ion-icon
+      ></i>
+      <i
         *ngIf="!isUserLoggedIn"
-        name="person-circle-outline"
+        class="fa-solid fa-user"
         slot="end"
         (click)="handleIconClick()"
-      ></ion-icon>
+      ></i>
 
       <img
         *ngIf="isUserLoggedIn && userProfileImage"
