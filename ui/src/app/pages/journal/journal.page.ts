@@ -62,7 +62,8 @@ export class JournalPage implements OnInit {
     ],
   };
   public pieChartType: ChartType = 'pie';
-  public dateSelected: string = new Date().toISOString();
+  public dateSelected: string = '';
+
   public journalEntries: any[] = [];
   public totalCalories: number = 0;
   public totalCarbs: number = 0;
@@ -74,11 +75,17 @@ export class JournalPage implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit() {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    this.dateSelected = `${year}-${month}-${day}`;
     this.fetchJournalEntries();
   }
 
-  formatDate(date: Date): string {
-    return date.toISOString().slice(0, 10).replace(/-/g, '');
+  private parseDateLocal(dateString: string): Date {
+    const [year, month, day] = dateString.split('-').map(Number);
+    return new Date(year, month - 1, day);
   }
 
   onDateChange() {
@@ -100,7 +107,7 @@ export class JournalPage implements OnInit {
       if (user) {
         const userId = user.uid;
         this.userProfileImage = user.photoURL;
-        const selectedDate = new Date(this.dateSelected);
+        const selectedDate = this.parseDateLocal(this.dateSelected);
         this.journalEntries = [];
 
         this.totalCalories = 0;
