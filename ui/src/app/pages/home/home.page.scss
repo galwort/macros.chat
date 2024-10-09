@@ -62,13 +62,13 @@ ion-toolbar {
     ion-textarea {
       max-width: 300px;
       margin-bottom: 10px;
+      --placeholder-color: var(--theme-primary);
+      --placeholder-opacity: 1;
     }
 
     i {
       font-size: 30px;
-      margin-right: 10px;
       color: var(--theme-primary);
-      padding: 3px;
 
       &:hover {
         cursor: pointer;
