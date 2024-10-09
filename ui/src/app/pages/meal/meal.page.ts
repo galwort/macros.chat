@@ -36,7 +36,7 @@ export class MealPage implements OnInit {
   errorMessage: string = '';
   isUserLoggedIn: boolean = false;
   userProfileImage: string | null = null;
-  datetimeSelected: string = new Date().toISOString();
+  datetimeSelected: string = '';
   mealTimestamp = this.mealForm.value.mealTimestamp as string;
   isLoggingFood: boolean = false;
   logButtonText: string = 'Log Food';
@@ -94,7 +94,10 @@ export class MealPage implements OnInit {
     this.mealId = this.route.snapshot.paramMap.get('mealId')!;
     this.fetchMealData();
 
-    const currentTimestamp = this.getLocalISOString(new Date());
+    const now = new Date();
+    const roundedDate = this.roundToNearest15Minutes(now);
+    const currentTimestamp = this.getLocalISOString(roundedDate);
+
     this.datetimeSelected = currentTimestamp;
     this.mealForm.patchValue({
       mealTimestamp: currentTimestamp,
@@ -157,6 +160,12 @@ export class MealPage implements OnInit {
       ];
       this.chart?.update();
     }
+  }
+
+  roundToNearest15Minutes(date: Date): Date {
+    const minutes = 15;
+    const ms = 1000 * 60 * minutes; // milliseconds in 15 minutes
+    return new Date(Math.round(date.getTime() / ms) * ms);
   }
 
   getLocalISOString(date: Date): string {
