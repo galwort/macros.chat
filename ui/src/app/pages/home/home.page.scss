@@ -3,10 +3,10 @@ ion-toolbar {
   --color: var(--theme-text);
   height: 8vh;
 
-  ion-icon {
+  i {
     color: var(--theme-primary);
     font-size: 5vh;
-    padding: 1vh;
+    padding: 2vh;
 
     &:hover {
       cursor: pointer;

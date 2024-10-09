@@ -1,11 +1,7 @@
 <ion-content>
   <ion-header class="ion-no-border">
     <ion-toolbar>
-      <ion-icon
-        name="information-circle-outline"
-        slot="start"
-        id="open-popover"
-      ></ion-icon>
+      <i class="fa-solid fa-circle-info" slot="start" id="open-popover"></i>
       <ion-popover [keepContentsMounted]="true" trigger="open-popover">
         <ng-template>
           <ion-content class="ion-padding">
@@ -15,19 +11,18 @@
           </ion-content>
         </ng-template>
       </ion-popover>
-      <ion-icon
+      <i
         *ngIf="isUserLoggedIn"
-        name="journal-outline"
+        class="fa-solid fa-book"
         slot="end"
         (click)="navigateTo('journal')"
-      ></ion-icon>
-      <ion-icon
+      ></i>
+      <i
         *ngIf="!isUserLoggedIn"
-        name="person-circle-outline"
+        class="fa-solid fa-user"
         slot="end"
         (click)="handleIconClick()"
-      ></ion-icon>
-
+      ></i>
       <img
         *ngIf="isUserLoggedIn && userProfileImage"
         [src]="userProfileImage"
