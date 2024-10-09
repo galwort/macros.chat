@@ -194,3 +194,21 @@
   font-style: italic;
   text-align: center;
 }
+
+.delete-cell {
+  width: 30px;
+  text-align: center;
+}
+
+.delete-button {
+  display: none;
+  background: none;
+  border: none;
+  color: red;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+tbody tr:hover .delete-button {
+  display: inline-block;
+}

@@ -42,10 +42,12 @@
                 <th>Protein</th>
                 <th>Fats</th>
                 <th>Time</th>
+                <th></th>
+                <!-- Extra header for delete button -->
               </tr>
             </thead>
             <tbody>
-              <ng-container *ngFor="let entry of journalEntries">
+              <ng-container *ngFor="let entry of journalEntries; let i = index">
                 <tr (click)="entry.showPrompt = !entry.showPrompt">
                   <td>{{ entry.summary }}</td>
                   <td class="calories">{{ entry.calories }}</td>
@@ -53,9 +55,17 @@
                   <td class="protein">{{ entry.proteins }}</td>
                   <td class="fats">{{ entry.fats }}</td>
                   <td>{{ entry.formattedMealTime }}</td>
+                  <td class="delete-cell">
+                    <button
+                      class="delete-button"
+                      (click)="deleteEntry(entry, $event)"
+                    >
+                      X
+                    </button>
+                  </td>
                 </tr>
                 <tr *ngIf="entry.showPrompt">
-                  <td colspan="6" class="prompt-cell">{{ entry.prompt }}</td>
+                  <td colspan="7" class="prompt-cell">{{ entry.prompt }}</td>
                 </tr>
               </ng-container>
             </tbody>
@@ -67,6 +77,8 @@
                 <td>{{ totalProteins }}</td>
                 <td>{{ totalFats }}</td>
                 <td></td>
+                <td></td>
+                <!-- Empty cell to align with the header -->
               </tr>
             </tfoot>
           </table>

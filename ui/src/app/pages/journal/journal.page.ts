@@ -8,6 +8,7 @@ import {
   where,
   doc,
   getDoc,
+  deleteDoc,
 } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
@@ -68,7 +69,7 @@ export class JournalPage implements OnInit {
   public totalProteins: number = 0;
   public totalFats: number = 0;
   public userProfileImage: string | null = null;
-  public expandedRowIndex: number | null = null; // Track expanded row index
+  public expandedRowIndex: number | null = null;
 
   constructor(private router: Router) {}
 
@@ -127,6 +128,7 @@ export class JournalPage implements OnInit {
                   const mealData = mealSnap.data();
 
                   this.journalEntries.push({
+                    id: journalDoc.id,
                     summary: mealData['summary'],
                     calories: mealData['calories'],
                     carbs: mealData['carbs'],
@@ -137,8 +139,8 @@ export class JournalPage implements OnInit {
                       hour: 'numeric',
                       minute: '2-digit',
                     }),
-                    prompt: mealData['prompt'], // Include the prompt field
-                    showPrompt: false, // Initialize showPrompt to false
+                    prompt: mealData['prompt'],
+                    showPrompt: false,
                   });
 
                   this.totalCalories += mealData['calories'];
@@ -171,6 +173,24 @@ export class JournalPage implements OnInit {
 
   toggleRow(index: number) {
     this.expandedRowIndex = this.expandedRowIndex === index ? null : index;
+  }
+
+  async deleteEntry(entry: any, event: any) {
+    event.stopPropagation();
+    try {
+      await deleteDoc(doc(db, 'journal', entry.id));
+
+      this.journalEntries = this.journalEntries.filter((e) => e !== entry);
+
+      this.totalCalories -= entry.calories;
+      this.totalCarbs -= entry.carbs;
+      this.totalProteins -= entry.proteins;
+      this.totalFats -= entry.fats;
+
+      this.updateChartData();
+    } catch (error) {
+      console.error('Error deleting journal entry:', error);
+    }
   }
 
   private updateChartData() {
