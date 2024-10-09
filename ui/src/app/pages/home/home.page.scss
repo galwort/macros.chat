@@ -57,14 +57,14 @@ ion-toolbar {
     --color: var(--theme-primary);
     --border-radius: 10px;
     --border-color: var(--theme-primary);
-    --border-width: 2px;
+    --border-width: 8px;
 
     ion-textarea {
       max-width: 300px;
       margin-bottom: 10px;
     }
 
-    ion-icon {
+    i {
       font-size: 30px;
       margin-right: 10px;
       color: var(--theme-primary);
@@ -73,7 +73,6 @@ ion-toolbar {
       &:hover {
         cursor: pointer;
         color: var(--theme-accent);
-        background-color: var(--theme-background);
         border-radius: 20%;
       }
     }

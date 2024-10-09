@@ -49,11 +49,7 @@
         (keydown.enter)="submitMeal($event)"
         [disabled]="isLoading"
       ></ion-textarea>
-      <ion-icon
-        name="arrow-up"
-        slot="end"
-        (click)="submitMeal($event)"
-      ></ion-icon>
+      <i class="fa-solid fa-circle-up" (click)="submitMeal($event)"></i>
     </ion-item>
   </div>
   <ion-popover
