@@ -45,14 +45,19 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let entry of journalEntries">
-                <td>{{ entry.summary }}</td>
-                <td class="calories">{{ entry.calories }}</td>
-                <td class="carbs">{{ entry.carbs }}</td>
-                <td class="protein">{{ entry.proteins }}</td>
-                <td class="fats">{{ entry.fats }}</td>
-                <td>{{ entry.formattedMealTime }}</td>
-              </tr>
+              <ng-container *ngFor="let entry of journalEntries">
+                <tr (click)="entry.showPrompt = !entry.showPrompt">
+                  <td>{{ entry.summary }}</td>
+                  <td class="calories">{{ entry.calories }}</td>
+                  <td class="carbs">{{ entry.carbs }}</td>
+                  <td class="protein">{{ entry.proteins }}</td>
+                  <td class="fats">{{ entry.fats }}</td>
+                  <td>{{ entry.formattedMealTime }}</td>
+                </tr>
+                <tr *ngIf="entry.showPrompt">
+                  <td colspan="6" class="prompt-cell">{{ entry.prompt }}</td>
+                </tr>
+              </ng-container>
             </tbody>
             <tfoot>
               <tr>

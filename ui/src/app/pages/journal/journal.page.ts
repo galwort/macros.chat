@@ -9,7 +9,7 @@ import {
   doc,
   getDoc,
 } from 'firebase/firestore';
-import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { environment } from 'src/environments/environment';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
@@ -68,6 +68,7 @@ export class JournalPage implements OnInit {
   public totalProteins: number = 0;
   public totalFats: number = 0;
   public userProfileImage: string | null = null;
+  public expandedRowIndex: number | null = null; // Track expanded row index
 
   constructor(private router: Router) {}
 
@@ -136,6 +137,8 @@ export class JournalPage implements OnInit {
                       hour: 'numeric',
                       minute: '2-digit',
                     }),
+                    prompt: mealData['prompt'], // Include the prompt field
+                    showPrompt: false, // Initialize showPrompt to false
                   });
 
                   this.totalCalories += mealData['calories'];
@@ -164,6 +167,10 @@ export class JournalPage implements OnInit {
         console.error('User is not logged in.');
       }
     });
+  }
+
+  toggleRow(index: number) {
+    this.expandedRowIndex = this.expandedRowIndex === index ? null : index;
   }
 
   private updateChartData() {

@@ -187,3 +187,11 @@
   max-width: 40vh;
   max-height: 40vh;
 }
+
+.prompt-cell {
+  background-color: var(--theme-secondary);
+  color: var(--theme-primary);
+  padding: 10px;
+  border-top: 1px solid var(--theme-primary);
+  transition: all 2s ease-in-out;
+}
