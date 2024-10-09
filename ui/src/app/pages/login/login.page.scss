@@ -121,6 +121,8 @@ ion-toolbar {
         ion-input {
           color: var(--theme-primary);
           --highlight-color-focused: var(--theme-primary);
+          --highlight-color-valid: var(--theme-primary);
+          --highlight-color-invalid: var(--theme-primary);
         }
       }
 
