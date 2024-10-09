@@ -200,15 +200,24 @@
   text-align: center;
 }
 
-.delete-button {
-  display: none;
-  background: none;
-  border: none;
-  color: red;
-  font-size: 1.2em;
-  cursor: pointer;
+.delete-cell {
+  width: 30px;
+  text-align: center;
 }
 
-tbody tr:hover .delete-button {
+.delete-icon {
+  display: none;
+  color: var(--theme-background);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+
+  &:hover {
+    color: #ff6347;
+  }
+}
+
+tbody tr:hover .delete-icon {
   display: inline-block;
 }

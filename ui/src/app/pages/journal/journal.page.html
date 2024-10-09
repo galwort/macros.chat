@@ -43,7 +43,6 @@
                 <th>Fats</th>
                 <th>Time</th>
                 <th></th>
-                <!-- Extra header for delete button -->
               </tr>
             </thead>
             <tbody>
@@ -56,12 +55,11 @@
                   <td class="fats">{{ entry.fats }}</td>
                   <td>{{ entry.formattedMealTime }}</td>
                   <td class="delete-cell">
-                    <button
-                      class="delete-button"
+                    <ion-icon
+                      name="close"
+                      class="delete-icon"
                       (click)="deleteEntry(entry, $event)"
-                    >
-                      X
-                    </button>
+                    ></ion-icon>
                   </td>
                 </tr>
                 <tr *ngIf="entry.showPrompt">
@@ -78,7 +76,6 @@
                 <td>{{ totalFats }}</td>
                 <td></td>
                 <td></td>
-                <!-- Empty cell to align with the header -->
               </tr>
             </tfoot>
           </table>
