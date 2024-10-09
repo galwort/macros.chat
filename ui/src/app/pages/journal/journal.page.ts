@@ -9,7 +9,7 @@ import {
   doc,
   getDoc,
 } from 'firebase/firestore';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { environment } from 'src/environments/environment';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
@@ -67,6 +67,7 @@ export class JournalPage implements OnInit {
   public totalCarbs: number = 0;
   public totalProteins: number = 0;
   public totalFats: number = 0;
+  public userProfileImage: string | null = null;
 
   constructor(private router: Router) {}
 
@@ -96,6 +97,7 @@ export class JournalPage implements OnInit {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const userId = user.uid;
+        this.userProfileImage = user.photoURL;
         const selectedDate = new Date(this.dateSelected);
         this.journalEntries = [];
 

@@ -14,6 +14,20 @@
   flex-direction: column;
   align-items: center;
   padding-top: 20px;
+
+  .user-profile-image {
+    width: 4vh;
+    height: 4vh;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-top: 18px;
+    cursor: pointer;
+    border: 2px solid #fff;
+
+    &:hover {
+      border: 2px solid var(--theme-accent);
+    }
+  }
 }
 
 #logo {
