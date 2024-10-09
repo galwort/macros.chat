@@ -13,11 +13,7 @@
         class="user-profile-image"
         (click)="navigateTo('account')"
       />
-      <ion-icon
-        name="information-circle-outline"
-        slot="start"
-        id="open-popover"
-      ></ion-icon>
+      <i class="fa-solid fa-circle-info" slot="start" id="open-popover"></i>
       <i
         class="fa-solid"
         [ngClass]="displayMode === 'numbers' ? 'fa-hashtag' : 'fa-percent'"
