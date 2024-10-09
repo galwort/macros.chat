@@ -215,6 +215,8 @@
   color: var(--theme-primary);
   font-style: italic;
   text-align: center;
+  user-select: text;
+  cursor: default;
 }
 
 .delete-cell {
