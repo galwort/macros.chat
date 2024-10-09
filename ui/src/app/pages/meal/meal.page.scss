@@ -33,6 +33,7 @@ ion-toolbar {
     border-radius: 50%;
     object-fit: cover;
     cursor: pointer;
+    border: 2px solid var(--theme-primary);
 
     &:hover {
       border: 2px solid var(--theme-accent);
