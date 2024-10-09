@@ -22,10 +22,21 @@
     object-fit: cover;
     margin-top: 18px;
     cursor: pointer;
-    border: 2px solid #fff;
+    border: 2px solid var(--theme-secondary);
 
     &:hover {
       border: 2px solid var(--theme-accent);
+    }
+  }
+
+  ion-icon {
+    color: var(--theme-secondary);
+    font-size: 5vh;
+    margin-top: 18px;
+
+    &:hover {
+      cursor: pointer;
+      color: var(--theme-accent);
     }
   }
 }
