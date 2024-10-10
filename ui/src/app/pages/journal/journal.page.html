@@ -101,10 +101,17 @@
                 <tr *ngIf="entry.showPrompt">
                   <td colspan="6" class="prompt-cell">
                     <div>{{ entry.prompt }}</div>
+                    <button class="detail-button">
+                      <i class="fa-solid fa-star"></i>Favorite
+                    </button>
+                    <button class="detail-button">
+                      <i class="fa-solid fa-pen"></i>Edit
+                    </button>
                     <button
                       class="detail-button"
                       (click)="deleteEntry(entry, $event)"
                     >
+                      <i class="fa-solid fa-trash"></i>
                       Remove
                     </button>
                   </td>
