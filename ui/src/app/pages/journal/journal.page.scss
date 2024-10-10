@@ -100,6 +100,9 @@
     th,
     td {
       padding: 8px;
+      background-color: transparent;
+      border-radius: 0;
+      transition: background-color 0.3s, color 0.3s, border-radius 0.3s;
     }
 
     th {
@@ -123,6 +126,7 @@
 
     tbody tr {
       position: relative;
+      cursor: pointer;
 
       &:after {
         content: "";
@@ -134,26 +138,9 @@
         background-color: var(--theme-primary);
       }
 
-      &:hover {
+      &:hover td {
         background-color: var(--theme-primary);
         color: var(--theme-secondary);
-        cursor: pointer;
-      }
-
-      &:hover .calories {
-        background-color: #32cd32;
-      }
-
-      &:hover .carbs {
-        background-color: #4682b4;
-      }
-
-      &:hover .protein {
-        background-color: #ff6347;
-      }
-
-      &:hover .fats {
-        background-color: #ffd700;
       }
 
       &:hover td:first-child {
@@ -165,6 +152,12 @@
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
       }
+    }
+
+    tbody tr.prompt-row:hover td {
+      background-color: transparent;
+      color: var(--theme-primary);
+      border-radius: 0;
     }
 
     tfoot tr {

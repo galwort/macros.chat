@@ -98,7 +98,7 @@
                   </td>
                   <td>{{ entry.formattedMealTime }}</td>
                 </tr>
-                <tr *ngIf="entry.showPrompt">
+                <tr *ngIf="entry.showPrompt" class="prompt-row">
                   <td colspan="6" class="prompt-cell">
                     <div>{{ entry.prompt }}</div>
                     <button class="detail-button">
