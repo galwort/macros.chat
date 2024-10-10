@@ -211,31 +211,21 @@
   text-align: center;
   user-select: text;
   cursor: default;
+
+  div {
+    margin-bottom: 10px;
+  }
 }
 
-.delete-cell {
-  width: 30px;
-  text-align: center;
-}
-
-.delete-cell {
-  width: 30px;
-  text-align: center;
-}
-
-.delete-icon {
-  display: none;
-  color: var(--theme-background);
+.remove-button {
+  background-color: transparent;
+  border: none;
+  color: var(--theme-primary);
   cursor: pointer;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
+  text-decoration: underline;
+  font-size: 1em;
 
   &:hover {
     color: #ff6347;
   }
-}
-
-tbody tr:hover .delete-icon {
-  display: inline-block;
 }
