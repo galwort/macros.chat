@@ -59,6 +59,7 @@
     flex-direction: row;
 
     ion-item {
+      padding-left: 35px;
       --background: transparent;
       --inner-padding-end: 0px;
 
@@ -67,7 +68,11 @@
         font-size: min(5vw, 2em);
         font-weight: bold;
         color: var(--theme-primary);
-        padding: 12px;
+      }
+
+      i {
+        color: var(--theme-primary);
+        font-size: min(4vw, 1.5em);
       }
     }
   }
