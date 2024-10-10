@@ -22,10 +22,10 @@
     object-fit: cover;
     margin-top: 18px;
     cursor: pointer;
-    border: 2px solid var(--theme-secondary);
+    border: 4px solid var(--theme-secondary);
 
     &:hover {
-      border: 2px solid var(--theme-accent);
+      border: 4px solid var(--theme-accent);
     }
   }
 
