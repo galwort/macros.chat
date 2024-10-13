@@ -9,6 +9,8 @@ import {
   doc,
   getDoc,
   deleteDoc,
+  setDoc,
+  serverTimestamp,
 } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
@@ -139,6 +141,7 @@ export class JournalPage implements OnInit {
 
                   this.journalEntries.push({
                     id: journalDoc.id,
+                    mealId: journalData['mealId'],
                     summary: mealData['summary'],
                     calories: mealData['calories'],
                     carbs: mealData['carbs'],
@@ -220,6 +223,28 @@ export class JournalPage implements OnInit {
   toggleDisplayMode() {
     this.displayMode =
       this.displayMode === 'numbers' ? 'percentages' : 'numbers';
+  }
+
+  async favoriteEntry(entry: any, event: any) {
+    event.stopPropagation();
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      if (user) {
+        const userId = user.uid;
+
+        const favoriteRef = doc(db, `users/${userId}/favorites`, entry.mealId);
+        await setDoc(favoriteRef, {
+          timestamp: serverTimestamp(),
+        });
+
+        console.log('Meal added to favorites.');
+      } else {
+        console.error('User is not authenticated.');
+      }
+    } catch (error) {
+      console.error('Error adding to favorites:', error);
+    }
   }
 
   async deleteEntry(entry: any, event: any) {
