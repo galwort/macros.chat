@@ -221,13 +221,11 @@ export class MealPage implements OnInit {
         }
 
         const logTimestamp = Timestamp.now();
-
         const mealTimestampDate = new Date(mealTimestamp);
         const mealTimestampLocal = mealTimestampDate.toLocaleString();
 
-        const journalRef = collection(db, 'journal');
+        const journalRef = collection(db, `users/${userId}/journal`);
         await addDoc(journalRef, {
-          userId: userId,
           mealId: mealId,
           mealTimestamp: mealTimestamp,
           mealTimestampLocal: mealTimestampLocal,
@@ -238,6 +236,7 @@ export class MealPage implements OnInit {
         console.error('User is not logged in.');
       }
     } catch (error) {
+      console.error('Error logging food:', error);
       this.logButtonText = 'Log Failed 😔';
     } finally {
       this.isLoggingFood = false;
