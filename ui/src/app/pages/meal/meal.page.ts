@@ -201,7 +201,6 @@ export class MealPage implements OnInit {
       this.datetimeSelected = selectedDate;
     }
   }
-
   logFood = async () => {
     this.isLoggingFood = true;
     this.logButtonText = 'Logging...';
@@ -231,7 +230,8 @@ export class MealPage implements OnInit {
           mealTimestampLocal: mealTimestampLocal,
           timestamp: logTimestamp,
         });
-        this.logButtonText = 'Logged';
+
+        this.router.navigateByUrl('/journal');
       } else {
         console.error('User is not logged in.');
       }
