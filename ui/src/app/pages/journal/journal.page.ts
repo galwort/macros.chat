@@ -59,7 +59,7 @@ export class JournalPage implements OnInit {
     datasets: [
       {
         data: [0, 0, 0],
-        backgroundColor: ['#ffd700', '#ff6347', '#4682b4'],
+        backgroundColor: ['#e3b508', '#ff6347', '#4682b4'],
       },
     ],
   };
