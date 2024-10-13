@@ -120,9 +120,8 @@ export class JournalPage implements OnInit {
         this.totalFats = 0;
 
         try {
-          const journalRef = collection(db, 'journal');
-          const q = query(journalRef, where('userId', '==', userId));
-          const querySnapshot = await getDocs(q);
+          const journalRef = collection(db, `users/${userId}/journal`);
+          const querySnapshot = await getDocs(journalRef);
 
           if (querySnapshot.empty) {
             console.log('No journal entries found for the user.');
@@ -226,17 +225,22 @@ export class JournalPage implements OnInit {
   async deleteEntry(entry: any, event: any) {
     event.stopPropagation();
     try {
-      await deleteDoc(doc(db, 'journal', entry.id));
+      const auth = getAuth();
+      const user = auth.currentUser;
+      if (user) {
+        const userId = user.uid;
+        await deleteDoc(doc(db, `users/${userId}/journal`, entry.id));
 
-      this.journalEntries = this.journalEntries.filter((e) => e !== entry);
+        this.journalEntries = this.journalEntries.filter((e) => e !== entry);
 
-      this.totalCalories -= entry.calories;
-      this.totalCarbs -= entry.carbs;
-      this.totalProteins -= entry.proteins;
-      this.totalFats -= entry.fats;
+        this.totalCalories -= entry.calories;
+        this.totalCarbs -= entry.carbs;
+        this.totalProteins -= entry.proteins;
+        this.totalFats -= entry.fats;
 
-      this.calculatePercentages();
-      this.updateChartData();
+        this.calculatePercentages();
+        this.updateChartData();
+      }
     } catch (error) {
       console.error('Error deleting journal entry:', error);
     }
