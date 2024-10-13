@@ -55,11 +55,11 @@ export class JournalPage implements OnInit {
   };
 
   public pieChartData: ChartData<'pie', number[], string | string[]> = {
-    labels: ['Carbs', 'Fats', 'Proteins'],
+    labels: ['Carbs', 'Proteins', 'Fats'],
     datasets: [
       {
         data: [0, 0, 0],
-        backgroundColor: ['#4682b4', '#ffd700', '#ff6347'],
+        backgroundColor: ['#ffd700', '#ff6347', '#4682b4'],
       },
     ],
   };

@@ -77,11 +77,11 @@ export class MealPage implements OnInit {
   };
 
   public pieChartData: ChartData<'pie', number[], string | string[]> = {
-    labels: ['Carbs', 'Fats', 'Proteins'],
+    labels: ['Carbs', 'Proteins', 'Fats'],
     datasets: [
       {
         data: [],
-        backgroundColor: ['#4682b4', '#ffd700', '#ff6347'],
+        backgroundColor: ['#ffd700', '#ff6347', '#4682b4'],
       },
     ],
   };
@@ -155,8 +155,8 @@ export class MealPage implements OnInit {
     if (this.nutrients) {
       this.pieChartData.datasets[0].data = [
         this.nutrients.carbs,
-        this.nutrients.fats,
         this.nutrients.proteins,
+        this.nutrients.fats,
       ];
       this.chart?.update();
     }
@@ -164,7 +164,7 @@ export class MealPage implements OnInit {
 
   roundToNearest15Minutes(date: Date): Date {
     const minutes = 15;
-    const ms = 1000 * 60 * minutes; // milliseconds in 15 minutes
+    const ms = 1000 * 60 * minutes;
     return new Date(Math.round(date.getTime() / ms) * ms);
   }
 
