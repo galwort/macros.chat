@@ -38,35 +38,7 @@ export class JournalPage implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   @ViewChild(IonModal) dateModal: IonModal | undefined;
 
-  public pieChartOptions: ChartConfiguration['options'] = {
-    borderColor: '#030607',
-    plugins: {
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        enabled: false,
-      },
-      datalabels: {
-        display: true,
-        formatter: function (value: any, context: any) {
-          return value + 'g';
-        },
-        color: '#030607',
-        font: (context) => {
-          const chart = context.chart;
-          const chartHeight = chart.height;
-          const chartWidth = chart.width;
-          let fontHeight = Math.min(chartHeight, chartWidth) / 16;
-          return {
-            size: fontHeight,
-            weight: 'bold',
-          };
-        },
-      },
-    },
-  };
-
+  public pieChartOptions: ChartConfiguration['options'];
   public pieChartData: ChartData<'pie', number[], string | string[]> = {
     labels: ['Carbs', 'Proteins', 'Fats'],
     datasets: [
@@ -91,7 +63,45 @@ export class JournalPage implements OnInit {
   public expandedRowIndex: number | null = null;
   public displayMode: 'numbers' | 'percentages' = 'numbers';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    this.pieChartOptions = {
+      borderColor: '#030607',
+      plugins: {
+        legend: {
+          display: false,
+        },
+        tooltip: {
+          enabled: false,
+        },
+        datalabels: {
+          display: true,
+          formatter: (value: any, context: any) => {
+            const total = context.dataset.data.reduce(
+              (sum: number, val: number) => sum + val,
+              0
+            );
+            if (this.displayMode === 'percentages') {
+              const percentage = (value / total) * 100;
+              return `${Math.round(percentage)}%`;
+            } else {
+              return value + 'g';
+            }
+          },
+          color: '#030607',
+          font: (context) => {
+            const chart = context.chart;
+            const chartHeight = chart.height;
+            const chartWidth = chart.width;
+            let fontHeight = Math.min(chartHeight, chartWidth) / 16;
+            return {
+              size: fontHeight,
+              weight: 'bold',
+            };
+          },
+        },
+      },
+    };
+  }
 
   ngOnInit() {
     const date = new Date();
@@ -247,6 +257,7 @@ export class JournalPage implements OnInit {
   toggleDisplayMode() {
     this.displayMode =
       this.displayMode === 'numbers' ? 'percentages' : 'numbers';
+    this.updateChartData();
   }
 
   async favoriteEntry(entry: any, event: any) {
@@ -296,11 +307,19 @@ export class JournalPage implements OnInit {
   }
 
   private updateChartData() {
-    this.pieChartData.datasets[0].data = [
-      this.totalCarbs,
-      this.totalFats,
-      this.totalProteins,
-    ];
+    if (this.displayMode === 'percentages') {
+      this.pieChartData.datasets[0].data = [
+        this.totalCarbsPercent,
+        this.totalFatsPercent,
+        this.totalProteinsPercent,
+      ];
+    } else {
+      this.pieChartData.datasets[0].data = [
+        this.totalCarbs,
+        this.totalFats,
+        this.totalProteins,
+      ];
+    }
     this.chart?.update();
   }
 
