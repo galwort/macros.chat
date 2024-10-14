@@ -59,20 +59,24 @@ export class MealPage implements OnInit {
         display: false,
       },
       tooltip: {
-        callbacks: {
-          label: function (context: any) {
-            let label = context.label || '';
-            if (label) {
-              label += ': ';
-            }
-            if (context.parsed) {
-              label += context.parsed + 'g';
-            }
-            return label;
-          },
-          title: () => '',
+        enabled: false,
+      },
+      datalabels: {
+        display: true,
+        formatter: function (value: any, context: any) {
+          return value + 'g';
         },
-        displayColors: false,
+        color: '#030607',
+        font: (context) => {
+          const chart = context.chart;
+          const chartHeight = chart.height;
+          const chartWidth = chart.width;
+          let fontHeight = Math.min(chartHeight, chartWidth) / 16;
+          return {
+            size: fontHeight,
+            weight: 'bold',
+          };
+        },
       },
     },
   };

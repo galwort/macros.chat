@@ -13,9 +13,18 @@ import {
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { environment } from 'src/environments/environment';
-import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import {
+  ChartConfiguration,
+  ChartData,
+  ChartType,
+  Chart,
+  registerables,
+} from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { IonModal } from '@ionic/angular';
+
+Chart.register(...registerables, ChartDataLabels);
 
 export const app = initializeApp(environment.firebaseConfig);
 export const db = getFirestore(app);
@@ -36,20 +45,24 @@ export class JournalPage implements OnInit {
         display: false,
       },
       tooltip: {
-        callbacks: {
-          label: function (context: any) {
-            let label = context.label || '';
-            if (label) {
-              label += ': ';
-            }
-            if (context.parsed) {
-              label += context.parsed + 'g';
-            }
-            return label;
-          },
-          title: () => '',
+        enabled: false,
+      },
+      datalabels: {
+        display: true,
+        formatter: function (value: any, context: any) {
+          return value + 'g';
         },
-        displayColors: false,
+        color: '#030607',
+        font: (context) => {
+          const chart = context.chart;
+          const chartHeight = chart.height;
+          const chartWidth = chart.width;
+          let fontHeight = Math.min(chartHeight, chartWidth) / 16;
+          return {
+            size: fontHeight,
+            weight: 'bold',
+          };
+        },
       },
     },
   };
