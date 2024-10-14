@@ -1,16 +1,6 @@
 <ion-content>
   <ion-header class="ion-no-border">
     <ion-toolbar>
-      <i class="fa-solid fa-circle-info" slot="start" id="open-popover"></i>
-      <ion-popover [keepContentsMounted]="true" trigger="open-popover">
-        <ng-template>
-          <ion-content class="ion-padding">
-            Simply describe your meal in as much detail as you'd like, from a
-            simple sandwich to an elaborate three-course meal, and macronutrient
-            information will be generated for you.
-          </ion-content>
-        </ng-template>
-      </ion-popover>
       <i
         *ngIf="isUserLoggedIn"
         class="fa-solid fa-book"
