@@ -33,7 +33,7 @@
     <div class="main-content">
       <div class="filter-container">
         <ion-item lines="none">
-          <div class="calendar-group">
+          <div class="calendar-group" (click)="openDatePicker()">
             <i class="fa-regular fa-calendar"></i>
             <ion-datetime-button datetime="filterDate"></ion-datetime-button>
           </div>
@@ -44,8 +44,7 @@
                 presentation="date"
                 [(ngModel)]="dateSelected"
                 (ionChange)="onDateChange()"
-              >
-              </ion-datetime>
+              ></ion-datetime>
             </ng-template>
           </ion-modal>
         </ion-item>
