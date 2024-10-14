@@ -8,6 +8,7 @@ import {
   addDoc,
   collection,
   Timestamp,
+  setDoc,
 } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 import { environment } from 'src/environments/environment';
@@ -106,10 +107,20 @@ export class MealPage implements OnInit {
 
   checkUserLoginStatus() {
     const auth = getAuth();
-    onAuthStateChanged(auth, (user: User | null) => {
+    onAuthStateChanged(auth, async (user: User | null) => {
       if (user) {
         this.isUserLoggedIn = true;
         this.userProfileImage = user.photoURL;
+        try {
+          const userDocRef = doc(db, 'users', user.uid);
+          await setDoc(
+            userDocRef,
+            { lastLoginTimestamp: new Date().toISOString() },
+            { merge: true }
+          );
+        } catch (e) {
+          console.error('Error updating lastLoginTimestamp:', e);
+        }
       } else {
         this.isUserLoggedIn = false;
         this.userProfileImage = null;

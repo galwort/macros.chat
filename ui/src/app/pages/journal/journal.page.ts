@@ -122,6 +122,17 @@ export class JournalPage implements OnInit {
         this.totalFats = 0;
 
         try {
+          const userDocRef = doc(db, 'users', userId);
+          await setDoc(
+            userDocRef,
+            { lastLoginTimestamp: new Date().toISOString() },
+            { merge: true }
+          );
+        } catch (e) {
+          console.error('Error updating lastLoginTimestamp:', e);
+        }
+
+        try {
           const journalRef = collection(db, `users/${userId}/journal`);
           const querySnapshot = await getDocs(journalRef);
 
