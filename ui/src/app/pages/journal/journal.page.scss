@@ -63,16 +63,26 @@
       --background: transparent;
       --inner-padding-end: 0px;
 
-      ion-datetime-button::part(native) {
-        background-color: transparent;
-        font-size: min(5vw, 2em);
-        font-weight: bold;
-        color: var(--theme-primary);
-      }
+      .calendar-group {
+        display: flex;
+        align-items: center;
 
-      i {
-        color: var(--theme-primary);
-        font-size: min(4vw, 1.5em);
+        i {
+          color: var(--theme-primary);
+          font-size: min(4vw, 1.5em);
+          cursor: pointer;
+
+          &:hover {
+            color: var(--theme-accent);
+          }
+        }
+
+        ion-datetime-button::part(native) {
+          background-color: transparent;
+          font-size: min(5vw, 2em);
+          font-weight: bold;
+          color: var(--theme-primary);
+        }
       }
     }
 
