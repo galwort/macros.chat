@@ -7,22 +7,11 @@
         id="logo"
         (click)="navigateTo('')"
       />
-      <i class="fa-solid fa-circle-info" slot="start" id="open-popover"></i>
       <i
         class="fa-solid"
         [ngClass]="displayMode === 'numbers' ? 'fa-hashtag' : 'fa-percent'"
         (click)="toggleDisplayMode()"
       ></i>
-      <ion-popover [keepContentsMounted]="true" trigger="open-popover">
-        <ng-template>
-          <ion-content class="ion-padding">
-            Track your meals throughout the day by logging them through the meal
-            page. Click the row of the meal to see the prompt that generated it,
-            and click 'Remove' to delete it. The pie chart at the bottom shows
-            the macronutrient breakdown of your meals.
-          </ion-content>
-        </ng-template>
-      </ion-popover>
       <img
         [src]="userProfileImage"
         alt="User Profile"
