@@ -310,14 +310,14 @@ export class JournalPage implements OnInit {
     if (this.displayMode === 'percentages') {
       this.pieChartData.datasets[0].data = [
         this.totalCarbsPercent,
-        this.totalFatsPercent,
         this.totalProteinsPercent,
+        this.totalFatsPercent,
       ];
     } else {
       this.pieChartData.datasets[0].data = [
         this.totalCarbs,
-        this.totalFats,
         this.totalProteins,
+        this.totalFats,
       ];
     }
     this.chart?.update();
