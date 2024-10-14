@@ -75,6 +75,10 @@
         font-size: min(4vw, 1.5em);
       }
     }
+
+    &:hover ion-item {
+      cursor: pointer;
+    }
   }
 
   h1 {

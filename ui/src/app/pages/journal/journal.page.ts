@@ -4,8 +4,6 @@ import {
   getFirestore,
   collection,
   getDocs,
-  query,
-  where,
   doc,
   getDoc,
   deleteDoc,
@@ -17,6 +15,7 @@ import { initializeApp } from 'firebase/app';
 import { environment } from 'src/environments/environment';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import { IonModal } from '@ionic/angular';
 
 export const app = initializeApp(environment.firebaseConfig);
 export const db = getFirestore(app);
@@ -28,6 +27,7 @@ export const db = getFirestore(app);
 })
 export class JournalPage implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+  @ViewChild(IonModal) dateModal: IonModal | undefined;
 
   public pieChartOptions: ChartConfiguration['options'] = {
     borderColor: '#030607',
@@ -282,5 +282,9 @@ export class JournalPage implements OnInit {
 
   navigateTo(page: string) {
     this.router.navigateByUrl(`/${page}`);
+  }
+
+  openDatePicker() {
+    this.dateModal?.present();
   }
 }
