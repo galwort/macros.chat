@@ -36,7 +36,11 @@
   </div>
 
   <div *ngIf="errorMessage" class="centered-content">
-    <img src="assets/nomeal.svg" alt="No meal found" />
+    <div class="error-message">
+      <p>Couldn't find that one.</p>
+      <img src="assets/nomeal.svg" alt="No meal found" />
+      <a href="#" (click)="navigateTo('')">Can you describe it?</a>
+    </div>
   </div>
 
   <div *ngIf="!isLoading && !errorMessage" class="centered-content">
