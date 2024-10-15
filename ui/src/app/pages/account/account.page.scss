@@ -62,13 +62,33 @@ ion-toolbar {
     font-size: 1em;
   }
 
-  input {
-    padding: 10px;
-    border-radius: 10px;
-    border: 2px solid var(--theme-primary);
-    background-color: var(--theme-background);
-    color: var(--theme-primary);
+  .input-container {
+    position: relative;
     width: 270px;
+
+    input {
+      width: 100%;
+      padding: 10px;
+      padding-right: 40px;
+      border-radius: 10px;
+      border: 2px solid var(--theme-primary);
+      background-color: var(--theme-background);
+      color: var(--theme-primary);
+    }
+
+    i {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--theme-primary);
+      font-size: 1.2em;
+      cursor: pointer;
+
+      &:hover {
+        color: var(--theme-accent);
+      }
+    }
   }
 
   .user-info {
