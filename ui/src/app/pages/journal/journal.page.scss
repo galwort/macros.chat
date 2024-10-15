@@ -158,21 +158,77 @@
         background-color: var(--theme-primary);
       }
 
-      &:hover td {
-        background-color: var(--theme-primary);
-        color: var(--theme-secondary);
+      /* Apply initial semi-transparent colors to nutrient columns */
+      td.calories {
+        background-color: #32cd3266;
       }
 
-      &:hover td:first-child {
-        border-top-left-radius: 10px;
-        border-bottom-left-radius: 10px;
+      td.carbs {
+        background-color: #e3b508aa;
       }
 
-      &:hover td:last-child {
-        border-top-right-radius: 10px;
-        border-bottom-right-radius: 10px;
+      td.protein {
+        background-color: #ff634766;
       }
 
+      td.fats {
+        background-color: #4682b466;
+      }
+
+      /* Hover effects for rows except prompt row */
+      &:not(.prompt-row):hover {
+        td {
+          color: var(--theme-secondary);
+        }
+
+        td:not(.calories):not(.carbs):not(.protein):not(.fats) {
+          background-color: var(--theme-primary);
+        }
+
+        td.calories {
+          background-color: #32cd32; /* Opaque color */
+        }
+
+        td.carbs {
+          background-color: #e3b508; /* Opaque color */
+        }
+
+        td.protein {
+          background-color: #ff6347; /* Opaque color */
+        }
+
+        td.fats {
+          background-color: #4682b4; /* Opaque color */
+        }
+
+        td:first-child {
+          border-top-left-radius: 10px;
+          border-bottom-left-radius: 10px;
+        }
+
+        td:last-child {
+          border-top-right-radius: 10px;
+          border-bottom-right-radius: 10px;
+        }
+      }
+
+      /* Remove hover effects from prompt row */
+      &.prompt-row {
+        cursor: default;
+
+        td {
+          background-color: var(--theme-background);
+          color: var(--theme-primary);
+        }
+
+        &:hover td {
+          background-color: var(--theme-background);
+          color: var(--theme-primary);
+          border-radius: 0;
+        }
+      }
+
+      /* Styles for edit rows */
       &.edit-row,
       &.edit-actions-row {
         cursor: default;
@@ -190,33 +246,27 @@
       }
     }
 
-    tbody tr.prompt-row:hover td {
-      background-color: transparent;
-      color: var(--theme-primary);
-      border-radius: 0;
-    }
-
     tfoot tr {
       font-weight: bold;
       color: var(--theme-primary);
+
+      td.calories {
+        background-color: #32cd3266;
+      }
+
+      td.carbs {
+        background-color: #e3b508aa;
+      }
+
+      td.protein {
+        background-color: #ff634766;
+      }
+
+      td.fats {
+        background-color: #4682b466;
+      }
     }
   }
-}
-
-.calories {
-  background-color: #32cd3266;
-}
-
-.carbs {
-  background-color: #e3b508aa;
-}
-
-.protein {
-  background-color: #ff634766;
-}
-
-.fats {
-  background-color: #4682b466;
 }
 
 .chart-container {
