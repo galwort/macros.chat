@@ -398,6 +398,30 @@
             outline: none;
           }
         }
+
+        ion-item {
+          --background: transparent;
+          --inner-padding-end: 0px;
+          --color: var(--theme-primary);
+          --border-radius: 50px;
+          --border-width: 2px;
+          --border-color: var(--theme-primary);
+          margin-top: 20px;
+
+          ion-label {
+            font-size: 1em;
+            font-weight: bold;
+          }
+
+          ion-select::part(icon) {
+            display: none !important;
+          }
+
+          &:hover {
+            --color: var(--theme-accent);
+            --border-color: var(--theme-accent);
+          }
+        }
       }
     }
   }

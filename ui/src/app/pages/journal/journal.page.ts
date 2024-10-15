@@ -60,6 +60,8 @@ export class JournalPage implements OnInit {
   public userProfileImage: string | null = null;
   public expandedRowIndex: number | null = null;
   public displayMode: 'numbers' | 'percentages' = 'numbers';
+  public favoriteMeals: any[] = [];
+  public selectedFavoriteMeal: string | null = null;
 
   constructor(private router: Router) {
     this.pieChartOptions = {
@@ -108,6 +110,7 @@ export class JournalPage implements OnInit {
     const day = ('0' + date.getDate()).slice(-2);
     this.dateSelected = `${year}-${month}-${day}`;
     this.fetchJournalEntries();
+    this.fetchFavoriteMeals();
   }
 
   private parseDateLocal(dateString: string): Date {
@@ -449,5 +452,31 @@ export class JournalPage implements OnInit {
     const [year, month, day] = dateString.split('-').map(Number);
     const [hours, minutes] = timeString.split(':').map(Number);
     return new Date(year, month - 1, day, hours, minutes);
+  }
+
+  async fetchFavoriteMeals() {
+    const auth = getAuth();
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const userId = user.uid;
+        try {
+          const journalRef = collection(db, `users/${userId}/journal`);
+          const querySnapshot = await getDocs(journalRef);
+          this.favoriteMeals = [];
+
+          for (const journalDoc of querySnapshot.docs) {
+            const journalData = journalDoc.data();
+            if (journalData['isFavorite'] === true) {
+              this.favoriteMeals.push({
+                id: journalDoc.id,
+                summary: journalData['summary'],
+              });
+            }
+          }
+        } catch (error) {
+          console.error('Error fetching favorite meals:', error);
+        }
+      }
+    });
   }
 }

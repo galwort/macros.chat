@@ -226,6 +226,20 @@
         <div class="add-meal">
           <h2><i class="fa-solid fa-plus"></i> Add a Meal</h2>
           <input type="text" placeholder="What else did you eat?" />
+          <ion-item lines="none">
+            <ion-label>Favorites</ion-label>
+            <ion-select
+              [(ngModel)]="selectedFavoriteMeal"
+              interface="action-sheet"
+            >
+              <ion-select-option
+                *ngFor="let favorite of favoriteMeals"
+                [value]="favorite.summary"
+              >
+                {{ favorite.summary }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
         </div>
       </div>
     </div>
