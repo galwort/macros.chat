@@ -2,342 +2,377 @@
   display: flex;
   height: 100%;
   background-color: var(--theme-background);
-}
 
-.sidebar {
-  width: 60px;
-  margin: 7px;
-  height: calc(100% - 14px);
-  background: var(--theme-primary);
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 20px;
-
-  .user-profile-image {
-    width: 5vh;
-    height: 5vh;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-top: 18px;
-    cursor: pointer;
-    border: 4px solid var(--theme-secondary);
-
-    &:hover {
-      border: 4px solid var(--theme-accent);
-    }
-  }
-
-  i {
-    color: var(--theme-secondary);
-    font-size: 5vh;
-    margin-top: 18px;
-
-    &:hover {
-      cursor: pointer;
-      color: var(--theme-accent);
-    }
-  }
-}
-
-#logo {
-  height: 36px;
-  cursor: pointer;
-}
-
-.main-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--theme-background);
-  padding-top: 20px;
-  position: relative;
-
-  .filter-container {
+  .sidebar {
+    width: 60px;
+    margin: 7px;
+    height: calc(100% - 14px);
+    background: var(--theme-primary);
+    border-radius: 20px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
 
-    ion-item {
-      padding-left: 35px;
-      --background: transparent;
-      --inner-padding-end: 0px;
+    #logo {
+      height: 36px;
       cursor: pointer;
+    }
 
-      .calendar-group {
-        display: flex;
-        align-items: center;
+    i {
+      color: var(--theme-secondary);
+      font-size: 5vh;
+      margin-top: 18px;
 
-        i {
-          color: var(--theme-primary);
-          font-size: min(4vw, 1.5em);
-          transition: color 0.3s ease;
-        }
+      &:hover {
+        cursor: pointer;
+        color: var(--theme-accent);
+      }
+    }
 
-        ion-datetime-button::part(native) {
-          background-color: transparent;
-          font-size: min(5vw, 2em);
-          font-weight: bold;
-          color: var(--theme-primary);
-          transition: color 0.3s ease;
-        }
+    .user-profile-image {
+      width: 5vh;
+      height: 5vh;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-top: 18px;
+      cursor: pointer;
+      border: 4px solid var(--theme-secondary);
 
-        &:hover {
+      &:hover {
+        border: 4px solid var(--theme-accent);
+      }
+    }
+  }
+
+  .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--theme-background);
+    padding-top: 20px;
+    position: relative;
+
+    .filter-container {
+      display: flex;
+      flex-direction: row;
+
+      ion-item {
+        padding-left: 35px;
+        --background: transparent;
+        --inner-padding-end: 0px;
+        cursor: pointer;
+
+        .calendar-group {
+          display: flex;
+          align-items: center;
+
           i {
-            color: var(--theme-accent);
+            color: var(--theme-primary);
+            font-size: min(4vw, 1.5em);
+            transition: color 0.3s ease;
           }
 
           ion-datetime-button::part(native) {
-            color: var(--theme-accent);
+            background-color: transparent;
+            font-size: min(5vw, 2em);
+            font-weight: bold;
+            color: var(--theme-primary);
+            transition: color 0.3s ease;
+          }
+
+          &:hover {
+            i {
+              color: var(--theme-accent);
+            }
+
+            ion-datetime-button::part(native) {
+              color: var(--theme-accent);
+            }
           }
         }
       }
     }
-  }
 
-  h1 {
-    color: var(--theme-primary);
-    font-weight: bold;
-    margin-bottom: 2.5px;
-    text-align: center;
-  }
-
-  h3 {
-    color: var(--theme-primary);
-    margin-top: 2.5px;
-    margin-bottom: 20px;
-  }
-}
-
-.table-container {
-  padding: 2rem;
-  color: var(--theme-primary);
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-
-    th,
-    td {
-      padding: 8px;
-      background-color: transparent;
-      border-radius: 0;
-      transition: background-color 0.3s, color 0.3s, border-radius 0.3s;
-    }
-
-    th {
-      text-align: left;
+    h1 {
       color: var(--theme-primary);
-    }
-
-    thead tr {
-      position: relative;
-
-      &:after {
-        content: "";
-        position: absolute;
-        left: 10px;
-        right: 10px;
-        bottom: 0;
-        height: 1px;
-        background-color: var(--theme-primary);
-      }
-    }
-
-    tbody tr {
-      position: relative;
-      cursor: pointer;
-
-      &:after {
-        content: "";
-        position: absolute;
-        left: 10px;
-        right: 10px;
-        bottom: 0;
-        height: 1px;
-        background-color: var(--theme-primary);
-      }
-
-      td.calories {
-        background-color: #32cd3266;
-      }
-
-      td.carbs {
-        background-color: #e3b508aa;
-      }
-
-      td.protein {
-        background-color: #ff634766;
-      }
-
-      td.fats {
-        background-color: #4682b466;
-      }
-
-      &:not(.prompt-row):hover {
-        td {
-          color: var(--theme-secondary);
-        }
-
-        td:not(.calories):not(.carbs):not(.protein):not(.fats) {
-          background-color: var(--theme-primary);
-        }
-
-        td.calories {
-          background-color: #32cd32;
-          color: #1a2f3a;
-        }
-
-        td.carbs {
-          background-color: #e3b508;
-          color: #1a2f3a;
-        }
-
-        td.protein {
-          background-color: #ff6347;
-          color: #1a2f3a;
-        }
-
-        td.fats {
-          background-color: #4682b4;
-          color: #1a2f3a;
-        }
-
-        td:first-child {
-          border-top-left-radius: 10px;
-          border-bottom-left-radius: 10px;
-        }
-
-        td:last-child {
-          border-top-right-radius: 10px;
-          border-bottom-right-radius: 10px;
-        }
-      }
-
-      &.prompt-row {
-        cursor: default;
-
-        td {
-          background-color: var(--theme-background);
-          color: var(--theme-primary);
-        }
-
-        &:hover td {
-          background-color: var(--theme-background);
-          color: var(--theme-primary);
-          border-radius: 0;
-        }
-      }
-
-      &.edit-row,
-      &.edit-actions-row {
-        cursor: default;
-
-        td {
-          background-color: var(--theme-background);
-          color: var(--theme-primary);
-        }
-
-        &:hover td {
-          background-color: var(--theme-background);
-          color: var(--theme-primary);
-          border-radius: 0;
-        }
-      }
-    }
-
-    tfoot tr {
       font-weight: bold;
+      margin-bottom: 2.5px;
+      text-align: center;
+    }
+
+    h3 {
       color: var(--theme-primary);
+      margin-top: 2.5px;
+      margin-bottom: 20px;
+    }
 
-      td.calories {
-        background-color: #32cd3266;
-      }
+    .table-wrapper {
+      .table-container {
+        padding: 2rem;
+        color: var(--theme-primary);
 
-      td.carbs {
-        background-color: #e3b508aa;
-      }
+        table {
+          width: 100%;
+          border-collapse: collapse;
 
-      td.protein {
-        background-color: #ff634766;
-      }
+          th,
+          td {
+            padding: 8px;
+            background-color: transparent;
+            border-radius: 0;
+            transition: background-color 0.3s, color 0.3s, border-radius 0.3s;
+          }
 
-      td.fats {
-        background-color: #4682b466;
+          th {
+            text-align: left;
+            color: var(--theme-primary);
+          }
+
+          thead {
+            tr {
+              position: relative;
+
+              &:after {
+                content: "";
+                position: absolute;
+                left: 10px;
+                right: 10px;
+                bottom: 0;
+                height: 1px;
+                background-color: var(--theme-primary);
+              }
+            }
+          }
+
+          tbody {
+            tr {
+              position: relative;
+              cursor: pointer;
+
+              &:after {
+                content: "";
+                position: absolute;
+                left: 10px;
+                right: 10px;
+                bottom: 0;
+                height: 1px;
+                background-color: var(--theme-primary);
+              }
+
+              td.calories {
+                background-color: #32cd3266;
+              }
+
+              td.carbs {
+                background-color: #e3b508aa;
+              }
+
+              td.protein {
+                background-color: #ff634766;
+              }
+
+              td.fats {
+                background-color: #4682b466;
+              }
+
+              &:not(.prompt-row):hover {
+                td {
+                  color: var(--theme-secondary);
+                }
+
+                td:not(.calories):not(.carbs):not(.protein):not(.fats) {
+                  background-color: var(--theme-primary);
+                }
+
+                td.calories {
+                  background-color: #32cd32;
+                  color: #1a2f3a;
+                }
+
+                td.carbs {
+                  background-color: #e3b508;
+                  color: #1a2f3a;
+                }
+
+                td.protein {
+                  background-color: #ff6347;
+                  color: #1a2f3a;
+                }
+
+                td.fats {
+                  background-color: #4682b4;
+                  color: #1a2f3a;
+                }
+
+                td:first-child {
+                  border-top-left-radius: 10px;
+                  border-bottom-left-radius: 10px;
+                }
+
+                td:last-child {
+                  border-top-right-radius: 10px;
+                  border-bottom-right-radius: 10px;
+                }
+              }
+
+              &.prompt-row {
+                cursor: default;
+
+                td {
+                  background-color: var(--theme-background);
+                  color: var(--theme-primary);
+                }
+
+                &:hover td {
+                  background-color: var(--theme-background);
+                  color: var(--theme-primary);
+                  border-radius: 0;
+                }
+
+                .prompt-cell {
+                  background-color: var(--theme-background);
+                  color: var(--theme-primary);
+                  font-style: italic;
+                  text-align: center;
+                  user-select: text;
+                  cursor: default;
+
+                  div {
+                    margin-bottom: 10px;
+                  }
+
+                  .detail-button {
+                    background-color: transparent;
+                    border: 1px solid var(--theme-primary);
+                    color: var(--theme-primary);
+                    cursor: pointer;
+                    text-decoration: none;
+                    padding: 5px 10px;
+                    margin: 5px;
+                    border-radius: 5px;
+                    font-style: normal;
+                    font-size: 1em;
+                    transition: background-color 0.3s, color 0.3s;
+
+                    i {
+                      margin-right: 5px;
+                    }
+
+                    &:hover {
+                      background-color: var(--theme-primary);
+                      color: var(--theme-background);
+                    }
+                  }
+                }
+              }
+
+              &.edit-row,
+              &.edit-actions-row {
+                cursor: default;
+
+                td {
+                  background-color: var(--theme-background);
+                  color: var(--theme-primary);
+                  padding: 5px;
+                }
+
+                &:hover td {
+                  background-color: var(--theme-background);
+                  color: var(--theme-primary);
+                  border-radius: 0;
+                }
+
+                &.edit-row {
+                  input[type="text"],
+                  input[type="number"],
+                  input[type="time"] {
+                    width: 100%;
+                    padding: 5px;
+                    border: 1px solid var(--theme-primary);
+                    border-radius: 5px;
+                    color: var(--theme-primary);
+                    background-color: var(--theme-background);
+                    font-size: 1em;
+
+                    &:focus {
+                      border: 2px solid var(--theme-accent);
+                      outline: none;
+                    }
+                  }
+                }
+
+                &.edit-actions-row {
+                  .prompt-cell {
+                    background-color: var(--theme-background);
+                    color: var(--theme-primary);
+
+                    .detail-button {
+                      background-color: transparent;
+                      border: 1px solid var(--theme-primary);
+                      color: var(--theme-primary);
+                      cursor: pointer;
+                      text-decoration: none;
+                      padding: 5px 10px;
+                      margin: 5px;
+                      border-radius: 5px;
+                      font-style: normal;
+                      font-size: 1em;
+                      transition: background-color 0.3s, color 0.3s;
+
+                      i {
+                        margin-right: 5px;
+                      }
+
+                      &:hover {
+                        background-color: var(--theme-primary);
+                        color: var(--theme-background);
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          tfoot {
+            tr {
+              font-weight: bold;
+              color: var(--theme-primary);
+
+              td.calories {
+                background-color: #32cd3266;
+              }
+
+              td.carbs {
+                background-color: #e3b508aa;
+              }
+
+              td.protein {
+                background-color: #ff634766;
+              }
+
+              td.fats {
+                background-color: #4682b466;
+              }
+            }
+          }
+        }
       }
     }
-  }
-}
 
-.chart-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-}
+    .chart-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
 
-.chart {
-  width: 60vw;
-  height: 60vw;
-  max-width: 40vh;
-  max-height: 40vh;
-}
-
-.prompt-cell {
-  background-color: var(--theme-background);
-  color: var(--theme-primary);
-  font-style: italic;
-  text-align: center;
-  user-select: text;
-  cursor: default;
-
-  div {
-    margin-bottom: 10px;
-  }
-}
-
-.detail-button {
-  background-color: transparent;
-  border: 1px solid var(--theme-primary);
-  color: var(--theme-primary);
-  cursor: pointer;
-  text-decoration: none;
-  padding: 5px 10px;
-  margin: 5px;
-  border-radius: 5px;
-  font-style: normal;
-  font-size: 1em;
-  transition: background-color 0.3s, color 0.3s;
-
-  i {
-    margin-right: 5px;
-  }
-
-  &:hover {
-    background-color: var(--theme-primary);
-    color: var(--theme-background);
-  }
-}
-
-.edit-row {
-  input[type="text"],
-  input[type="number"],
-  input[type="time"] {
-    width: 100%;
-    padding: 5px;
-    border: 1px solid var(--theme-primary);
-    border-radius: 5px;
-    color: var(--theme-primary);
-    background-color: var(--theme-background);
-    font-size: 1em;
-
-    &:focus {
-      border: 2px solid var(--theme-accent);
-      outline: none;
+      .chart {
+        width: 60vw;
+        height: 60vw;
+        max-width: 40vh;
+        max-height: 40vh;
+      }
     }
-  }
-
-  td {
-    padding: 5px;
   }
 }
