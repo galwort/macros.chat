@@ -85,7 +85,7 @@ export class JournalPage implements OnInit {
               return value + 'g';
             }
           },
-          color: '#030607',
+          color: '#1a2f3a',
           font: (context) => {
             const chart = context.chart;
             const chartHeight = chart.height;

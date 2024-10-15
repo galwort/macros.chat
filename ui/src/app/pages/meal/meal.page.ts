@@ -66,7 +66,7 @@ export class MealPage implements OnInit {
         formatter: function (value: any, context: any) {
           return value + 'g';
         },
-        color: '#030607',
+        color: '#1a2f3a',
         font: (context) => {
           const chart = context.chart;
           const chartHeight = chart.height;
