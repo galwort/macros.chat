@@ -349,17 +349,48 @@
       }
     }
 
-    .chart-container {
+    .bottom-content {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 20px;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 20px;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
 
-      .chart {
-        width: 60vw;
-        height: 60vw;
-        max-width: 40vh;
-        max-height: 40vh;
+      .chart-container {
+        flex: 1;
+        display: flex;
+        justify-content: flex-start;
+
+        .chart {
+          width: 60vw;
+          height: 60vw;
+          max-width: 40vh;
+          max-height: 40vh;
+        }
+      }
+
+      .input-container {
+        display: flex;
+        justify-content: flex-end;
+        flex: 1;
+
+        input {
+          padding: 10px;
+          font-size: 1em;
+          border: 1px solid var(--theme-primary);
+          border-radius: 5px;
+          width: 100%;
+          max-width: 300px;
+          color: var(--theme-primary);
+          background-color: var(--theme-background);
+
+          &:focus {
+            border: 2px solid var(--theme-accent);
+            outline: none;
+          }
+        }
       }
     }
   }
