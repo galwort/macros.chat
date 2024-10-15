@@ -255,18 +255,16 @@ export class JournalPage implements OnInit {
       const user = auth.currentUser;
       if (user) {
         const userId = user.uid;
+        const journalDocRef = doc(db, `users/${userId}/journal`, entry.id);
 
-        const favoriteRef = doc(db, `users/${userId}/favorites`, entry.mealId);
-        await setDoc(favoriteRef, {
-          timestamp: serverTimestamp(),
-        });
+        await setDoc(journalDocRef, { isFavorite: true }, { merge: true });
 
-        console.log('Meal added to favorites.');
+        entry.isFavorite = true;
       } else {
         console.error('User is not authenticated.');
       }
     } catch (error) {
-      console.error('Error adding to favorites:', error);
+      console.error('Error updating favorite status:', error);
     }
   }
 
