@@ -96,7 +96,15 @@
                       class="detail-button"
                       (click)="favoriteEntry(entry, $event)"
                     >
-                      <i class="fa-solid fa-star"></i>Favorite
+                      <i
+                        [ngClass]="{
+                      'fa-solid': entry.isFavorite,
+                      'fa-regular': !entry.isFavorite,
+                      'fa-star': true
+                    }"
+                      ></i>
+
+                      {{ entry.isFavorite ? 'Favorited' : 'Favorite' }}
                     </button>
                     <button class="detail-button">
                       <i class="fa-solid fa-pen"></i>Edit

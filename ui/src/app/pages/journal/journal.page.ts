@@ -185,6 +185,7 @@ export class JournalPage implements OnInit {
                   carbsPercent: 0,
                   proteinsPercent: 0,
                   fatsPercent: 0,
+                  isFavorite: journalData['isFavorite'] || false,
                 });
 
                 this.totalCalories += journalData['calories'];
