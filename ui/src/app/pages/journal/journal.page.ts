@@ -206,8 +206,6 @@ export class JournalPage implements OnInit {
         } catch (error) {
           console.error('Error fetching journal entries:', error);
         }
-      } else {
-        console.error('User is not logged in.');
       }
     });
   }
@@ -284,12 +282,6 @@ export class JournalPage implements OnInit {
         );
 
         entry.isFavorite = newFavoriteStatus;
-
-        console.log(
-          `Meal ${newFavoriteStatus ? 'marked as favorite' : 'unfavorited'}.`
-        );
-      } else {
-        console.error('User is not authenticated.');
       }
     } catch (error) {
       console.error('Error updating favorite status:', error);
@@ -440,8 +432,6 @@ export class JournalPage implements OnInit {
 
         this.calculateTotalsAndPercentages();
         this.updateChartData();
-      } else {
-        console.error('User is not authenticated.');
       }
     } catch (error) {
       console.error('Error saving journal entry:', error);
