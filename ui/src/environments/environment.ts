@@ -2,7 +2,7 @@ export const environment = {
   production: false,
   firebaseConfig: {
     apiKey: 'AIzaSyAvA00PrC_WVvuffA5n71n0airnYAVvS_k',
-    authDomain: 'macrosdotchat.firebaseapp.com',
+    authDomain: 'macros.chat',
     projectId: 'macrosdotchat',
     storageBucket: 'macrosdotchat.appspot.com',
     messagingSenderId: '638048215887',
