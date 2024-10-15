@@ -176,7 +176,7 @@
                 background-color: #4682b466;
               }
 
-              &:not(.prompt-row):hover {
+              &:not(.prompt-row):not(.edit-row):not(.edit-actions-row):hover {
                 td {
                   color: var(--theme-secondary);
                 }
@@ -216,7 +216,9 @@
                 }
               }
 
-              &.prompt-row {
+              &.prompt-row,
+              &.edit-row,
+              &.edit-actions-row {
                 cursor: default;
 
                 td {
@@ -267,67 +269,53 @@
                 }
               }
 
-              &.edit-row,
-              &.edit-actions-row {
-                cursor: default;
-
+              &.edit-row {
                 td {
-                  background-color: var(--theme-background);
-                  color: var(--theme-primary);
                   padding: 5px;
                 }
 
-                &:hover td {
-                  background-color: var(--theme-background);
+                input[type="text"],
+                input[type="number"],
+                input[type="time"] {
+                  width: 100%;
+                  padding: 5px;
+                  border: 1px solid var(--theme-primary);
+                  border-radius: 5px;
                   color: var(--theme-primary);
-                  border-radius: 0;
-                }
+                  background-color: var(--theme-background);
+                  font-size: 1em;
 
-                &.edit-row {
-                  input[type="text"],
-                  input[type="number"],
-                  input[type="time"] {
-                    width: 100%;
-                    padding: 5px;
-                    border: 1px solid var(--theme-primary);
-                    border-radius: 5px;
-                    color: var(--theme-primary);
-                    background-color: var(--theme-background);
-                    font-size: 1em;
-
-                    &:focus {
-                      border: 2px solid var(--theme-accent);
-                      outline: none;
-                    }
+                  &:focus {
+                    border: 2px solid var(--theme-accent);
+                    outline: none;
                   }
                 }
+              }
 
-                &.edit-actions-row {
-                  .prompt-cell {
-                    background-color: var(--theme-background);
+              &.edit-actions-row {
+                .prompt-cell {
+                  text-align: center;
+
+                  .detail-button {
+                    background-color: transparent;
+                    border: 1px solid var(--theme-primary);
                     color: var(--theme-primary);
+                    cursor: pointer;
+                    text-decoration: none;
+                    padding: 5px 10px;
+                    margin: 5px;
+                    border-radius: 5px;
+                    font-style: normal;
+                    font-size: 1em;
+                    transition: background-color 0.3s, color 0.3s;
 
-                    .detail-button {
-                      background-color: transparent;
-                      border: 1px solid var(--theme-primary);
-                      color: var(--theme-primary);
-                      cursor: pointer;
-                      text-decoration: none;
-                      padding: 5px 10px;
-                      margin: 5px;
-                      border-radius: 5px;
-                      font-style: normal;
-                      font-size: 1em;
-                      transition: background-color 0.3s, color 0.3s;
+                    i {
+                      margin-right: 5px;
+                    }
 
-                      i {
-                        margin-right: 5px;
-                      }
-
-                      &:hover {
-                        background-color: var(--theme-primary);
-                        color: var(--theme-background);
-                      }
+                    &:hover {
+                      background-color: var(--theme-primary);
+                      color: var(--theme-background);
                     }
                   }
                 }
