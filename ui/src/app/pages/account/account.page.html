@@ -42,15 +42,13 @@
     </div>
     <div *ngIf="searchSubmitted">
       <div *ngIf="searchResults.length > 0">
-        <h3>Search Results:</h3>
-        <ul>
-          <li *ngFor="let user of searchResults">
-            {{ user.displayName || user.email || user.username }}
-          </li>
-        </ul>
+        <p *ngFor="let user of searchResults" class="search-result">
+          {{ user.displayName || user.email || user.username }}
+          <i class="fa-solid fa-plus"></i>
+        </p>
       </div>
       <div *ngIf="searchResults.length === 0">
-        <p>No users found</p>
+        <p>Couldn't find them 😔</p>
       </div>
     </div>
     <ion-button expand="block" (click)="logout()">Logout</ion-button>
