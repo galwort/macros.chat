@@ -168,41 +168,29 @@ export class JournalPage implements OnInit {
               const mealDate = new Date(mealTimestampLocal);
 
               if (this.isSameDate(mealDate, selectedDate)) {
-                const mealRef = doc(db, 'meals', journalData['mealId']);
-                const mealSnap = await getDoc(mealRef);
-                if (mealSnap.exists()) {
-                  const mealData = mealSnap.data();
+                this.journalEntries.push({
+                  id: journalDoc.id,
+                  summary: journalData['summary'],
+                  calories: journalData['calories'],
+                  carbs: journalData['carbs'],
+                  proteins: journalData['proteins'],
+                  fats: journalData['fats'],
+                  mealTimestampLocal: mealTimestampLocal,
+                  formattedMealTime: mealDate.toLocaleTimeString([], {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                  }),
+                  prompt: journalData['prompt'] || '',
+                  showPrompt: false,
+                  carbsPercent: 0,
+                  proteinsPercent: 0,
+                  fatsPercent: 0,
+                });
 
-                  this.journalEntries.push({
-                    id: journalDoc.id,
-                    mealId: journalData['mealId'],
-                    summary: mealData['summary'],
-                    calories: mealData['calories'],
-                    carbs: mealData['carbs'],
-                    proteins: mealData['proteins'],
-                    fats: mealData['fats'],
-                    mealTimestampLocal: mealTimestampLocal,
-                    formattedMealTime: mealDate.toLocaleTimeString([], {
-                      hour: 'numeric',
-                      minute: '2-digit',
-                    }),
-                    prompt: mealData['prompt'],
-                    showPrompt: false,
-                    carbsPercent: 0,
-                    proteinsPercent: 0,
-                    fatsPercent: 0,
-                  });
-
-                  this.totalCalories += mealData['calories'];
-                  this.totalCarbs += mealData['carbs'];
-                  this.totalProteins += mealData['proteins'];
-                  this.totalFats += mealData['fats'];
-                } else {
-                  console.log(
-                    'No meal found for mealId:',
-                    journalData['mealId']
-                  );
-                }
+                this.totalCalories += journalData['calories'];
+                this.totalCarbs += journalData['carbs'];
+                this.totalProteins += journalData['proteins'];
+                this.totalFats += journalData['fats'];
               }
             }
             this.journalEntries.sort(
