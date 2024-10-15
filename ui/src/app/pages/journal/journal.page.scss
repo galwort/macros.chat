@@ -170,6 +170,22 @@
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
       }
+
+      &.edit-row,
+      &.edit-actions-row {
+        cursor: default;
+
+        td {
+          background-color: var(--theme-background);
+          color: var(--theme-primary);
+        }
+
+        &:hover td {
+          background-color: var(--theme-background);
+          color: var(--theme-primary);
+          border-radius: 0;
+        }
+      }
     }
 
     tbody tr.prompt-row:hover td {
