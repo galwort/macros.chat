@@ -5,10 +5,8 @@ import {
   collection,
   getDocs,
   doc,
-  getDoc,
   deleteDoc,
   setDoc,
-  serverTimestamp,
 } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
@@ -118,7 +116,6 @@ export class JournalPage implements OnInit {
   }
 
   onDateChange() {
-    console.log(this.dateSelected);
     this.fetchJournalEntries();
   }
 
@@ -168,6 +165,11 @@ export class JournalPage implements OnInit {
               const mealDate = new Date(mealTimestampLocal);
 
               if (this.isSameDate(mealDate, selectedDate)) {
+                const formattedMealTime = mealDate.toLocaleTimeString([], {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                });
+
                 this.journalEntries.push({
                   id: journalDoc.id,
                   summary: journalData['summary'],
@@ -176,10 +178,7 @@ export class JournalPage implements OnInit {
                   proteins: journalData['proteins'],
                   fats: journalData['fats'],
                   mealTimestampLocal: mealTimestampLocal,
-                  formattedMealTime: mealDate.toLocaleTimeString([], {
-                    hour: 'numeric',
-                    minute: '2-digit',
-                  }),
+                  formattedMealTime: formattedMealTime,
                   prompt: journalData['prompt'] || '',
                   showPrompt: false,
                   carbsPercent: 0,
@@ -214,13 +213,11 @@ export class JournalPage implements OnInit {
   }
 
   private calculateTotalsAndPercentages() {
-    // Reset totals
     this.totalCalories = 0;
     this.totalCarbs = 0;
     this.totalProteins = 0;
     this.totalFats = 0;
 
-    // Calculate totals
     for (const entry of this.journalEntries) {
       this.totalCalories += entry.calories;
       this.totalCarbs += entry.carbs;
@@ -228,7 +225,6 @@ export class JournalPage implements OnInit {
       this.totalFats += entry.fats;
     }
 
-    // Calculate percentages
     this.calculatePercentages();
   }
 
@@ -310,10 +306,7 @@ export class JournalPage implements OnInit {
 
         this.journalEntries = this.journalEntries.filter((e) => e !== entry);
 
-        // Recalculate totals and percentages
         this.calculateTotalsAndPercentages();
-
-        // Update chart data
         this.updateChartData();
       }
     } catch (error) {
@@ -355,7 +348,7 @@ export class JournalPage implements OnInit {
       carbs: entry.carbs,
       proteins: entry.proteins,
       fats: entry.fats,
-      mealTimestampLocal: entry.mealTimestampLocal,
+      mealTime: this.formatTimeForInput(entry.mealTimestampLocal),
     };
   }
 
@@ -374,7 +367,11 @@ export class JournalPage implements OnInit {
         const userId = user.uid;
         const journalDocRef = doc(db, `users/${userId}/journal`, entry.id);
 
-        // Update the Firestore document
+        const newMealTimestampLocal = this.combineDateAndTime(
+          this.dateSelected,
+          entry.editValues.mealTime
+        );
+
         await setDoc(
           journalDocRef,
           {
@@ -383,33 +380,27 @@ export class JournalPage implements OnInit {
             carbs: entry.editValues.carbs,
             proteins: entry.editValues.proteins,
             fats: entry.editValues.fats,
-            mealTimestampLocal: entry.editValues.mealTimestampLocal,
+            mealTimestampLocal: newMealTimestampLocal.toISOString(),
           },
           { merge: true }
         );
 
-        // Update the local entry
         entry.summary = entry.editValues.summary;
         entry.calories = entry.editValues.calories;
         entry.carbs = entry.editValues.carbs;
         entry.proteins = entry.editValues.proteins;
         entry.fats = entry.editValues.fats;
-        entry.mealTimestampLocal = entry.editValues.mealTimestampLocal;
+        entry.mealTimestampLocal = newMealTimestampLocal.toISOString();
 
-        // Update formattedMealTime
-        const mealDate = new Date(entry.mealTimestampLocal);
-        entry.formattedMealTime = mealDate.toLocaleTimeString([], {
-          hour: 'numeric',
+        entry.formattedMealTime = newMealTimestampLocal.toLocaleTimeString([], {
+          hour: '2-digit',
           minute: '2-digit',
         });
 
         entry.isEditing = false;
         entry.editValues = null;
 
-        // Recalculate totals and percentages
         this.calculateTotalsAndPercentages();
-
-        // Update chart data
         this.updateChartData();
       } else {
         console.error('User is not authenticated.');
@@ -417,5 +408,18 @@ export class JournalPage implements OnInit {
     } catch (error) {
       console.error('Error saving journal entry:', error);
     }
+  }
+
+  private formatTimeForInput(isoString: string): string {
+    const date = new Date(isoString);
+    const hours = ('0' + date.getHours()).slice(-2);
+    const minutes = ('0' + date.getMinutes()).slice(-2);
+    return `${hours}:${minutes}`;
+  }
+
+  private combineDateAndTime(dateString: string, timeString: string): Date {
+    const [year, month, day] = dateString.split('-').map(Number);
+    const [hours, minutes] = timeString.split(':').map(Number);
+    return new Date(year, month - 1, day, hours, minutes);
   }
 }

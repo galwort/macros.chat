@@ -61,7 +61,6 @@
             <tbody>
               <ng-container *ngFor="let entry of journalEntries; let i = index">
                 <ng-container *ngIf="!entry.isEditing">
-                  <!-- Display mode rows -->
                   <tr (click)="entry.showPrompt = !entry.showPrompt">
                     <td>{{ entry.summary }}</td>
                     <td class="calories">{{ entry.calories }}</td>
@@ -154,10 +153,10 @@
                       />
                     </td>
                     <td>
-                      <ion-datetime
-                        presentation="time"
-                        [(ngModel)]="entry.editValues.mealTimestampLocal"
-                      ></ion-datetime>
+                      <input
+                        type="time"
+                        [(ngModel)]="entry.editValues.mealTime"
+                      />
                     </td>
                   </tr>
                   <tr class="prompt-row">
@@ -213,7 +212,6 @@
           </table>
         </div>
       </div>
-
       <div class="chart-container">
         <canvas
           baseChart
