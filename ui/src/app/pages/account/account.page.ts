@@ -28,6 +28,7 @@ export class AccountPage {
   averageCalories: number = 0;
   searchQuery: string = '';
   searchResults: any[] = [];
+  searchSubmitted: boolean = false;
 
   constructor(private router: Router) {
     this.checkUserLoginStatus();
@@ -74,6 +75,7 @@ export class AccountPage {
   async searchUsers() {
     if (!this.searchQuery.trim()) return;
 
+    this.searchSubmitted = true;
     this.searchResults = [];
 
     const usersCollectionRef = collection(db, 'users');
