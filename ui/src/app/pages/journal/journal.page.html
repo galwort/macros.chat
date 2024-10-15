@@ -38,7 +38,6 @@
           </ion-modal>
         </ion-item>
       </div>
-
       <div class="table-wrapper">
         <div class="table-container">
           <table>
@@ -123,10 +122,12 @@
                   </tr>
                 </ng-container>
                 <ng-container *ngIf="entry.isEditing">
-                  <!-- Edit mode rows -->
-                  <tr>
+                  <tr class="edit-row">
                     <td>
-                      <input [(ngModel)]="entry.editValues.summary" />
+                      <input
+                        type="text"
+                        [(ngModel)]="entry.editValues.summary"
+                      />
                     </td>
                     <td class="calories">
                       <input
@@ -159,7 +160,7 @@
                       />
                     </td>
                   </tr>
-                  <tr class="prompt-row">
+                  <tr class="edit-actions-row">
                     <td colspan="6" class="prompt-cell">
                       <button
                         class="detail-button"

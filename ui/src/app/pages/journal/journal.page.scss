@@ -250,3 +250,26 @@
     color: var(--theme-background);
   }
 }
+
+.edit-row {
+  input[type="text"],
+  input[type="number"],
+  input[type="time"] {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid var(--theme-primary);
+    border-radius: 5px;
+    color: var(--theme-primary);
+    background-color: var(--theme-background);
+    font-size: 1em;
+
+    &:focus {
+      border: 2px solid var(--theme-accent);
+      outline: none;
+    }
+  }
+
+  td {
+    padding: 5px;
+  }
+}
