@@ -60,64 +60,123 @@
             </thead>
             <tbody>
               <ng-container *ngFor="let entry of journalEntries; let i = index">
-                <tr (click)="entry.showPrompt = !entry.showPrompt">
-                  <td>{{ entry.summary }}</td>
-                  <td class="calories">{{ entry.calories }}</td>
-                  <td class="carbs">
-                    <ng-container *ngIf="displayMode === 'numbers'">
-                      {{ entry.carbs }}
-                    </ng-container>
-                    <ng-container *ngIf="displayMode === 'percentages'">
-                      {{ entry.carbsPercent | number: '1.0-1' }}%
-                    </ng-container>
-                  </td>
-                  <td class="protein">
-                    <ng-container *ngIf="displayMode === 'numbers'">
-                      {{ entry.proteins }}
-                    </ng-container>
-                    <ng-container *ngIf="displayMode === 'percentages'">
-                      {{ entry.proteinsPercent | number: '1.0-1' }}%
-                    </ng-container>
-                  </td>
-                  <td class="fats">
-                    <ng-container *ngIf="displayMode === 'numbers'">
-                      {{ entry.fats }}
-                    </ng-container>
-                    <ng-container *ngIf="displayMode === 'percentages'">
-                      {{ entry.fatsPercent | number: '1.0-1' }}%
-                    </ng-container>
-                  </td>
-                  <td>{{ entry.formattedMealTime }}</td>
-                </tr>
-                <tr *ngIf="entry.showPrompt" class="prompt-row">
-                  <td colspan="6" class="prompt-cell">
-                    <div>{{ entry.prompt }}</div>
-                    <button
-                      class="detail-button"
-                      (click)="favoriteEntry(entry, $event)"
-                    >
-                      <i
-                        [ngClass]="{
-                      'fa-solid': entry.isFavorite,
-                      'fa-regular': !entry.isFavorite,
-                      'fa-star': true
-                    }"
-                      ></i>
-
-                      {{ entry.isFavorite ? 'Favorited' : 'Favorite' }}
-                    </button>
-                    <button class="detail-button">
-                      <i class="fa-solid fa-pen"></i>Edit
-                    </button>
-                    <button
-                      class="detail-button"
-                      (click)="deleteEntry(entry, $event)"
-                    >
-                      <i class="fa-solid fa-trash"></i>
-                      Remove
-                    </button>
-                  </td>
-                </tr>
+                <ng-container *ngIf="!entry.isEditing">
+                  <!-- Display mode rows -->
+                  <tr (click)="entry.showPrompt = !entry.showPrompt">
+                    <td>{{ entry.summary }}</td>
+                    <td class="calories">{{ entry.calories }}</td>
+                    <td class="carbs">
+                      <ng-container *ngIf="displayMode === 'numbers'">
+                        {{ entry.carbs }}
+                      </ng-container>
+                      <ng-container *ngIf="displayMode === 'percentages'">
+                        {{ entry.carbsPercent | number: '1.0-1' }}%
+                      </ng-container>
+                    </td>
+                    <td class="protein">
+                      <ng-container *ngIf="displayMode === 'numbers'">
+                        {{ entry.proteins }}
+                      </ng-container>
+                      <ng-container *ngIf="displayMode === 'percentages'">
+                        {{ entry.proteinsPercent | number: '1.0-1' }}%
+                      </ng-container>
+                    </td>
+                    <td class="fats">
+                      <ng-container *ngIf="displayMode === 'numbers'">
+                        {{ entry.fats }}
+                      </ng-container>
+                      <ng-container *ngIf="displayMode === 'percentages'">
+                        {{ entry.fatsPercent | number: '1.0-1' }}%
+                      </ng-container>
+                    </td>
+                    <td>{{ entry.formattedMealTime }}</td>
+                  </tr>
+                  <tr *ngIf="entry.showPrompt" class="prompt-row">
+                    <td colspan="6" class="prompt-cell">
+                      <div>{{ entry.prompt }}</div>
+                      <button
+                        class="detail-button"
+                        (click)="favoriteEntry(entry, $event)"
+                      >
+                        <i
+                          [ngClass]="{
+                            'fa-solid': entry.isFavorite,
+                            'fa-regular': !entry.isFavorite,
+                            'fa-star': true
+                          }"
+                        ></i>
+                        {{ entry.isFavorite ? 'Favorited' : 'Favorite' }}
+                      </button>
+                      <button
+                        class="detail-button"
+                        (click)="editEntry(entry, $event)"
+                      >
+                        <i class="fa-solid fa-pen"></i>Edit
+                      </button>
+                      <button
+                        class="detail-button"
+                        (click)="deleteEntry(entry, $event)"
+                      >
+                        <i class="fa-solid fa-trash"></i>
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                </ng-container>
+                <ng-container *ngIf="entry.isEditing">
+                  <!-- Edit mode rows -->
+                  <tr>
+                    <td>
+                      <input [(ngModel)]="entry.editValues.summary" />
+                    </td>
+                    <td class="calories">
+                      <input
+                        type="number"
+                        [(ngModel)]="entry.editValues.calories"
+                      />
+                    </td>
+                    <td class="carbs">
+                      <input
+                        type="number"
+                        [(ngModel)]="entry.editValues.carbs"
+                      />
+                    </td>
+                    <td class="protein">
+                      <input
+                        type="number"
+                        [(ngModel)]="entry.editValues.proteins"
+                      />
+                    </td>
+                    <td class="fats">
+                      <input
+                        type="number"
+                        [(ngModel)]="entry.editValues.fats"
+                      />
+                    </td>
+                    <td>
+                      <ion-datetime
+                        presentation="time"
+                        [(ngModel)]="entry.editValues.mealTimestampLocal"
+                      ></ion-datetime>
+                    </td>
+                  </tr>
+                  <tr class="prompt-row">
+                    <td colspan="6" class="prompt-cell">
+                      <button
+                        class="detail-button"
+                        (click)="saveEntry(entry, $event)"
+                      >
+                        <i class="fa-solid fa-save"></i>Save
+                      </button>
+                      <button
+                        class="detail-button"
+                        (click)="cancelEditEntry(entry, $event)"
+                      >
+                        <i class="fa-solid fa-times"></i>Cancel
+                      </button>
+                    </td>
+                  </tr>
+                </ng-container>
               </ng-container>
             </tbody>
             <tfoot>

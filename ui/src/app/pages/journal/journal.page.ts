@@ -186,6 +186,8 @@ export class JournalPage implements OnInit {
                   proteinsPercent: 0,
                   fatsPercent: 0,
                   isFavorite: journalData['isFavorite'] || false,
+                  isEditing: false,
+                  editValues: null,
                 });
 
                 this.totalCalories += journalData['calories'];
@@ -199,7 +201,7 @@ export class JournalPage implements OnInit {
                 new Date(a.mealTimestampLocal).getTime() -
                 new Date(b.mealTimestampLocal).getTime()
             );
-            this.calculatePercentages();
+            this.calculateTotalsAndPercentages();
             this.updateChartData();
           }
         } catch (error) {
@@ -209,6 +211,25 @@ export class JournalPage implements OnInit {
         console.error('User is not logged in.');
       }
     });
+  }
+
+  private calculateTotalsAndPercentages() {
+    // Reset totals
+    this.totalCalories = 0;
+    this.totalCarbs = 0;
+    this.totalProteins = 0;
+    this.totalFats = 0;
+
+    // Calculate totals
+    for (const entry of this.journalEntries) {
+      this.totalCalories += entry.calories;
+      this.totalCarbs += entry.carbs;
+      this.totalProteins += entry.proteins;
+      this.totalFats += entry.fats;
+    }
+
+    // Calculate percentages
+    this.calculatePercentages();
   }
 
   private calculatePercentages() {
@@ -289,12 +310,10 @@ export class JournalPage implements OnInit {
 
         this.journalEntries = this.journalEntries.filter((e) => e !== entry);
 
-        this.totalCalories -= entry.calories;
-        this.totalCarbs -= entry.carbs;
-        this.totalProteins -= entry.proteins;
-        this.totalFats -= entry.fats;
+        // Recalculate totals and percentages
+        this.calculateTotalsAndPercentages();
 
-        this.calculatePercentages();
+        // Update chart data
         this.updateChartData();
       }
     } catch (error) {
@@ -325,5 +344,78 @@ export class JournalPage implements OnInit {
 
   openDatePicker() {
     this.dateModal?.present();
+  }
+
+  editEntry(entry: any, event: any) {
+    event.stopPropagation();
+    entry.isEditing = true;
+    entry.editValues = {
+      summary: entry.summary,
+      calories: entry.calories,
+      carbs: entry.carbs,
+      proteins: entry.proteins,
+      fats: entry.fats,
+      mealTimestampLocal: entry.mealTimestampLocal,
+    };
+  }
+
+  cancelEditEntry(entry: any, event: any) {
+    event.stopPropagation();
+    entry.isEditing = false;
+    entry.editValues = null;
+  }
+
+  async saveEntry(entry: any, event: any) {
+    event.stopPropagation();
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      if (user) {
+        const userId = user.uid;
+        const journalDocRef = doc(db, `users/${userId}/journal`, entry.id);
+
+        // Update the Firestore document
+        await setDoc(
+          journalDocRef,
+          {
+            summary: entry.editValues.summary,
+            calories: entry.editValues.calories,
+            carbs: entry.editValues.carbs,
+            proteins: entry.editValues.proteins,
+            fats: entry.editValues.fats,
+            mealTimestampLocal: entry.editValues.mealTimestampLocal,
+          },
+          { merge: true }
+        );
+
+        // Update the local entry
+        entry.summary = entry.editValues.summary;
+        entry.calories = entry.editValues.calories;
+        entry.carbs = entry.editValues.carbs;
+        entry.proteins = entry.editValues.proteins;
+        entry.fats = entry.editValues.fats;
+        entry.mealTimestampLocal = entry.editValues.mealTimestampLocal;
+
+        // Update formattedMealTime
+        const mealDate = new Date(entry.mealTimestampLocal);
+        entry.formattedMealTime = mealDate.toLocaleTimeString([], {
+          hour: 'numeric',
+          minute: '2-digit',
+        });
+
+        entry.isEditing = false;
+        entry.editValues = null;
+
+        // Recalculate totals and percentages
+        this.calculateTotalsAndPercentages();
+
+        // Update chart data
+        this.updateChartData();
+      } else {
+        console.error('User is not authenticated.');
+      }
+    } catch (error) {
+      console.error('Error saving journal entry:', error);
+    }
   }
 }
