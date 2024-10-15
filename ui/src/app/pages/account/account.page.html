@@ -28,6 +28,9 @@
         <h3>{{ userEmailAddress }}</h3>
       </div>
     </div>
+    <p>{{ mealsLogged }} meals logged</p>
+    <p>{{ averageCalories | number:'1.0-0' }} average calories</p>
+    <h2>Favorite Meals</h2>
     <ion-button expand="block" (click)="logout()">Logout</ion-button>
   </div>
 </ion-content>

@@ -2,7 +2,14 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, setDoc } from 'firebase/firestore';
+import {
+  getFirestore,
+  doc,
+  collection,
+  getDocs,
+  query,
+  setDoc,
+} from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
 
 export const app = initializeApp(environment.firebaseConfig);
@@ -18,6 +25,8 @@ export class AccountPage {
   userProfileImage: string | null = null;
   userName: string | null = null;
   userEmailAddress: string | null = null;
+  mealsLogged: number = 0;
+  averageCalories: number = 0;
 
   constructor(private router: Router) {
     this.checkUserLoginStatus();
@@ -33,16 +42,13 @@ export class AccountPage {
         this.userEmailAddress = user.email;
         try {
           const userDocRef = doc(db, 'users', user.uid);
-          await setDoc(
-            userDocRef,
-            {
-              lastLoginTimestamp: new Date().toISOString(),
-            },
-            { merge: true }
-          );
-          console.log('Last login timestamp updated.');
+          await this.updateLastLogin(userDocRef);
+          await this.getMealData(user.uid);
         } catch (e) {
-          console.error('Error updating lastLoginTimestamp:', e);
+          console.error(
+            'Error updating lastLoginTimestamp or fetching meal data:',
+            e
+          );
         }
       } else {
         this.isUserLoggedIn = false;
@@ -51,6 +57,33 @@ export class AccountPage {
         this.userEmailAddress = null;
       }
     });
+  }
+
+  async updateLastLogin(userDocRef: any) {
+    await setDoc(
+      userDocRef,
+      {
+        lastLoginTimestamp: new Date().toISOString(),
+      },
+      { merge: true }
+    );
+    console.log('Last login timestamp updated.');
+  }
+
+  async getMealData(userId: string) {
+    const journalCollectionRef = collection(db, `users/${userId}/journal`);
+    const journalSnapshot = await getDocs(journalCollectionRef);
+    let totalCalories = 0;
+
+    this.mealsLogged = journalSnapshot.size;
+
+    journalSnapshot.forEach((doc) => {
+      const data = doc.data();
+      totalCalories += data['calories'] || 0;
+    });
+
+    this.averageCalories =
+      this.mealsLogged > 0 ? totalCalories / this.mealsLogged : 0;
   }
 
   logout() {
