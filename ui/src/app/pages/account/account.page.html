@@ -32,8 +32,21 @@
     <p>{{ averageCalories | number:'1.0-0' }} average calories</p>
     <h2>Share Journal</h2>
     <div class="input-container">
-      <input type="text" placeholder="Search by name or email" />
-      <i class="fa-solid fa-magnifying-glass"></i>
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        placeholder="Search by name or email"
+        (keyup.enter)="searchUsers()"
+      />
+      <i class="fa-solid fa-magnifying-glass" (click)="searchUsers()"></i>
+    </div>
+    <div *ngIf="searchResults.length > 0">
+      <h3>Search Results:</h3>
+      <ul>
+        <li *ngFor="let user of searchResults">
+          {{ user.displayName || user.email || user.username }}
+        </li>
+      </ul>
     </div>
     <ion-button expand="block" (click)="logout()">Logout</ion-button>
   </div>

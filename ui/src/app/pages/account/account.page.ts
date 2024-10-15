@@ -4,11 +4,10 @@ import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import {
   getFirestore,
-  doc,
   collection,
-  getDocs,
   query,
-  setDoc,
+  where,
+  getDocs,
 } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
 
@@ -27,6 +26,8 @@ export class AccountPage {
   userEmailAddress: string | null = null;
   mealsLogged: number = 0;
   averageCalories: number = 0;
+  searchQuery: string = '';
+  searchResults: any[] = [];
 
   constructor(private router: Router) {
     this.checkUserLoginStatus();
@@ -41,14 +42,9 @@ export class AccountPage {
         this.userName = user.displayName;
         this.userEmailAddress = user.email;
         try {
-          const userDocRef = doc(db, 'users', user.uid);
-          await this.updateLastLogin(userDocRef);
           await this.getMealData(user.uid);
         } catch (e) {
-          console.error(
-            'Error updating lastLoginTimestamp or fetching meal data:',
-            e
-          );
+          console.error('Error fetching meal data:', e);
         }
       } else {
         this.isUserLoggedIn = false;
@@ -57,17 +53,6 @@ export class AccountPage {
         this.userEmailAddress = null;
       }
     });
-  }
-
-  async updateLastLogin(userDocRef: any) {
-    await setDoc(
-      userDocRef,
-      {
-        lastLoginTimestamp: new Date().toISOString(),
-      },
-      { merge: true }
-    );
-    console.log('Last login timestamp updated.');
   }
 
   async getMealData(userId: string) {
@@ -84,6 +69,38 @@ export class AccountPage {
 
     this.averageCalories =
       this.mealsLogged > 0 ? totalCalories / this.mealsLogged : 0;
+  }
+
+  async searchUsers() {
+    if (!this.searchQuery.trim()) return;
+
+    this.searchResults = [];
+
+    const usersCollectionRef = collection(db, 'users');
+
+    const emailQuery = query(
+      usersCollectionRef,
+      where('email', '==', this.searchQuery)
+    );
+    const displayNameQuery = query(
+      usersCollectionRef,
+      where('displayName', '==', this.searchQuery)
+    );
+    const usernameQuery = query(
+      usersCollectionRef,
+      where('username', '==', this.searchQuery)
+    );
+
+    const [emailSnapshot, displayNameSnapshot, usernameSnapshot] =
+      await Promise.all([
+        getDocs(emailQuery),
+        getDocs(displayNameQuery),
+        getDocs(usernameQuery),
+      ]);
+
+    emailSnapshot.forEach((doc) => this.searchResults.push(doc.data()));
+    displayNameSnapshot.forEach((doc) => this.searchResults.push(doc.data()));
+    usernameSnapshot.forEach((doc) => this.searchResults.push(doc.data()));
   }
 
   logout() {
