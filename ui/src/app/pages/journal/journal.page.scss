@@ -175,7 +175,6 @@
         background-color: #4682b466;
       }
 
-      /* Hover effects for rows except prompt row */
       &:not(.prompt-row):hover {
         td {
           color: var(--theme-secondary);
@@ -186,19 +185,23 @@
         }
 
         td.calories {
-          background-color: #32cd32; /* Opaque color */
+          background-color: #32cd32;
+          color: #1a2f3a;
         }
 
         td.carbs {
-          background-color: #e3b508; /* Opaque color */
+          background-color: #e3b508;
+          color: #1a2f3a;
         }
 
         td.protein {
-          background-color: #ff6347; /* Opaque color */
+          background-color: #ff6347;
+          color: #1a2f3a;
         }
 
         td.fats {
-          background-color: #4682b4; /* Opaque color */
+          background-color: #4682b4;
+          color: #1a2f3a;
         }
 
         td:first-child {
@@ -212,7 +215,6 @@
         }
       }
 
-      /* Remove hover effects from prompt row */
       &.prompt-row {
         cursor: default;
 
@@ -228,7 +230,6 @@
         }
       }
 
-      /* Styles for edit rows */
       &.edit-row,
       &.edit-actions-row {
         cursor: default;
