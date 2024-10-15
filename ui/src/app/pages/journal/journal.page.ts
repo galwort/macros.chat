@@ -256,8 +256,9 @@ export class JournalPage implements OnInit {
     }
   }
 
-  toggleRow(index: number) {
-    this.expandedRowIndex = this.expandedRowIndex === index ? null : index;
+  toggleEntryPrompt(entry: any) {
+    entry.showPrompt = !entry.showPrompt;
+    this.updateChartData();
   }
 
   toggleDisplayMode() {
@@ -315,17 +316,54 @@ export class JournalPage implements OnInit {
   }
 
   private updateChartData() {
+    let selectedEntries = this.journalEntries.filter(
+      (entry) => entry.showPrompt
+    );
+    let totalCarbs: number;
+    let totalProteins: number;
+    let totalFats: number;
+    let totalCarbsPercent: number;
+    let totalProteinsPercent: number;
+    let totalFatsPercent: number;
+
+    if (selectedEntries.length > 0) {
+      totalCarbs = selectedEntries.reduce((sum, entry) => sum + entry.carbs, 0);
+      totalProteins = selectedEntries.reduce(
+        (sum, entry) => sum + entry.proteins,
+        0
+      );
+      totalFats = selectedEntries.reduce((sum, entry) => sum + entry.fats, 0);
+
+      const totalGrams = totalCarbs + totalProteins + totalFats;
+      if (totalGrams > 0) {
+        totalCarbsPercent = Math.round((totalCarbs / totalGrams) * 100);
+        totalProteinsPercent = Math.round((totalProteins / totalGrams) * 100);
+        totalFatsPercent = Math.round((totalFats / totalGrams) * 100);
+      } else {
+        totalCarbsPercent = 0;
+        totalProteinsPercent = 0;
+        totalFatsPercent = 0;
+      }
+    } else {
+      totalCarbs = this.totalCarbs;
+      totalProteins = this.totalProteins;
+      totalFats = this.totalFats;
+      totalCarbsPercent = this.totalCarbsPercent;
+      totalProteinsPercent = this.totalProteinsPercent;
+      totalFatsPercent = this.totalFatsPercent;
+    }
+
     if (this.displayMode === 'percentages') {
       this.pieChartData.datasets[0].data = [
-        this.totalCarbsPercent,
-        this.totalProteinsPercent,
-        this.totalFatsPercent,
+        totalCarbsPercent,
+        totalProteinsPercent,
+        totalFatsPercent,
       ];
     } else {
       this.pieChartData.datasets[0].data = [
-        this.totalCarbs,
-        this.totalProteins,
-        this.totalFats,
+        totalCarbs,
+        totalProteins,
+        totalFats,
       ];
     }
     this.chart?.update();

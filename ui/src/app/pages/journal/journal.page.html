@@ -60,7 +60,7 @@
             <tbody>
               <ng-container *ngFor="let entry of journalEntries; let i = index">
                 <ng-container *ngIf="!entry.isEditing">
-                  <tr (click)="entry.showPrompt = !entry.showPrompt">
+                  <tr (click)="toggleEntryPrompt(entry)">
                     <td>{{ entry.summary }}</td>
                     <td class="calories">{{ entry.calories }}</td>
                     <td class="carbs">
