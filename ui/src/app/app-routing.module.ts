@@ -1,5 +1,8 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+
+@Component({ template: '' })
+export class AuthHandlerComponent {}
 
 const routes: Routes = [
   {
@@ -34,9 +37,14 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/meal/meal.module').then((m) => m.MealPageModule),
   },
+  {
+    path: '__/auth/handler',
+    component: AuthHandlerComponent,
+  },
 ];
 
 @NgModule({
+  declarations: [AuthHandlerComponent],
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
