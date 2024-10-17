@@ -515,6 +515,17 @@ export class JournalPage implements OnInit {
         const userId = user.uid;
         const journalRef = collection(db, `users/${userId}/journal`);
 
+        const currentTimestamp = new Date().toISOString();
+        const mealTimestampLocal = this.parseDateLocal(
+          this.dateSelected
+        ).toISOString();
+
+        const mealId = response.summary
+          .toLowerCase()
+          .replace(/&/g, 'and')
+          .replace(/[\'\(\),]/g, '')
+          .replace(/\s+/g, '-');
+
         const newMeal = {
           summary: response.summary,
           calories: response.calories,
@@ -522,7 +533,10 @@ export class JournalPage implements OnInit {
           proteins: response.proteins,
           fats: response.fats,
           prompt: this.newMealDescription,
-          mealTimestampLocal: new Date().toISOString(),
+          mealTimestampLocal: mealTimestampLocal,
+          lastEditTimestamp: currentTimestamp,
+          logTimestamp: currentTimestamp,
+          mealId: mealId,
           isFavorite: false,
         };
 
@@ -532,10 +546,13 @@ export class JournalPage implements OnInit {
           ...newMeal,
           id: '',
           showPrompt: false,
-          formattedMealTime: new Date().toLocaleTimeString([], {
-            hour: '2-digit',
-            minute: '2-digit',
-          }),
+          formattedMealTime: new Date(mealTimestampLocal).toLocaleTimeString(
+            [],
+            {
+              hour: '2-digit',
+              minute: '2-digit',
+            }
+          ),
           carbsPercent: 0,
           proteinsPercent: 0,
           fatsPercent: 0,
