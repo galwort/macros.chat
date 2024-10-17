@@ -216,6 +216,7 @@ export class MealPage implements OnInit {
       this.datetimeSelected = selectedDate;
     }
   }
+
   logFood = async () => {
     this.isLoggingFood = true;
     this.logButtonText = 'Logging...';
@@ -238,12 +239,38 @@ export class MealPage implements OnInit {
         const mealTimestampDate = new Date(mealTimestamp);
         const mealTimestampLocal = mealTimestampDate.toLocaleString();
 
+        const docRef = doc(db, 'meals', mealId);
+        const docSnap = await getDoc(docRef);
+
+        if (!docSnap.exists()) {
+          console.error('Meal not found.');
+          return;
+        }
+
+        const data = docSnap.data();
+        const nutrients = {
+          carbs: data['carbs'],
+          fats: data['fats'],
+          proteins: data['proteins'],
+          calories: data['calories'],
+          summary: data['summary'],
+          prompt: data['prompt'] || '',
+        };
+
         const journalRef = collection(db, `users/${userId}/journal`);
         await addDoc(journalRef, {
           mealId: mealId,
           mealTimestamp: mealTimestamp,
           mealTimestampLocal: mealTimestampLocal,
-          timestamp: logTimestamp,
+          logTimestamp: logTimestamp,
+          lastEditTimestamp: logTimestamp,
+          calories: nutrients.calories,
+          carbs: nutrients.carbs,
+          fats: nutrients.fats,
+          proteins: nutrients.proteins,
+          summary: nutrients.summary,
+          prompt: nutrients.prompt,
+          isFavorite: false,
         });
 
         this.router.navigateByUrl('/journal');
