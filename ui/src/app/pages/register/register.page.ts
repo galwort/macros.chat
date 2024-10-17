@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { AuthService } from '../../services/auth.service';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
+import { initializeApp } from 'firebase/app';
 
 export const app = initializeApp(environment.firebaseConfig);
 export const db = getFirestore(app);
@@ -18,7 +18,7 @@ export class RegisterPage implements OnInit {
   password: string = '';
   meals: any[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
     this.loadMeals();
@@ -47,9 +47,9 @@ export class RegisterPage implements OnInit {
   }
 
   register() {
-    const auth = getAuth();
-    createUserWithEmailAndPassword(auth, this.email, this.password)
-      .then((result) => {
+    this.authService
+      .register(this.email, this.password)
+      .then(() => {
         this.router.navigate(['/login']);
       })
       .catch((error) => {

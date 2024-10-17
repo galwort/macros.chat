@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  getAuth,
-  signInWithPopup,
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-} from 'firebase/auth';
+import { AuthService } from '../../services/auth.service';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
@@ -23,7 +18,7 @@ export class LoginPage implements OnInit {
   email: string = '';
   password: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
     this.loadMeals();
@@ -52,11 +47,10 @@ export class LoginPage implements OnInit {
   }
 
   emailLogin() {
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, this.email, this.password)
-      .then((result) => {
-        const user = result.user;
-        this.router.navigate(['/']);
+    this.authService
+      .login(this.email, this.password)
+      .then(() => {
+        this.router.navigate(['/home']);
       })
       .catch((error) => {
         console.error(error);
@@ -64,14 +58,14 @@ export class LoginPage implements OnInit {
   }
 
   googleLogin() {
-    const auth = getAuth();
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const user = result.user;
-        this.router.navigate(['/']);
+    this.authService
+      .loginWithGoogle()
+      .then(() => {
+        this.router.navigate(['/home']);
       })
-      .catch((error) => {});
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   navigateTo(page: string) {
