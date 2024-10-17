@@ -533,6 +533,7 @@ export class JournalPage implements OnInit {
           proteins: response.proteins,
           fats: response.fats,
           prompt: this.newMealDescription,
+          mealTimestamp: currentTimestamp,
           mealTimestampLocal: mealTimestampLocal,
           lastEditTimestamp: currentTimestamp,
           logTimestamp: currentTimestamp,
