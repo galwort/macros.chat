@@ -1,6 +1,7 @@
 import { NgModule, Component } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
+import { AuthenticatedGuard } from './guards/authenticated.guard';
 
 @Component({ template: '' })
 export class AuthHandlerComponent {}
@@ -29,11 +30,13 @@ const routes: Routes = [
     path: 'journal',
     loadChildren: () =>
       import('./pages/journal/journal.module').then((m) => m.JournalPageModule),
+    canActivate: [AuthenticatedGuard],
   },
   {
     path: 'account',
     loadChildren: () =>
       import('./pages/account/account.module').then((m) => m.AccountPageModule),
+    canActivate: [AuthenticatedGuard],
   },
   {
     path: ':mealId',
