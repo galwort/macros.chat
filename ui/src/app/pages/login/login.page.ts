@@ -50,7 +50,7 @@ export class LoginPage implements OnInit {
     this.authService
       .login(this.email, this.password)
       .then(() => {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/']);
       })
       .catch((error) => {
         console.error(error);
@@ -61,7 +61,7 @@ export class LoginPage implements OnInit {
     this.authService
       .loginWithGoogle()
       .then(() => {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/']);
       })
       .catch((error) => {
         console.error(error);
