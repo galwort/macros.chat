@@ -1,5 +1,6 @@
 import { NgModule, Component } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 
 @Component({ template: '' })
 export class AuthHandlerComponent {}
@@ -14,6 +15,7 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () =>
       import('./pages/login/login.module').then((m) => m.LoginPageModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'register',
@@ -21,6 +23,7 @@ const routes: Routes = [
       import('./pages/register/register.module').then(
         (m) => m.RegisterPageModule
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'journal',
