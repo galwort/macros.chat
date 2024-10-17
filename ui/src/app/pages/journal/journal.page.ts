@@ -7,6 +7,7 @@ import {
   doc,
   deleteDoc,
   setDoc,
+  addDoc,
 } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
@@ -21,6 +22,7 @@ import {
 import { BaseChartDirective } from 'ng2-charts';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { IonModal } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
 
 Chart.register(...registerables, ChartDataLabels);
 
@@ -62,8 +64,10 @@ export class JournalPage implements OnInit {
   public displayMode: 'numbers' | 'percentages' = 'numbers';
   public favoriteMeals: any[] = [];
   public selectedFavoriteMeal: string | null = null;
+  public newMealDescription: string = '';
+  public isLoadingNewMeal: boolean = false;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private http: HttpClient) {
     this.pieChartOptions = {
       borderColor: '#030607',
       plugins: {
@@ -478,5 +482,84 @@ export class JournalPage implements OnInit {
         }
       }
     });
+  }
+
+  async addNewMeal() {
+    if (!this.newMealDescription) {
+      console.log('Please enter a meal description');
+      return;
+    }
+
+    this.isLoadingNewMeal = true;
+
+    try {
+      const response = await this.http
+        .post<any>(
+          'https://fa-macroschat.azurewebsites.net/api/process_meal?',
+          {
+            text: this.newMealDescription,
+          }
+        )
+        .toPromise();
+
+      if (response.error) {
+        console.error('Error processing meal:', response.error);
+        this.isLoadingNewMeal = false;
+        return;
+      }
+
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (user) {
+        const userId = user.uid;
+        const journalRef = collection(db, `users/${userId}/journal`);
+
+        const newMeal = {
+          summary: response.summary,
+          calories: response.calories,
+          carbs: response.carbs,
+          proteins: response.proteins,
+          fats: response.fats,
+          prompt: this.newMealDescription,
+          mealTimestampLocal: new Date().toISOString(),
+          isFavorite: false,
+        };
+
+        await addDoc(journalRef, newMeal);
+
+        this.journalEntries.push({
+          ...newMeal,
+          id: '',
+          showPrompt: false,
+          formattedMealTime: new Date().toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+          }),
+          carbsPercent: 0,
+          proteinsPercent: 0,
+          fatsPercent: 0,
+          isEditing: false,
+          editValues: null,
+        });
+
+        this.calculateTotalsAndPercentages();
+        this.updateChartData();
+
+        this.newMealDescription = '';
+
+        await this.fetchJournalEntries();
+      }
+    } catch (error) {
+      console.error('Error adding new meal:', error);
+    }
+
+    this.isLoadingNewMeal = false;
+  }
+
+  onFavoriteMealSelected() {
+    if (this.selectedFavoriteMeal) {
+      this.newMealDescription = this.selectedFavoriteMeal;
+    }
   }
 }
