@@ -41,6 +41,7 @@ export class MealPage implements OnInit {
   mealTimestamp = this.mealForm.value.mealTimestamp as string;
   isLoggingFood: boolean = false;
   logButtonText: string = 'Log Food';
+  formattedMealName: string = 'it';
 
   nutrients: {
     carbs: number;
@@ -97,6 +98,7 @@ export class MealPage implements OnInit {
   ngOnInit() {
     this.checkUserLoginStatus();
     this.mealId = this.route.snapshot.paramMap.get('mealId')!;
+    this.formattedMealName = this.mealId.replace(/-/g, ' ');
     this.fetchMealData();
 
     const now = new Date();

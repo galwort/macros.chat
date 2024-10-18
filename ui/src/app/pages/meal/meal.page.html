@@ -37,7 +37,7 @@
 
   <div *ngIf="errorMessage" class="centered-content">
     <div class="error-message">
-      <p>Couldn't find that one.</p>
+      <p>Couldn't find {{ formattedMealName }}.</p>
       <img src="assets/nomeal.svg" alt="No meal found" />
       <a href="#" (click)="navigateTo('')">Can you describe it?</a>
     </div>
