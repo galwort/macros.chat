@@ -515,10 +515,15 @@ export class JournalPage implements OnInit {
         const userId = user.uid;
         const journalRef = collection(db, `users/${userId}/journal`);
 
-        const currentTimestamp = new Date().toISOString();
-        const mealTimestampLocal = this.parseDateLocal(
-          this.dateSelected
-        ).toISOString();
+        const currentTime = new Date();
+        const [year, month, day] = this.dateSelected.split('-').map(Number);
+        const mealTimestampLocal = new Date(
+          year,
+          month - 1,
+          day,
+          currentTime.getHours(),
+          currentTime.getMinutes()
+        );
 
         const mealId = response.summary
           .toLowerCase()
@@ -533,10 +538,10 @@ export class JournalPage implements OnInit {
           proteins: response.proteins,
           fats: response.fats,
           prompt: this.newMealDescription,
-          mealTimestamp: currentTimestamp,
-          mealTimestampLocal: mealTimestampLocal,
-          lastEditTimestamp: currentTimestamp,
-          logTimestamp: currentTimestamp,
+          mealTimestamp: currentTime.toISOString(),
+          mealTimestampLocal: mealTimestampLocal.toISOString(),
+          lastEditTimestamp: currentTime.toISOString(),
+          logTimestamp: currentTime.toISOString(),
           mealId: mealId,
           isFavorite: false,
         };
@@ -547,13 +552,10 @@ export class JournalPage implements OnInit {
           ...newMeal,
           id: '',
           showPrompt: false,
-          formattedMealTime: new Date(mealTimestampLocal).toLocaleTimeString(
-            [],
-            {
-              hour: 'numeric',
-              minute: '2-digit',
-            }
-          ),
+          formattedMealTime: mealTimestampLocal.toLocaleTimeString([], {
+            hour: 'numeric',
+            minute: '2-digit',
+          }),
           carbsPercent: 0,
           proteinsPercent: 0,
           fatsPercent: 0,
