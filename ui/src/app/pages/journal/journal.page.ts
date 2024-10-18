@@ -173,7 +173,7 @@ export class JournalPage implements OnInit {
 
               if (this.isSameDate(mealDate, selectedDate)) {
                 const formattedMealTime = mealDate.toLocaleTimeString([], {
-                  hour: '2-digit',
+                  hour: 'numeric',
                   minute: '2-digit',
                 });
 
@@ -430,7 +430,7 @@ export class JournalPage implements OnInit {
         entry.mealTimestampLocal = newMealTimestampLocal.toISOString();
 
         entry.formattedMealTime = newMealTimestampLocal.toLocaleTimeString([], {
-          hour: '2-digit',
+          hour: 'numeric',
           minute: '2-digit',
         });
 
@@ -550,7 +550,7 @@ export class JournalPage implements OnInit {
           formattedMealTime: new Date(mealTimestampLocal).toLocaleTimeString(
             [],
             {
-              hour: '2-digit',
+              hour: 'numeric',
               minute: '2-digit',
             }
           ),
