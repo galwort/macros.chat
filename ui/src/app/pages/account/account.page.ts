@@ -154,7 +154,9 @@ export class AccountPage {
         db,
         `users/${currentUser.uid}/sharedWith/${sharedWithUserId}`
       );
-      await setDoc(sharedWithDocRef, { sharedAt: new Date().toISOString() });
+      await setDoc(sharedWithDocRef, {
+        sharedTimestamp: new Date().toISOString(),
+      });
     } catch (error) {
       console.error('Error sharing journal:', error);
     }
