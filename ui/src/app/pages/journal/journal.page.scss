@@ -53,6 +53,17 @@
     padding-top: 20px;
     position: relative;
 
+    &.no-entries {
+      .bottom-content {
+        flex-direction: column;
+        align-items: center;
+
+        .chart-container {
+          display: none;
+        }
+      }
+    }
+
     .filter-container {
       display: flex;
       flex-direction: row;
@@ -92,19 +103,6 @@
           }
         }
       }
-    }
-
-    h1 {
-      color: var(--theme-primary);
-      font-weight: bold;
-      margin-bottom: 2.5px;
-      text-align: center;
-    }
-
-    h3 {
-      color: var(--theme-primary);
-      margin-top: 2.5px;
-      margin-bottom: 20px;
     }
 
     .table-wrapper {
@@ -354,9 +352,21 @@
       justify-content: space-between;
       align-items: center;
       padding: 20px;
-      position: absolute;
       bottom: 0;
       width: 100%;
+
+      &.no-entries {
+        flex-direction: column;
+        align-items: center;
+
+        .chart-container {
+          display: none;
+        }
+
+        .add-meal {
+          margin-top: 20px;
+        }
+      }
 
       .chart-container {
         flex: 1;
@@ -381,12 +391,14 @@
         h2 {
           font-weight: bold;
           color: var(--theme-primary);
+          text-align: center;
         }
 
         .input-wrapper {
           position: relative;
           width: 100%;
           max-width: 300px;
+          margin: 0 auto;
 
           input {
             width: 100%;
@@ -427,6 +439,9 @@
           --border-width: 2px;
           --border-color: var(--theme-primary);
           margin-top: 20px;
+          margin-left: auto;
+          margin-right: auto;
+          max-width: 300px;
 
           ion-label {
             font-size: 1em;
@@ -442,6 +457,21 @@
             --border-color: var(--theme-accent);
           }
         }
+      }
+    }
+
+    .no-entries-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      padding-top: 50px;
+
+      .no-meal-image {
+        width: 200px;
+        height: auto;
+        margin-bottom: 20px;
       }
     }
   }
