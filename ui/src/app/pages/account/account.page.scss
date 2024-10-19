@@ -66,6 +66,7 @@ ion-toolbar {
     display: flex;
     margin-top: 20px;
     margin-bottom: 20px;
+    align-items: center;
 
     .user-profile-image {
       width: 10vh;
@@ -76,9 +77,47 @@ ion-toolbar {
       border: 4px solid var(--theme-primary);
     }
 
-    .user-details,
-    h2 {
-      margin: 0px;
+    .user-details {
+      display: flex;
+      flex-direction: column;
+
+      .editable-display-name {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        h2 {
+          margin-right: 10px;
+          transition: color 0.3s;
+        }
+
+        i {
+          margin-left: 5px;
+          font-size: 1.5em;
+          transition: color 0.3s;
+        }
+
+        &.hovered {
+          h2,
+          i {
+            color: var(--theme-accent);
+          }
+        }
+
+        input {
+          font-size: 1.5em;
+          border: 2px solid var(--theme-primary);
+          border-radius: 5px;
+          padding: 5px;
+          width: auto;
+        }
+      }
+
+      .email {
+        margin-top: 5px;
+        font-size: 1em;
+        color: var(--theme-primary);
+      }
     }
   }
 

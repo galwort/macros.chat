@@ -4,12 +4,13 @@ import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import {
   getFirestore,
-  collection,
   doc,
   getDoc,
+  setDoc,
+  collection,
+  getDocs,
   query,
   where,
-  getDocs,
 } from 'firebase/firestore';
 import { environment } from 'src/environments/environment';
 
@@ -23,6 +24,8 @@ export const db = getFirestore(app);
 })
 export class AccountPage {
   isUserLoggedIn: boolean = false;
+  isEditing: boolean = false;
+  isHovering: boolean = false;
   userProfileImage: string | null = null;
   userName: string = 'Steve';
   userEmailAddress: string | null = null;
@@ -50,13 +53,15 @@ export class AccountPage {
           console.error('Error fetching data:', e);
         }
       } else {
-        this.isUserLoggedIn = false;
         this.resetUserData();
       }
     });
   }
 
   resetUserData() {
+    this.isUserLoggedIn = false;
+    this.isEditing = false;
+    this.isHovering = false;
     this.userProfileImage = null;
     this.userName = 'Steve';
     this.userEmailAddress = null;
@@ -75,6 +80,26 @@ export class AccountPage {
       return data['displayName'] || defaultName || 'Steve';
     }
     return defaultName || 'Steve';
+  }
+
+  async saveDisplayName() {
+    if (!this.isEditing) return;
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (user) {
+      const userDocRef = doc(db, 'users', user.uid);
+      await setDoc(userDocRef, { displayName: this.userName }, { merge: true });
+      this.isEditing = false;
+    }
+  }
+
+  toggleEdit() {
+    this.isEditing = !this.isEditing;
+  }
+
+  setHover(state: boolean) {
+    this.isHovering = state;
   }
 
   async getMealData(userId: string) {

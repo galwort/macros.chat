@@ -14,6 +14,7 @@
       ></i>
     </ion-toolbar>
   </ion-header>
+
   <div class="main-content">
     <h1>Account Settings</h1>
     <div class="user-info">
@@ -24,12 +25,30 @@
         class="user-profile-image"
       />
       <div class="user-details">
-        <h2>{{ userName }}</h2>
-        <h3>{{ userEmailAddress }}</h3>
+        <div
+          class="editable-display-name"
+          (click)="toggleEdit()"
+          [ngClass]="{ 'hovered': isHovering }"
+          (mouseover)="setHover(true)"
+          (mouseout)="setHover(false)"
+        >
+          <input
+            *ngIf="isEditing"
+            type="text"
+            [(ngModel)]="userName"
+            (keyup.enter)="saveDisplayName()"
+            (blur)="saveDisplayName()"
+          />
+          <h2 *ngIf="!isEditing">{{ userName }}</h2>
+          <i class="fa-solid fa-pen"></i>
+        </div>
+        <h3 class="email">{{ userEmailAddress }}</h3>
       </div>
     </div>
+
     <p>{{ mealsLogged }} meals logged</p>
-    <p>{{ averageCalories | number:'1.0-0' }} average calories</p>
+    <p>{{ averageCalories | number: '1.0-0' }} average calories</p>
+
     <h2>Share Journal</h2>
     <div class="input-container">
       <input
@@ -40,6 +59,7 @@
       />
       <i class="fa-solid fa-magnifying-glass" (click)="searchUsers()"></i>
     </div>
+
     <div *ngIf="searchSubmitted">
       <div *ngIf="searchResults.length > 0">
         <p *ngFor="let user of searchResults" class="search-result">
@@ -51,6 +71,7 @@
         <p>Couldn't find them 😔</p>
       </div>
     </div>
+
     <ion-button expand="block" (click)="logout()">Logout</ion-button>
   </div>
 </ion-content>
