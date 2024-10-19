@@ -141,13 +141,6 @@ export class AccountPage {
   }
 
   async shareJournal(sharedWithUserId: string) {
-    console.log('Shared with User ID:', sharedWithUserId);
-
-    if (!sharedWithUserId) {
-      console.error('SharedWithUserId is undefined or empty.');
-      return;
-    }
-
     const auth = getAuth();
     const currentUser = auth.currentUser;
 
@@ -162,8 +155,6 @@ export class AccountPage {
         `users/${currentUser.uid}/sharedWith/${sharedWithUserId}`
       );
       await setDoc(sharedWithDocRef, { sharedAt: new Date().toISOString() });
-
-      console.log(`Journal successfully shared with user: ${sharedWithUserId}`);
     } catch (error) {
       console.error('Error sharing journal:', error);
     }
