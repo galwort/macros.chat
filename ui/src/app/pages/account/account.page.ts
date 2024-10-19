@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import {
+  addDoc,
   getFirestore,
   doc,
   getDoc,
@@ -131,8 +132,41 @@ export class AccountPage {
 
     const snapshots = await Promise.all(queries);
     snapshots.forEach((snapshot) =>
-      snapshot.forEach((doc) => this.searchResults.push(doc.data()))
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        data['uid'] = doc.id;
+        this.searchResults.push(data);
+      })
     );
+  }
+
+  async shareJournal(sharedWithUserId: string) {
+    console.log('Shared with User ID:', sharedWithUserId);
+
+    if (!sharedWithUserId) {
+      console.error('SharedWithUserId is undefined or empty.');
+      return;
+    }
+
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+
+    if (!currentUser) {
+      console.error('No user is currently logged in.');
+      return;
+    }
+
+    try {
+      const sharedWithDocRef = doc(
+        db,
+        `users/${currentUser.uid}/sharedWith/${sharedWithUserId}`
+      );
+      await setDoc(sharedWithDocRef, { sharedAt: new Date().toISOString() });
+
+      console.log(`Journal successfully shared with user: ${sharedWithUserId}`);
+    } catch (error) {
+      console.error('Error sharing journal:', error);
+    }
   }
 
   logout() {
