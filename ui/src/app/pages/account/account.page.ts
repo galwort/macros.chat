@@ -5,6 +5,8 @@ import { initializeApp } from 'firebase/app';
 import {
   getFirestore,
   collection,
+  doc,
+  getDoc,
   query,
   where,
   getDocs,
@@ -22,7 +24,7 @@ export const db = getFirestore(app);
 export class AccountPage {
   isUserLoggedIn: boolean = false;
   userProfileImage: string | null = null;
-  userName: string | null = null;
+  userName: string = 'Steve';
   userEmailAddress: string | null = null;
   mealsLogged: number = 0;
   averageCalories: number = 0;
@@ -40,20 +42,39 @@ export class AccountPage {
       if (user) {
         this.isUserLoggedIn = true;
         this.userProfileImage = user.photoURL;
-        this.userName = user.displayName;
         this.userEmailAddress = user.email;
         try {
+          this.userName = await this.getUserName(user.uid, user.displayName);
           await this.getMealData(user.uid);
         } catch (e) {
-          console.error('Error fetching meal data:', e);
+          console.error('Error fetching data:', e);
         }
       } else {
         this.isUserLoggedIn = false;
-        this.userProfileImage = null;
-        this.userName = null;
-        this.userEmailAddress = null;
+        this.resetUserData();
       }
     });
+  }
+
+  resetUserData() {
+    this.userProfileImage = null;
+    this.userName = 'Steve';
+    this.userEmailAddress = null;
+    this.mealsLogged = 0;
+    this.averageCalories = 0;
+  }
+
+  async getUserName(
+    userId: string,
+    defaultName: string | null
+  ): Promise<string> {
+    const userDocRef = doc(db, 'users', userId);
+    const userDoc = await getDoc(userDocRef);
+    if (userDoc.exists()) {
+      const data = userDoc.data();
+      return data['displayName'] || defaultName || 'Steve';
+    }
+    return defaultName || 'Steve';
   }
 
   async getMealData(userId: string) {
@@ -79,30 +100,14 @@ export class AccountPage {
     this.searchResults = [];
 
     const usersCollectionRef = collection(db, 'users');
-
-    const emailQuery = query(
-      usersCollectionRef,
-      where('email', '==', this.searchQuery)
-    );
-    const displayNameQuery = query(
-      usersCollectionRef,
-      where('displayName', '==', this.searchQuery)
-    );
-    const usernameQuery = query(
-      usersCollectionRef,
-      where('username', '==', this.searchQuery)
+    const queries = ['email', 'displayName', 'username'].map((field) =>
+      getDocs(query(usersCollectionRef, where(field, '==', this.searchQuery)))
     );
 
-    const [emailSnapshot, displayNameSnapshot, usernameSnapshot] =
-      await Promise.all([
-        getDocs(emailQuery),
-        getDocs(displayNameQuery),
-        getDocs(usernameQuery),
-      ]);
-
-    emailSnapshot.forEach((doc) => this.searchResults.push(doc.data()));
-    displayNameSnapshot.forEach((doc) => this.searchResults.push(doc.data()));
-    usernameSnapshot.forEach((doc) => this.searchResults.push(doc.data()));
+    const snapshots = await Promise.all(queries);
+    snapshots.forEach((snapshot) =>
+      snapshot.forEach((doc) => this.searchResults.push(doc.data()))
+    );
   }
 
   logout() {
