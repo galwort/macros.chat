@@ -38,9 +38,13 @@
             [(ngModel)]="userName"
             (keyup.enter)="saveDisplayName()"
             (blur)="saveDisplayName()"
+            (click)="$event.stopPropagation()"
           />
           <h2 *ngIf="!isEditing">{{ userName }}</h2>
-          <i class="fa-solid fa-pen"></i>
+          <i
+            class="fa-solid fa-pen"
+            (click)="$event.stopPropagation(); toggleEdit()"
+          ></i>
         </div>
         <h3 class="email">{{ userEmailAddress }}</h3>
       </div>
