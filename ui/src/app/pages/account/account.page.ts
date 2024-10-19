@@ -77,7 +77,7 @@ export class AccountPage {
     const userDoc = await getDoc(userDocRef);
     if (userDoc.exists()) {
       const data = userDoc.data();
-      return data['displayName'] || defaultName || 'Steve';
+      return data['username'] || defaultName || 'Steve';
     }
     return defaultName || 'Steve';
   }
@@ -125,7 +125,7 @@ export class AccountPage {
     this.searchResults = [];
 
     const usersCollectionRef = collection(db, 'users');
-    const queries = ['email', 'displayName', 'username'].map((field) =>
+    const queries = ['email', 'username', 'loginUsername'].map((field) =>
       getDocs(query(usersCollectionRef, where(field, '==', this.searchQuery)))
     );
 
