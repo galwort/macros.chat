@@ -231,6 +231,7 @@
               type="text"
               [(ngModel)]="newMealDescription"
               placeholder="What else did you eat?"
+              (keydown.enter)="addNewMeal()"
             />
             <i class="fa-solid fa-arrow-up" (click)="addNewMeal()"></i>
           </div>
