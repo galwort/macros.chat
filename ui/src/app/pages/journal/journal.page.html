@@ -225,13 +225,15 @@
           ></canvas>
         </div>
         <div class="add-meal">
-          <h2><i class="fa-solid fa-plus"></i> Add a Meal</h2>
-          <input
-            type="text"
-            [(ngModel)]="newMealDescription"
-            placeholder="What else did you eat?"
-          />
-          <button (click)="addNewMeal()">Add Meal</button>
+          <h2>Add a Meal</h2>
+          <div class="input-wrapper">
+            <input
+              type="text"
+              [(ngModel)]="newMealDescription"
+              placeholder="What else did you eat?"
+            />
+            <i class="fa-solid fa-arrow-up" (click)="addNewMeal()"></i>
+          </div>
           <ion-item lines="none">
             <ion-label>Favorites</ion-label>
             <ion-select
