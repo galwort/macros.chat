@@ -66,10 +66,14 @@
 
     <div *ngIf="searchSubmitted">
       <div *ngIf="searchResults.length > 0">
-        <p *ngFor="let user of searchResults" class="search-result">
+        <div
+          *ngFor="let user of searchResults"
+          class="search-result"
+          (click)="shareJournal(user.uid)"
+        >
           {{ user.username || user.loginUsername || user.email }}
-          <i class="fa-solid fa-plus" (click)="shareJournal(user.uid)"></i>
-        </p>
+          <i class="fa-solid fa-plus"></i>
+        </div>
       </div>
       <div *ngIf="searchResults.length === 0">
         <p>Couldn't find them 😔</p>
