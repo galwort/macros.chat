@@ -22,7 +22,7 @@
     <div class="main-content" [class.no-entries]="journalEntries.length === 0">
       <div class="filter-container">
         <ion-item lines="none">
-          <div class="calendar-group" (click)="openDatePicker()">
+          <div class="date-filter" (click)="openDatePicker()">
             <i class="fa-regular fa-calendar"></i>
             <ion-datetime-button datetime="filterDate"></ion-datetime-button>
           </div>
@@ -38,7 +38,7 @@
           </ion-modal>
         </ion-item>
         <ion-item lines="none">
-          <div class="user-group">
+          <div class="user-filter">
             <i class="fa-solid fa-user-group"></i>
             <ion-select [(ngModel)]="selectedUser" interface="popover">
               <ion-select-option value="Me">Me</ion-select-option>

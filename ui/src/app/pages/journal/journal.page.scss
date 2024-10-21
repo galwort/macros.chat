@@ -74,17 +74,19 @@
         --inner-padding-end: 0px;
         cursor: pointer;
 
-        .calendar-group {
+        i {
+          color: var(--theme-primary);
+          font-size: min(4vw, 1.5em);
+          transition: color 0.3s ease;
+        }
+
+        .date-filter,
+        .user-filter {
           display: flex;
           align-items: center;
 
-          i {
-            color: var(--theme-primary);
-            font-size: min(4vw, 1.5em);
-            transition: color 0.3s ease;
-          }
-
-          ion-datetime-button::part(native) {
+          ion-datetime-button::part(native),
+          ion-select::part(native) {
             background-color: transparent;
             font-size: min(5vw, 2em);
             font-weight: bold;
@@ -92,13 +94,32 @@
             transition: color 0.3s ease;
           }
 
+          i {
+            margin-right: 10px;
+          }
+
           &:hover {
             i {
               color: var(--theme-accent);
             }
 
-            ion-datetime-button::part(native) {
+            ion-datetime-button::part(native),
+            ion-select::part(native) {
               color: var(--theme-accent);
+            }
+          }
+        }
+
+        .user-filter {
+          ion-select {
+            --padding-start: 10px;
+            --padding-end: 10px;
+            --placeholder-color: var(--theme-primary);
+            --color: var(--theme-primary);
+
+            &:hover {
+              --placeholder-color: var(--theme-accent);
+              --color: var(--theme-accent);
             }
           }
         }
