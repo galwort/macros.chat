@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import {
   getFirestore,
   collection,
+  getDoc,
   getDocs,
   doc,
   deleteDoc,
@@ -67,6 +68,7 @@ export class JournalPage implements OnInit {
   public newMealDescription: string = '';
   public isLoadingNewMeal: boolean = false;
   public selectedUser: string = 'Me';
+  public sharedUsers: { uid: string; username: string }[] = [];
 
   constructor(private router: Router, private http: HttpClient) {
     this.pieChartOptions = {
@@ -114,8 +116,10 @@ export class JournalPage implements OnInit {
     const month = ('0' + (date.getMonth() + 1)).slice(-2);
     const day = ('0' + date.getDate()).slice(-2);
     this.dateSelected = `${year}-${month}-${day}`;
+
     this.fetchJournalEntries();
     this.fetchFavoriteMeals();
+    this.fetchSharedUsers();
   }
 
   private parseDateLocal(dateString: string): Date {
@@ -133,6 +137,38 @@ export class JournalPage implements OnInit {
       date1.getMonth() === date2.getMonth() &&
       date1.getDate() === date2.getDate()
     );
+  }
+
+  async fetchSharedUsers() {
+    const auth = getAuth();
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const currentUserId = user.uid;
+        const sharedWithRef = collection(
+          db,
+          `users/${currentUserId}/sharedWith`
+        );
+        try {
+          const querySnapshot = await getDocs(sharedWithRef);
+          const userUids = querySnapshot.docs.map((doc) => doc.id);
+          this.sharedUsers = [];
+
+          for (const uid of userUids) {
+            const userDocRef = doc(db, 'users', uid);
+            const userDocSnap = await getDoc(userDocRef);
+            if (userDocSnap.exists()) {
+              const userData = userDocSnap.data();
+              this.sharedUsers.push({
+                uid: uid,
+                username: userData['username'],
+              });
+            }
+          }
+        } catch (error) {
+          console.error('Error fetching shared users:', error);
+        }
+      }
+    });
   }
 
   async fetchJournalEntries() {

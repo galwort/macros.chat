@@ -42,7 +42,12 @@
             <i class="fa-solid fa-user-group"></i>
             <ion-select [(ngModel)]="selectedUser" interface="popover">
               <ion-select-option value="Me">Me</ion-select-option>
-              <ion-select-option value="Christa">Christa</ion-select-option>
+              <ion-select-option
+                *ngFor="let user of sharedUsers"
+                [value]="user.uid"
+              >
+                {{ user.username }}
+              </ion-select-option>
             </ion-select>
           </div>
         </ion-item>
