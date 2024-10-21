@@ -166,7 +166,6 @@ export class AccountPage implements OnInit {
 
       const sharedData = { sharedTimestamp: new Date().toISOString() };
 
-      // Update both sharedWith and sharedBy subcollections
       await setDoc(sharedWithRef, sharedData);
       await setDoc(sharedByRef, sharedData);
 
