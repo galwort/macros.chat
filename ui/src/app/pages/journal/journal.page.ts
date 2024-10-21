@@ -66,6 +66,7 @@ export class JournalPage implements OnInit {
   public selectedFavoriteMeal: string | null = null;
   public newMealDescription: string = '';
   public isLoadingNewMeal: boolean = false;
+  public selectedUser: string = 'Me';
 
   constructor(private router: Router, private http: HttpClient) {
     this.pieChartOptions = {
