@@ -89,6 +89,14 @@
       </div>
     </div>
 
+    <h2 *ngIf="sharedByUsers.length > 0">Shared With Me</h2>
+    <div *ngIf="sharedByUsers.length > 0">
+      <div *ngFor="let user of sharedByUsers" class="search-result">
+        {{ user.username || user.loginUsername || user.email }}
+        <i class="fa-solid fa-arrow-right"></i>
+      </div>
+    </div>
+
     <ion-button expand="block" (click)="logout()">Logout</ion-button>
   </div>
 </ion-content>

@@ -36,6 +36,7 @@ export class AccountPage implements OnInit {
   searchResults: any[] = [];
   searchSubmitted: boolean = false;
   sharedUsers: any[] = [];
+  sharedByUsers: any[] = [];
 
   constructor(private router: Router) {
     this.checkUserLoginStatus();
@@ -200,33 +201,55 @@ export class AccountPage implements OnInit {
     }
 
     try {
+      // Fetch users you shared with
       const sharedWithCollectionRef = collection(
         db,
         `users/${currentUser.uid}/sharedWith`
       );
       const sharedWithSnapshot = await getDocs(sharedWithCollectionRef);
+      this.sharedUsers = await Promise.all(
+        sharedWithSnapshot.docs.map(async (docSnapshot) => {
+          const userDoc = await getDoc(doc(db, 'users', docSnapshot.id));
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            return {
+              uid: docSnapshot.id,
+              username: userData['username'],
+              loginUsername: userData['loginUsername'],
+              email: userData['email'],
+            };
+          }
+          return null; // Ensure all paths return a value
+        })
+      );
 
-      this.sharedUsers = [];
+      // Filter out any null values
+      this.sharedUsers = this.sharedUsers.filter((user) => user !== null);
 
-      for (const docSnapshot of sharedWithSnapshot.docs) {
-        const sharedUserId = docSnapshot.id;
-        const userDocRef = doc(db, 'users', sharedUserId);
-        const userDoc = await getDoc(userDocRef);
+      // Fetch users who shared with you
+      const sharedByCollectionRef = collection(
+        db,
+        `users/${currentUser.uid}/sharedBy`
+      );
+      const sharedBySnapshot = await getDocs(sharedByCollectionRef);
+      this.sharedByUsers = await Promise.all(
+        sharedBySnapshot.docs.map(async (docSnapshot) => {
+          const userDoc = await getDoc(doc(db, 'users', docSnapshot.id));
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            return {
+              uid: docSnapshot.id,
+              username: userData['username'],
+              loginUsername: userData['loginUsername'],
+              email: userData['email'],
+            };
+          }
+          return null; // Ensure all paths return a value
+        })
+      );
 
-        if (userDoc.exists()) {
-          const userData = userDoc.data();
-          this.sharedUsers.push({
-            uid: sharedUserId,
-            username: userData['username'],
-            loginUsername: userData['loginUsername'],
-            email: userData['email'],
-          });
-        } else {
-          console.error(
-            `User document does not exist for UID: ${sharedUserId}`
-          );
-        }
-      }
+      // Filter out any null values
+      this.sharedByUsers = this.sharedByUsers.filter((user) => user !== null);
     } catch (error) {
       console.error('Error fetching shared users:', error);
     }
