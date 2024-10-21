@@ -84,11 +84,11 @@
     <div *ngIf="sharedUsers.length > 0">
       <div
         *ngFor="let user of sharedUsers"
-        class="shared-user"
+        class="search-result"
         (click)="unshareJournal(user.uid)"
       >
         {{ user.username || user.loginUsername || user.email }}
-        <i class="fa-solid fa-x"></i>
+        <i class="fa-solid fa-minus"></i>
       </div>
     </div>
 
