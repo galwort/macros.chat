@@ -201,7 +201,6 @@ export class AccountPage implements OnInit {
     }
 
     try {
-      // Fetch users you shared with
       const sharedWithCollectionRef = collection(
         db,
         `users/${currentUser.uid}/sharedWith`
@@ -219,14 +218,12 @@ export class AccountPage implements OnInit {
               email: userData['email'],
             };
           }
-          return null; // Ensure all paths return a value
+          return null;
         })
       );
 
-      // Filter out any null values
       this.sharedUsers = this.sharedUsers.filter((user) => user !== null);
 
-      // Fetch users who shared with you
       const sharedByCollectionRef = collection(
         db,
         `users/${currentUser.uid}/sharedBy`
@@ -244,11 +241,10 @@ export class AccountPage implements OnInit {
               email: userData['email'],
             };
           }
-          return null; // Ensure all paths return a value
+          return null;
         })
       );
 
-      // Filter out any null values
       this.sharedByUsers = this.sharedByUsers.filter((user) => user !== null);
     } catch (error) {
       console.error('Error fetching shared users:', error);
