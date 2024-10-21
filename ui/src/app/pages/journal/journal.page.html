@@ -147,36 +147,42 @@
                         <input
                           type="text"
                           [(ngModel)]="entry.editValues.summary"
+                          (keydown.enter)="saveEntry(entry, $event)"
                         />
                       </td>
                       <td class="calories">
                         <input
                           type="number"
                           [(ngModel)]="entry.editValues.calories"
+                          (keydown.enter)="saveEntry(entry, $event)"
                         />
                       </td>
                       <td class="carbs">
                         <input
                           type="number"
                           [(ngModel)]="entry.editValues.carbs"
+                          (keydown.enter)="saveEntry(entry, $event)"
                         />
                       </td>
                       <td class="protein">
                         <input
                           type="number"
                           [(ngModel)]="entry.editValues.proteins"
+                          (keydown.enter)="saveEntry(entry, $event)"
                         />
                       </td>
                       <td class="fats">
                         <input
                           type="number"
                           [(ngModel)]="entry.editValues.fats"
+                          (keydown.enter)="saveEntry(entry, $event)"
                         />
                       </td>
                       <td>
                         <input
                           type="time"
                           [(ngModel)]="entry.editValues.mealTime"
+                          (keydown.enter)="saveEntry(entry, $event)"
                         />
                       </td>
                     </tr>
