@@ -185,19 +185,29 @@ export class JournalPage implements OnInit {
         this.totalProteins = 0;
         this.totalFats = 0;
 
-        try {
-          const userDocRef = doc(db, 'users', userId);
-          await setDoc(
-            userDocRef,
-            { lastLoginTimestamp: new Date().toISOString() },
-            { merge: true }
-          );
-        } catch (e) {
-          console.error('Error updating lastLoginTimestamp:', e);
+        let targetUserId: string;
+
+        if (this.selectedUser === 'Me') {
+          targetUserId = userId;
+        } else {
+          targetUserId = this.selectedUser;
+        }
+
+        if (targetUserId === userId) {
+          try {
+            const userDocRef = doc(db, 'users', userId);
+            await setDoc(
+              userDocRef,
+              { lastLoginTimestamp: new Date().toISOString() },
+              { merge: true }
+            );
+          } catch (e) {
+            console.error('Error updating lastLoginTimestamp:', e);
+          }
         }
 
         try {
-          const journalRef = collection(db, `users/${userId}/journal`);
+          const journalRef = collection(db, `users/${targetUserId}/journal`);
           const querySnapshot = await getDocs(journalRef);
 
           if (querySnapshot.empty) {
@@ -311,6 +321,9 @@ export class JournalPage implements OnInit {
 
   async favoriteEntry(entry: any, event: any) {
     event.stopPropagation();
+    if (this.selectedUser !== 'Me') {
+      return;
+    }
     try {
       const auth = getAuth();
       const user = auth.currentUser;
@@ -334,6 +347,9 @@ export class JournalPage implements OnInit {
 
   async deleteEntry(entry: any, event: any) {
     event.stopPropagation();
+    if (this.selectedUser !== 'Me') {
+      return;
+    }
     try {
       const auth = getAuth();
       const user = auth.currentUser;
@@ -415,6 +431,9 @@ export class JournalPage implements OnInit {
 
   editEntry(entry: any, event: any) {
     event.stopPropagation();
+    if (this.selectedUser !== 'Me') {
+      return;
+    }
     entry.isEditing = true;
     entry.editValues = {
       summary: entry.summary,
@@ -434,6 +453,9 @@ export class JournalPage implements OnInit {
 
   async saveEntry(entry: any, event: any) {
     event.stopPropagation();
+    if (this.selectedUser !== 'Me') {
+      return;
+    }
     try {
       const auth = getAuth();
       const user = auth.currentUser;
@@ -522,6 +544,9 @@ export class JournalPage implements OnInit {
   }
 
   async addNewMeal() {
+    if (this.selectedUser !== 'Me') {
+      return;
+    }
     if (!this.newMealDescription) {
       console.log('Please enter a meal description');
       return;
@@ -618,5 +643,9 @@ export class JournalPage implements OnInit {
     if (this.selectedFavoriteMeal) {
       this.newMealDescription = this.selectedFavoriteMeal;
     }
+  }
+
+  onUserChange() {
+    this.fetchJournalEntries();
   }
 }

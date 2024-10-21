@@ -40,7 +40,11 @@
         <ion-item lines="none">
           <div class="user-filter">
             <i class="fa-solid fa-user-group"></i>
-            <ion-select [(ngModel)]="selectedUser" interface="popover">
+            <ion-select
+              [(ngModel)]="selectedUser"
+              interface="popover"
+              (ionChange)="onUserChange()"
+            >
               <ion-select-option value="Me">Me</ion-select-option>
               <ion-select-option
                 *ngFor="let user of sharedUsers"
@@ -110,32 +114,34 @@
                     <tr *ngIf="entry.showPrompt" class="prompt-row">
                       <td colspan="6" class="prompt-cell">
                         <div>{{ entry.prompt }}</div>
-                        <button
-                          class="detail-button"
-                          (click)="favoriteEntry(entry, $event)"
-                        >
-                          <i
-                            [ngClass]="{
-                              'fa-solid': entry.isFavorite,
-                              'fa-regular': !entry.isFavorite,
-                              'fa-star': true
-                            }"
-                          ></i>
-                          {{ entry.isFavorite ? 'Favorited' : 'Favorite' }}
-                        </button>
-                        <button
-                          class="detail-button"
-                          (click)="editEntry(entry, $event)"
-                        >
-                          <i class="fa-solid fa-pen"></i>Edit
-                        </button>
-                        <button
-                          class="detail-button"
-                          (click)="deleteEntry(entry, $event)"
-                        >
-                          <i class="fa-solid fa-trash"></i>
-                          Remove
-                        </button>
+                        <ng-container *ngIf="selectedUser === 'Me'">
+                          <button
+                            class="detail-button"
+                            (click)="favoriteEntry(entry, $event)"
+                          >
+                            <i
+                              [ngClass]="{
+                                'fa-solid': entry.isFavorite,
+                                'fa-regular': !entry.isFavorite,
+                                'fa-star': true
+                              }"
+                            ></i>
+                            {{ entry.isFavorite ? 'Favorited' : 'Favorite' }}
+                          </button>
+                          <button
+                            class="detail-button"
+                            (click)="editEntry(entry, $event)"
+                          >
+                            <i class="fa-solid fa-pen"></i>Edit
+                          </button>
+                          <button
+                            class="detail-button"
+                            (click)="deleteEntry(entry, $event)"
+                          >
+                            <i class="fa-solid fa-trash"></i>
+                            Remove
+                          </button>
+                        </ng-container>
                       </td>
                     </tr>
                   </ng-container>
@@ -256,7 +262,7 @@
             [options]="pieChartOptions"
           ></canvas>
         </div>
-        <div class="add-meal">
+        <div class="add-meal" *ngIf="selectedUser === 'Me'">
           <h2>Add a Meal</h2>
           <div class="input-wrapper">
             <input
