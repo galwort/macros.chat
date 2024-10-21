@@ -78,6 +78,7 @@
           color: var(--theme-primary);
           font-size: min(4vw, 1.5em);
           transition: color 0.3s ease;
+          margin-right: 10px;
         }
 
         .date-filter,
@@ -94,8 +95,10 @@
             transition: color 0.3s ease;
           }
 
-          i {
-            margin-right: 10px;
+          ion-select::part(text) {
+            font-weight: bold;
+            color: var(--theme-primary);
+            transition: color 0.3s ease;
           }
 
           &:hover {
@@ -104,7 +107,8 @@
             }
 
             ion-datetime-button::part(native),
-            ion-select::part(native) {
+            ion-select::part(native),
+            ion-select::part(text) {
               color: var(--theme-accent);
             }
           }
@@ -112,10 +116,14 @@
 
         .user-filter {
           ion-select {
-            --padding-start: 10px;
-            --padding-end: 10px;
+            --padding-start: 0;
+            --padding-end: 0;
             --placeholder-color: var(--theme-primary);
             --color: var(--theme-primary);
+            --padding-top: 0;
+            --padding-bottom: 0;
+            font-size: min(5vw, 2em);
+            font-weight: bold;
 
             &:hover {
               --placeholder-color: var(--theme-accent);
