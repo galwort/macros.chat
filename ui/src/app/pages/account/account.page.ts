@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import {
-  addDoc,
   getFirestore,
+  deleteDoc,
   doc,
   getDoc,
   setDoc,
@@ -23,7 +23,7 @@ export const db = getFirestore(app);
   templateUrl: './account.page.html',
   styleUrls: ['./account.page.scss'],
 })
-export class AccountPage {
+export class AccountPage implements OnInit {
   isUserLoggedIn: boolean = false;
   isEditing: boolean = false;
   isHovering: boolean = false;
@@ -35,9 +35,14 @@ export class AccountPage {
   searchQuery: string = '';
   searchResults: any[] = [];
   searchSubmitted: boolean = false;
+  sharedUsers: any[] = [];
 
   constructor(private router: Router) {
     this.checkUserLoginStatus();
+  }
+
+  ngOnInit() {
+    this.fetchSharedUsers();
   }
 
   checkUserLoginStatus() {
@@ -159,6 +164,75 @@ export class AccountPage {
       });
     } catch (error) {
       console.error('Error sharing journal:', error);
+    }
+  }
+
+  async fetchSharedUsers() {
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+
+    if (!currentUser) {
+      console.error('No user is currently logged in.');
+      return;
+    }
+
+    try {
+      const sharedWithCollectionRef = collection(
+        db,
+        `users/${currentUser.uid}/sharedWith`
+      );
+      const sharedWithSnapshot = await getDocs(sharedWithCollectionRef);
+
+      this.sharedUsers = [];
+
+      for (const docSnapshot of sharedWithSnapshot.docs) {
+        const data = docSnapshot.data();
+        const sharedUserId = docSnapshot.id;
+
+        // Fetch user details
+        const userDocRef = doc(db, 'users', sharedUserId);
+        const userDoc = await getDoc(userDocRef);
+
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          this.sharedUsers.push({
+            uid: sharedUserId,
+            username: userData['username'],
+            loginUsername: userData['loginUsername'],
+            email: userData['email'],
+          });
+        } else {
+          console.error(
+            `User document does not exist for UID: ${sharedUserId}`
+          );
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching shared users:', error);
+    }
+  }
+
+  async unshareJournal(sharedWithUserId: string) {
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+
+    if (!currentUser) {
+      console.error('No user is currently logged in.');
+      return;
+    }
+
+    try {
+      const sharedWithDocRef = doc(
+        db,
+        `users/${currentUser.uid}/sharedWith/${sharedWithUserId}`
+      );
+      await deleteDoc(sharedWithDocRef);
+
+      this.sharedUsers = this.sharedUsers.filter(
+        (user) => user.uid !== sharedWithUserId
+      );
+    } catch (error) {
+      console.error('Error unsharing journal:', error);
     }
   }
 

@@ -80,6 +80,18 @@
       </div>
     </div>
 
+    <h2>Shared With</h2>
+    <div *ngIf="sharedUsers.length > 0">
+      <div
+        *ngFor="let user of sharedUsers"
+        class="shared-user"
+        (click)="unshareJournal(user.uid)"
+      >
+        {{ user.username || user.loginUsername || user.email }}
+        <i class="fa-solid fa-x"></i>
+      </div>
+    </div>
+
     <ion-button expand="block" (click)="logout()">Logout</ion-button>
   </div>
 </ion-content>
