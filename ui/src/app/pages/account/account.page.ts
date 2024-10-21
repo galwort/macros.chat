@@ -162,6 +162,23 @@ export class AccountPage implements OnInit {
       await setDoc(sharedWithDocRef, {
         sharedTimestamp: new Date().toISOString(),
       });
+
+      const userDocRef = doc(db, 'users', sharedWithUserId);
+      const userDoc = await getDoc(userDocRef);
+
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        this.sharedUsers.push({
+          uid: sharedWithUserId,
+          username: userData['username'],
+          loginUsername: userData['loginUsername'],
+          email: userData['email'],
+        });
+
+        this.searchResults = this.searchResults.filter(
+          (user) => user.uid !== sharedWithUserId
+        );
+      }
     } catch (error) {
       console.error('Error sharing journal:', error);
     }
@@ -189,7 +206,6 @@ export class AccountPage implements OnInit {
         const data = docSnapshot.data();
         const sharedUserId = docSnapshot.id;
 
-        // Fetch user details
         const userDocRef = doc(db, 'users', sharedUserId);
         const userDoc = await getDoc(userDocRef);
 
