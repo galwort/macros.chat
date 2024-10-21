@@ -155,13 +155,20 @@ export class AccountPage implements OnInit {
     }
 
     try {
-      const sharedWithDocRef = doc(
+      const sharedWithRef = doc(
         db,
         `users/${currentUser.uid}/sharedWith/${sharedWithUserId}`
       );
-      await setDoc(sharedWithDocRef, {
-        sharedTimestamp: new Date().toISOString(),
-      });
+      const sharedByRef = doc(
+        db,
+        `users/${sharedWithUserId}/sharedBy/${currentUser.uid}`
+      );
+
+      const sharedData = { sharedTimestamp: new Date().toISOString() };
+
+      // Update both sharedWith and sharedBy subcollections
+      await setDoc(sharedWithRef, sharedData);
+      await setDoc(sharedByRef, sharedData);
 
       const userDocRef = doc(db, 'users', sharedWithUserId);
       const userDoc = await getDoc(userDocRef);
@@ -203,9 +210,7 @@ export class AccountPage implements OnInit {
       this.sharedUsers = [];
 
       for (const docSnapshot of sharedWithSnapshot.docs) {
-        const data = docSnapshot.data();
         const sharedUserId = docSnapshot.id;
-
         const userDocRef = doc(db, 'users', sharedUserId);
         const userDoc = await getDoc(userDocRef);
 
@@ -238,11 +243,17 @@ export class AccountPage implements OnInit {
     }
 
     try {
-      const sharedWithDocRef = doc(
+      const sharedWithRef = doc(
         db,
         `users/${currentUser.uid}/sharedWith/${sharedWithUserId}`
       );
-      await deleteDoc(sharedWithDocRef);
+      const sharedByRef = doc(
+        db,
+        `users/${sharedWithUserId}/sharedBy/${currentUser.uid}`
+      );
+
+      await deleteDoc(sharedWithRef);
+      await deleteDoc(sharedByRef);
 
       this.sharedUsers = this.sharedUsers.filter(
         (user) => user.uid !== sharedWithUserId

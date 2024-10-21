@@ -144,12 +144,9 @@ export class JournalPage implements OnInit {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const currentUserId = user.uid;
-        const sharedWithRef = collection(
-          db,
-          `users/${currentUserId}/sharedWith`
-        );
+        const sharedByRef = collection(db, `users/${currentUserId}/sharedBy`);
         try {
-          const querySnapshot = await getDocs(sharedWithRef);
+          const querySnapshot = await getDocs(sharedByRef);
           const userUids = querySnapshot.docs.map((doc) => doc.id);
           this.sharedUsers = [];
 
