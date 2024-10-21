@@ -40,11 +40,7 @@
         <ion-item lines="none" *ngIf="sharedUsers.length > 0">
           <div class="user-filter">
             <i class="fa-solid fa-user-group"></i>
-            <ion-select
-              [(ngModel)]="selectedUser"
-              interface="popover"
-              (ionChange)="onUserChange()"
-            >
+            <ion-select [(ngModel)]="selectedUser" (ionChange)="onUserChange()">
               <ion-select-option value="Me">Me</ion-select-option>
               <ion-select-option
                 *ngFor="let user of sharedUsers"

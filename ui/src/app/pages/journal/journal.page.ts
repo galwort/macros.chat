@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import {
   getFirestore,
   collection,
@@ -70,7 +70,11 @@ export class JournalPage implements OnInit {
   public selectedUser: string = 'Me';
   public sharedUsers: { uid: string; username: string }[] = [];
 
-  constructor(private router: Router, private http: HttpClient) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private http: HttpClient
+  ) {
     this.pieChartOptions = {
       borderColor: '#030607',
       plugins: {
@@ -112,14 +116,34 @@ export class JournalPage implements OnInit {
 
   ngOnInit() {
     const date = new Date();
-    const year = date.getFullYear();
-    const month = ('0' + (date.getMonth() + 1)).slice(-2);
-    const day = ('0' + date.getDate()).slice(-2);
-    this.dateSelected = `${year}-${month}-${day}`;
+    this.dateSelected = date.toISOString().split('T')[0]; // Format YYYY-MM-DD
 
-    this.fetchJournalEntries();
-    this.fetchFavoriteMeals();
-    this.fetchSharedUsers();
+    const auth = getAuth();
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const currentUserId = user.uid;
+        this.userProfileImage = user.photoURL;
+
+        await this.fetchSharedUsers(currentUserId);
+
+        this.route.queryParams.subscribe((params) => {
+          const userFromUrl = params['user'];
+
+          const matchedUser = this.sharedUsers.find(
+            (u) => u.username === userFromUrl
+          );
+
+          if (matchedUser) {
+            this.selectedUser = matchedUser.uid;
+          } else {
+            this.selectedUser = 'Me';
+          }
+          this.fetchJournalEntries(currentUserId);
+        });
+      } else {
+        console.error('User is not authenticated');
+      }
+    });
   }
 
   private parseDateLocal(dateString: string): Date {
@@ -128,7 +152,15 @@ export class JournalPage implements OnInit {
   }
 
   onDateChange() {
-    this.fetchJournalEntries();
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const currentUserId = user.uid;
+        this.fetchJournalEntries(currentUserId);
+      } else {
+        console.error('User is not authenticated');
+      }
+    });
   }
 
   isSameDate(date1: Date, date2: Date): boolean {
@@ -139,126 +171,100 @@ export class JournalPage implements OnInit {
     );
   }
 
-  async fetchSharedUsers() {
-    const auth = getAuth();
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const currentUserId = user.uid;
-        const sharedByRef = collection(db, `users/${currentUserId}/sharedBy`);
-        try {
-          const querySnapshot = await getDocs(sharedByRef);
-          const userUids = querySnapshot.docs.map((doc) => doc.id);
-          this.sharedUsers = [];
+  async fetchSharedUsers(currentUserId: string) {
+    const sharedByRef = collection(db, `users/${currentUserId}/sharedBy`);
+    try {
+      const querySnapshot = await getDocs(sharedByRef);
+      const userUids = querySnapshot.docs.map((doc) => doc.id);
+      this.sharedUsers = [];
 
-          for (const uid of userUids) {
-            const userDocRef = doc(db, 'users', uid);
-            const userDocSnap = await getDoc(userDocRef);
-            if (userDocSnap.exists()) {
-              const userData = userDocSnap.data();
-              this.sharedUsers.push({
-                uid: uid,
-                username: userData['username'],
-              });
-            }
-          }
-        } catch (error) {
-          console.error('Error fetching shared users:', error);
+      for (const uid of userUids) {
+        const userDocRef = doc(db, 'users', uid);
+        const userDocSnap = await getDoc(userDocRef);
+        if (userDocSnap.exists()) {
+          const userData = userDocSnap.data();
+          this.sharedUsers.push({
+            uid: uid,
+            username: userData['username'],
+          });
         }
       }
-    });
+    } catch (error) {
+      console.error('Error fetching shared users:', error);
+    }
   }
 
-  async fetchJournalEntries() {
-    const auth = getAuth();
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const userId = user.uid;
-        this.userProfileImage = user.photoURL;
-        const selectedDate = this.parseDateLocal(this.dateSelected);
-        this.journalEntries = [];
+  async fetchJournalEntries(currentUserId: string) {
+    const selectedDate = this.parseDateLocal(this.dateSelected);
+    this.journalEntries = [];
 
-        this.totalCalories = 0;
-        this.totalCarbs = 0;
-        this.totalProteins = 0;
-        this.totalFats = 0;
+    this.totalCalories = 0;
+    this.totalCarbs = 0;
+    this.totalProteins = 0;
+    this.totalFats = 0;
 
-        let targetUserId: string;
+    let targetUserId: string;
 
-        if (this.selectedUser === 'Me') {
-          targetUserId = userId;
-        } else {
-          targetUserId = this.selectedUser;
-        }
+    if (this.selectedUser === 'Me') {
+      targetUserId = currentUserId;
+    } else {
+      targetUserId = this.selectedUser;
+    }
 
-        if (targetUserId === userId) {
-          try {
-            const userDocRef = doc(db, 'users', userId);
-            await setDoc(
-              userDocRef,
-              { lastLoginTimestamp: new Date().toISOString() },
-              { merge: true }
-            );
-          } catch (e) {
-            console.error('Error updating lastLoginTimestamp:', e);
+    try {
+      const journalRef = collection(db, `users/${targetUserId}/journal`);
+      const querySnapshot = await getDocs(journalRef);
+
+      if (querySnapshot.empty) {
+        console.log('No journal entries found for the user.');
+      } else {
+        for (const journalDoc of querySnapshot.docs) {
+          const journalData = journalDoc.data();
+          const mealTimestampLocal = journalData['mealTimestampLocal'];
+          const mealDate = new Date(mealTimestampLocal);
+
+          if (this.isSameDate(mealDate, selectedDate)) {
+            const formattedMealTime = mealDate.toLocaleTimeString([], {
+              hour: 'numeric',
+              minute: '2-digit',
+            });
+
+            this.journalEntries.push({
+              id: journalDoc.id,
+              summary: journalData['summary'],
+              calories: journalData['calories'],
+              carbs: journalData['carbs'],
+              proteins: journalData['proteins'],
+              fats: journalData['fats'],
+              mealTimestampLocal: mealTimestampLocal,
+              formattedMealTime: formattedMealTime,
+              prompt: journalData['prompt'] || '',
+              showPrompt: false,
+              carbsPercent: 0,
+              proteinsPercent: 0,
+              fatsPercent: 0,
+              isFavorite: journalData['isFavorite'] || false,
+              isEditing: false,
+              editValues: null,
+            });
+
+            this.totalCalories += journalData['calories'];
+            this.totalCarbs += journalData['carbs'];
+            this.totalProteins += journalData['proteins'];
+            this.totalFats += journalData['fats'];
           }
         }
-
-        try {
-          const journalRef = collection(db, `users/${targetUserId}/journal`);
-          const querySnapshot = await getDocs(journalRef);
-
-          if (querySnapshot.empty) {
-            console.log('No journal entries found for the user.');
-          } else {
-            for (const journalDoc of querySnapshot.docs) {
-              const journalData = journalDoc.data();
-              const mealTimestampLocal = journalData['mealTimestampLocal'];
-              const mealDate = new Date(mealTimestampLocal);
-
-              if (this.isSameDate(mealDate, selectedDate)) {
-                const formattedMealTime = mealDate.toLocaleTimeString([], {
-                  hour: 'numeric',
-                  minute: '2-digit',
-                });
-
-                this.journalEntries.push({
-                  id: journalDoc.id,
-                  summary: journalData['summary'],
-                  calories: journalData['calories'],
-                  carbs: journalData['carbs'],
-                  proteins: journalData['proteins'],
-                  fats: journalData['fats'],
-                  mealTimestampLocal: mealTimestampLocal,
-                  formattedMealTime: formattedMealTime,
-                  prompt: journalData['prompt'] || '',
-                  showPrompt: false,
-                  carbsPercent: 0,
-                  proteinsPercent: 0,
-                  fatsPercent: 0,
-                  isFavorite: journalData['isFavorite'] || false,
-                  isEditing: false,
-                  editValues: null,
-                });
-
-                this.totalCalories += journalData['calories'];
-                this.totalCarbs += journalData['carbs'];
-                this.totalProteins += journalData['proteins'];
-                this.totalFats += journalData['fats'];
-              }
-            }
-            this.journalEntries.sort(
-              (a, b) =>
-                new Date(a.mealTimestampLocal).getTime() -
-                new Date(b.mealTimestampLocal).getTime()
-            );
-            this.calculateTotalsAndPercentages();
-            this.updateChartData();
-          }
-        } catch (error) {
-          console.error('Error fetching journal entries:', error);
-        }
+        this.journalEntries.sort(
+          (a, b) =>
+            new Date(a.mealTimestampLocal).getTime() -
+            new Date(b.mealTimestampLocal).getTime()
+        );
+        this.calculateTotalsAndPercentages();
+        this.updateChartData();
       }
-    });
+    } catch (error) {
+      console.error('Error fetching journal entries:', error);
+    }
   }
 
   private calculateTotalsAndPercentages() {
@@ -627,7 +633,7 @@ export class JournalPage implements OnInit {
 
         this.newMealDescription = '';
 
-        await this.fetchJournalEntries();
+        await this.fetchJournalEntries(userId);
       }
     } catch (error) {
       console.error('Error adding new meal:', error);
@@ -643,6 +649,14 @@ export class JournalPage implements OnInit {
   }
 
   onUserChange() {
-    this.fetchJournalEntries();
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const currentUserId = user.uid;
+        this.fetchJournalEntries(currentUserId);
+      } else {
+        console.error('User is not authenticated');
+      }
+    });
   }
 }
