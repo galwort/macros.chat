@@ -37,7 +37,7 @@
             </ng-template>
           </ion-modal>
         </ion-item>
-        <ion-item lines="none">
+        <ion-item lines="none" *ngIf="sharedUsers.length > 0">
           <div class="user-filter">
             <i class="fa-solid fa-user-group"></i>
             <ion-select
