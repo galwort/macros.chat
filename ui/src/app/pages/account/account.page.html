@@ -80,7 +80,7 @@
       </div>
     </div>
 
-    <h2>Shared With</h2>
+    <h2 *ngIf="sharedUsers.length > 0">Shared With</h2>
     <div *ngIf="sharedUsers.length > 0">
       <div
         *ngFor="let user of sharedUsers"
