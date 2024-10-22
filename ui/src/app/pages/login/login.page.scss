@@ -133,18 +133,18 @@ ion-content {
                 --highlight-color-invalid: var(--theme-primary);
               }
             }
-
-            ion-button {
-              color: var(--theme-secondary);
-              --background: var(--theme-primary);
-              font-weight: bold;
-              margin-top: 30px;
-              display: block;
-            }
           }
 
-          ion-button[expand="block"] {
-            margin-top: 10px;
+          ion-button {
+            color: var(--theme-secondary);
+            --background: var(--theme-primary);
+            font-weight: bold;
+            margin-top: 20px;
+            display: block;
+          }
+
+          ion-button[type="submit"] {
+            margin-top: 30px;
           }
 
           .account-text {
