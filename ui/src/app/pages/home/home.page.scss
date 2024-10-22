@@ -5,8 +5,8 @@ ion-toolbar {
 
   i {
     color: var(--theme-primary);
-    font-size: 5vh;
-    padding: 2vh;
+    font-size: min(5vh, 30px);
+    padding: min(1vh, 10px);
 
     &:hover {
       cursor: pointer;
@@ -15,9 +15,9 @@ ion-toolbar {
   }
 
   .user-profile-image {
-    width: 6vh;
-    height: 6vh;
-    margin-right: 1.5vh;
+    width: min(6vh, 34px);
+    height: min(6vh, 34px);
+    margin-right: min(1.5vh, 10px);
     border-radius: 50%;
     object-fit: cover;
     cursor: pointer;
