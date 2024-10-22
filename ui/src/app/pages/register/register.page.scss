@@ -1,136 +1,144 @@
-ion-toolbar {
-  --background: transparent;
-  position: absolute;
+ion-content {
+  ion-header {
+    &.ion-no-border {
+      ion-toolbar {
+        --background: transparent;
+        position: absolute;
 
-  img {
-    height: 30px;
-    margin: 1vw;
+        img {
+          height: 30px;
+          margin: 1vw;
 
-    &:hover {
-      cursor: pointer;
-    }
-  }
+          &:hover {
+            cursor: pointer;
+          }
+        }
 
-  i {
-    color: var(--theme-primary);
-    font-size: 5vh;
-    padding: 2vh;
-
-    &:hover {
-      cursor: pointer;
-      color: var(--theme-accent);
-    }
-  }
-}
-
-.split-screen {
-  display: flex;
-  height: 100%;
-}
-
-.left-side {
-  flex: 1;
-  background-color: var(--theme-background);
-  max-width: 60vw;
-  overflow: hidden;
-
-  .meal-list {
-    display: inline-block;
-    animation: scroll 60s linear infinite;
-
-    &:has(.meal-item:hover) {
-      animation-play-state: paused;
-      cursor: pointer;
-    }
-  }
-
-  .meal-item {
-    display: inline-block;
-    padding: 5px;
-    white-space: nowrap;
-    margin-right: 10px;
-    font-weight: bold;
-  }
-
-  @keyframes scroll {
-    0% {
-      transform: translateY(0);
-    }
-    100% {
-      transform: translateY(-50%);
-    }
-  }
-
-  .calories {
-    color: #32cd32aa;
-
-    &:hover {
-      color: #32cd32;
-    }
-  }
-
-  .carbs {
-    color: #e3b508aa;
-
-    &:hover {
-      color: #e3b508;
-    }
-  }
-
-  .protein {
-    color: #ff6347aa;
-
-    &:hover {
-      color: #ff6347;
-    }
-  }
-
-  .fats {
-    color: #4682b4aa;
-
-    &:hover {
-      color: #4682b4;
-    }
-  }
-}
-
-.right-side {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--theme-background);
-  overflow: auto;
-
-  ion-card {
-    color: var(--theme-primary);
-    border: 2px solid var(--theme-primary);
-    width: 80%;
-    max-width: 25vw;
-    min-width: 300px;
-
-    ion-card-content {
-      background-color: var(--theme-secondary);
-
-      ion-item {
-        --background: var(--theme-secondary);
-        --border-color: var(--theme-primary);
-        --highlight-color-focused: var(--theme-primary);
-
-        ion-label,
-        ion-input {
+        i {
           color: var(--theme-primary);
-          --highlight-color-focused: var(--theme-primary);
-          --highlight-color-valid: var(--theme-primary);
-          --highlight-color-invalid: var(--theme-primary);
+          font-size: 5vh;
+          padding: 2vh;
+
+          &:hover {
+            cursor: pointer;
+            color: var(--theme-accent);
+          }
+        }
+      }
+    }
+  }
+
+  .split-screen {
+    display: flex;
+    height: 100%;
+
+    .left-side {
+      flex: 1;
+      background-color: var(--theme-background);
+      max-width: 60vw;
+      overflow: hidden;
+
+      .meal-list {
+        display: inline-block;
+        animation: scroll 60s linear infinite;
+
+        &:has(.meal-item:hover) {
+          animation-play-state: paused;
+          cursor: pointer;
+        }
+
+        .meal-item {
+          display: inline-block;
+          padding: 5px;
+          white-space: nowrap;
+          margin-right: 10px;
+          font-weight: bold;
         }
       }
 
-      ion-button {
-        color: var(--theme-secondary);
-        --background: var(--theme-primary);
-        font-weight: bold;
-        margin-top: 30px;
+      @keyframes scroll {
+        0% {
+          transform: translateY(0);
+        }
+        100% {
+          transform: translateY(-50%);
+        }
+      }
+
+      // Nutrition Categories
+      .calories {
+        color: #32cd32aa;
+
+        &:hover {
+          color: #32cd32;
+        }
+      }
+
+      .carbs {
+        color: #e3b508aa;
+
+        &:hover {
+          color: #e3b508;
+        }
+      }
+
+      .protein {
+        color: #ff6347aa;
+
+        &:hover {
+          color: #ff6347;
+        }
+      }
+
+      .fats {
+        color: #4682b4aa;
+
+        &:hover {
+          color: #4682b4;
+        }
+      }
+    }
+
+    .right-side {
+      display: flex;
+      flex: 1;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--theme-background);
+      overflow: auto;
+
+      ion-card {
+        color: var(--theme-primary);
+        border: 2px solid var(--theme-primary);
+        width: 80%;
+        max-width: 25vw;
+        min-width: 300px;
+
+        ion-card-content {
+          background-color: var(--theme-secondary);
+
+          ion-item {
+            --background: var(--theme-secondary);
+            --border-color: var(--theme-primary);
+            --highlight-color-focused: var(--theme-primary);
+
+            ion-label,
+            ion-input {
+              color: var(--theme-primary);
+              --highlight-color-focused: var(--theme-primary);
+              --highlight-color-valid: var(--theme-primary);
+              --highlight-color-invalid: var(--theme-primary);
+            }
+          }
+
+          ion-button {
+            color: var(--theme-secondary);
+            --background: var(--theme-primary);
+            font-weight: bold;
+            margin-top: 30px;
+            display: block;
+          }
+        }
       }
     }
   }
