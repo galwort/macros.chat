@@ -1,154 +1,171 @@
-ion-toolbar {
-  --background: transparent;
-  position: absolute;
+ion-content {
+  ion-header {
+    &.ion-no-border {
+      ion-toolbar {
+        --background: transparent;
+        position: absolute;
 
-  img {
-    height: 30px;
-    margin: 1vw;
+        img {
+          height: 30px;
+          margin: 1vw;
 
-    &:hover {
-      cursor: pointer;
-    }
-  }
-}
-
-.split-screen {
-  display: flex;
-  height: 100%;
-}
-
-.left-side {
-  flex: 1;
-  background-color: var(--theme-background);
-  max-width: 60vw;
-  overflow: hidden;
-
-  .meal-list {
-    display: inline-block;
-    animation: scroll 60s linear infinite;
-
-    &:has(.meal-item:hover) {
-      animation-play-state: paused;
-      cursor: pointer;
-    }
-  }
-
-  .meal-item {
-    display: inline-block;
-    padding: 5px;
-    white-space: nowrap;
-    margin-right: 10px;
-    font-weight: bold;
-  }
-
-  @keyframes scroll {
-    0% {
-      transform: translateY(0);
-    }
-    100% {
-      transform: translateY(-50%);
-    }
-  }
-
-  .calories {
-    color: #32cd32aa;
-
-    &:hover {
-      color: #32cd32;
-    }
-  }
-
-  .carbs {
-    color: #e3b508aa;
-
-    &:hover {
-      color: #e3b508;
-    }
-  }
-
-  .protein {
-    color: #ff6347aa;
-
-    &:hover {
-      color: #ff6347;
-    }
-  }
-
-  .fats {
-    color: #4682b4aa;
-
-    &:hover {
-      color: #4682b4;
-    }
-  }
-}
-
-.right-side {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--theme-background);
-  overflow: auto;
-
-  ion-card {
-    color: var(--theme-primary);
-    border: 2px solid var(--theme-primary);
-    width: 80%;
-    max-width: 25vw;
-    min-width: 300px;
-
-    ion-card-header {
-      --background: var(--theme-secondary);
-
-      ion-card-title {
-        text-align: center;
-        color: var(--theme-primary);
-        font-weight: bold;
-        font-size: 1.5rem;
-      }
-    }
-
-    ion-card-content {
-      background-color: var(--theme-secondary);
-
-      ion-item {
-        --background: var(--theme-secondary);
-        --border-color: var(--theme-primary);
-        --highlight-color-focused: var(--theme-primary);
-
-        ion-label,
-        ion-input {
-          color: var(--theme-primary);
-          --highlight-color-focused: var(--theme-primary);
-          --highlight-color-valid: var(--theme-primary);
-          --highlight-color-invalid: var(--theme-primary);
-        }
-      }
-
-      ion-button {
-        color: var(--theme-secondary);
-        --background: var(--theme-primary);
-        font-weight: bold;
-        margin-top: 30px;
-      }
-
-      .account-text {
-        color: var(--theme-primary);
-        text-decoration: underline;
-        text-align: center;
-        margin-top: 20px;
-
-        ion-text {
-          a {
-            color: var(--theme-primary);
+          &:hover {
+            cursor: pointer;
           }
         }
       }
+    }
+  }
 
-      #loginButton img {
-        height: 20px;
-        margin-right: 10px;
+  .split-screen {
+    display: flex;
+    height: 100%;
+
+    .left-side {
+      flex: 1;
+      background-color: var(--theme-background);
+      max-width: 60vw;
+      overflow: hidden;
+
+      .scroll-container {
+        .meal-list {
+          display: inline-block;
+          animation: scroll 60s linear infinite;
+
+          &:has(.meal-item:hover) {
+            animation-play-state: paused;
+            cursor: pointer;
+          }
+
+          .meal-item {
+            display: inline-block;
+            padding: 5px;
+            white-space: nowrap;
+            margin-right: 10px;
+            font-weight: bold;
+          }
+        }
+
+        @keyframes scroll {
+          0% {
+            transform: translateY(0);
+          }
+          100% {
+            transform: translateY(-50%);
+          }
+        }
+
+        // Nutrition categories
+        .calories {
+          color: #32cd32aa;
+
+          &:hover {
+            color: #32cd32;
+          }
+        }
+
+        .carbs {
+          color: #e3b508aa;
+
+          &:hover {
+            color: #e3b508;
+          }
+        }
+
+        .protein {
+          color: #ff6347aa;
+
+          &:hover {
+            color: #ff6347;
+          }
+        }
+
+        .fats {
+          color: #4682b4aa;
+
+          &:hover {
+            color: #4682b4;
+          }
+        }
+      }
+    }
+
+    .right-side {
+      display: flex;
+      flex: 1;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--theme-background);
+      overflow: auto;
+
+      ion-card {
+        color: var(--theme-primary);
+        border: 2px solid var(--theme-primary);
+        width: 80%;
+        max-width: 25vw;
+        min-width: 300px;
+        border-radius: 15px;
+
+        ion-card-header {
+          --background: var(--theme-secondary);
+
+          ion-card-title {
+            text-align: center;
+            color: var(--theme-primary);
+            font-weight: bold;
+            font-size: 1.5rem;
+          }
+        }
+
+        ion-card-content {
+          background-color: var(--theme-secondary);
+
+          form {
+            ion-item {
+              --background: var(--theme-secondary);
+              --border-color: var(--theme-primary);
+              --highlight-color-focused: var(--theme-primary);
+
+              ion-label,
+              ion-input {
+                color: var(--theme-primary);
+                --highlight-color-focused: var(--theme-primary);
+                --highlight-color-valid: var(--theme-primary);
+                --highlight-color-invalid: var(--theme-primary);
+              }
+            }
+
+            ion-button {
+              color: var(--theme-secondary);
+              --background: var(--theme-primary);
+              font-weight: bold;
+              margin-top: 30px;
+              display: block;
+            }
+          }
+
+          ion-button[expand="block"] {
+            margin-top: 10px;
+          }
+
+          .account-text {
+            color: var(--theme-primary);
+            text-decoration: underline;
+            text-align: center;
+            margin-top: 20px;
+
+            ion-text {
+              a {
+                color: var(--theme-primary);
+              }
+            }
+          }
+
+          #loginButton img {
+            height: 20px;
+            margin-right: 10px;
+          }
+        }
       }
     }
   }
