@@ -102,11 +102,12 @@ ion-content {
         border: 2px solid var(--theme-primary);
         width: 80%;
         max-width: 25vw;
-        min-width: 300px;
+        min-width: 270px;
         border-radius: 15px;
 
         ion-card-header {
           --background: var(--theme-secondary);
+          padding-bottom: 0px;
 
           ion-card-title {
             text-align: center;
