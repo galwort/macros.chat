@@ -14,7 +14,7 @@
       <div class="scroll-container">
         <div class="meal-list">
           <span
-            *ngFor="let meal of meals; let i = index;"
+            *ngFor="let meal of meals; let i = index"
             [ngClass]="getColorClass(i)"
             class="meal-item"
             (click)="navigateTo(meal.id)"
