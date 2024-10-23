@@ -3,12 +3,16 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private afAuth: AngularFireAuth) {}
+  constructor(
+    private afAuth: AngularFireAuth,
+    private firestore: AngularFirestore
+  ) {}
 
   login(
     email: string,
@@ -24,9 +28,32 @@ export class AuthService {
     return this.afAuth.createUserWithEmailAndPassword(email, password);
   }
 
-  loginWithGoogle(): Promise<firebase.auth.UserCredential> {
+  async loginWithGoogle(): Promise<void> {
     const provider = new firebase.auth.GoogleAuthProvider();
-    return this.afAuth.signInWithPopup(provider);
+    const credential = await this.afAuth.signInWithPopup(provider);
+    const user = credential.user;
+
+    if (user) {
+      await this.createUserIfNotExists(user);
+    }
+  }
+
+  async createUserIfNotExists(user: firebase.User): Promise<void> {
+    const userRef = this.firestore.collection('users').doc(user.uid);
+
+    try {
+      const doc = await userRef.get().toPromise();
+
+      if (doc && !doc.exists) {
+        await userRef.set({
+          email: user.email,
+          loginUsername: user.displayName,
+          username: user.displayName,
+        });
+      }
+    } catch (error) {
+      console.error('Error creating user document:', error);
+    }
   }
 
   logout(): Promise<void> {
