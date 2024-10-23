@@ -116,23 +116,19 @@ export class JournalPage implements OnInit {
 
   ngOnInit() {
     const date = new Date();
-    this.dateSelected = date.toISOString().split('T')[0]; // Format YYYY-MM-DD
-
+    this.dateSelected = date.toISOString().split('T')[0];
     const auth = getAuth();
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const currentUserId = user.uid;
         this.userProfileImage = user.photoURL;
-
         await this.fetchSharedUsers(currentUserId);
-
+        await this.fetchFavoriteMeals();
         this.route.queryParams.subscribe((params) => {
           const userFromUrl = params['user'];
-
           const matchedUser = this.sharedUsers.find(
             (u) => u.username === userFromUrl
           );
-
           if (matchedUser) {
             this.selectedUser = matchedUser.uid;
           } else {
@@ -529,13 +525,19 @@ export class JournalPage implements OnInit {
           const journalRef = collection(db, `users/${userId}/journal`);
           const querySnapshot = await getDocs(journalRef);
           this.favoriteMeals = [];
-
           for (const journalDoc of querySnapshot.docs) {
             const journalData = journalDoc.data();
             if (journalData['isFavorite'] === true) {
               this.favoriteMeals.push({
                 id: journalDoc.id,
                 summary: journalData['summary'],
+                calories: journalData['calories'],
+                carbs: journalData['carbs'],
+                proteins: journalData['proteins'],
+                fats: journalData['fats'],
+                prompt: journalData['prompt'] || '',
+                mealId: journalData['mealId'],
+                isFavorite: journalData['isFavorite'],
               });
             }
           }
@@ -642,9 +644,67 @@ export class JournalPage implements OnInit {
     this.isLoadingNewMeal = false;
   }
 
+  async addFavoriteMeal(favoriteMeal: any) {
+    if (this.selectedUser !== 'Me') {
+      return;
+    }
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      if (user) {
+        const userId = user.uid;
+        const journalRef = collection(db, `users/${userId}/journal`);
+        const currentTime = new Date();
+        const [year, month, day] = this.dateSelected.split('-').map(Number);
+        const mealTimestampLocal = new Date(
+          year,
+          month - 1,
+          day,
+          currentTime.getHours(),
+          currentTime.getMinutes()
+        );
+        const newMeal = {
+          summary: favoriteMeal.summary,
+          calories: favoriteMeal.calories,
+          carbs: favoriteMeal.carbs,
+          proteins: favoriteMeal.proteins,
+          fats: favoriteMeal.fats,
+          prompt: favoriteMeal.prompt,
+          mealTimestamp: currentTime.toISOString(),
+          mealTimestampLocal: mealTimestampLocal.toISOString(),
+          lastEditTimestamp: currentTime.toISOString(),
+          logTimestamp: currentTime.toISOString(),
+          mealId: favoriteMeal.mealId,
+          isFavorite: favoriteMeal.isFavorite || false,
+        };
+        await addDoc(journalRef, newMeal);
+        this.journalEntries.push({
+          ...newMeal,
+          id: '',
+          showPrompt: false,
+          formattedMealTime: mealTimestampLocal.toLocaleTimeString([], {
+            hour: 'numeric',
+            minute: '2-digit',
+          }),
+          carbsPercent: 0,
+          proteinsPercent: 0,
+          fatsPercent: 0,
+          isEditing: false,
+          editValues: null,
+        });
+        this.calculateTotalsAndPercentages();
+        this.updateChartData();
+        this.selectedFavoriteMeal = null;
+        await this.fetchJournalEntries(userId);
+      }
+    } catch (error) {
+      console.error('Error adding favorite meal:', error);
+    }
+  }
+
   onFavoriteMealSelected() {
     if (this.selectedFavoriteMeal) {
-      this.newMealDescription = this.selectedFavoriteMeal;
+      this.addFavoriteMeal(this.selectedFavoriteMeal);
     }
   }
 
