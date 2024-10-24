@@ -272,8 +272,14 @@
               [(ngModel)]="newMealDescription"
               placeholder="What else did you eat?"
               (keydown.enter)="addNewMeal()"
+              [disabled]="isLoadingNewMeal"
             />
-            <i class="fa-solid fa-arrow-up" (click)="addNewMeal()"></i>
+            <ng-container *ngIf="!isLoadingNewMeal">
+              <ion-icon name="arrow-up" (click)="addNewMeal()"></ion-icon>
+            </ng-container>
+            <ng-container *ngIf="isLoadingNewMeal">
+              <ion-spinner name="dots"></ion-spinner>
+            </ng-container>
           </div>
           <ion-item lines="none">
             <ion-label>Favorites</ion-label>

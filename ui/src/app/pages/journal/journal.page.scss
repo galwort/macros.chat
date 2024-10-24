@@ -446,9 +446,14 @@
               border: 2px solid var(--theme-accent);
               outline: none;
             }
+
+            &:disabled {
+              background-color: var(--theme-background);
+              opacity: 0.5;
+            }
           }
 
-          i {
+          ion-icon {
             position: absolute;
             right: 10px;
             top: 50%;
@@ -460,6 +465,16 @@
             &:hover {
               color: var(--theme-accent);
             }
+          }
+
+          ion-spinner {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--theme-primary);
+            width: 24px;
+            height: 24px;
           }
         }
 
