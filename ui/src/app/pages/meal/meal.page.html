@@ -1,36 +1,34 @@
-<ion-content>
-  <ion-header class="ion-no-border">
-    <ion-toolbar>
-      <img
-        src="assets/strawberry.svg"
-        alt="Home"
-        id="logo"
-        (click)="navigateTo('')"
-      />
-      <i
-        *ngIf="isUserLoggedIn"
-        class="fa-solid fa-book"
-        slot="end"
-        (click)="navigateTo('journal')"
-      ></i>
-      <i
-        *ngIf="!isUserLoggedIn"
-        class="fa-solid fa-user"
-        slot="end"
-        (click)="handleIconClick()"
-      ></i>
+<ion-toolbar>
+  <img
+    src="assets/strawberry.svg"
+    alt="Home"
+    id="logo"
+    (click)="navigateTo('')"
+  />
+  <i
+    *ngIf="isUserLoggedIn"
+    class="fa-solid fa-book"
+    slot="end"
+    (click)="navigateTo('journal')"
+  ></i>
+  <i
+    *ngIf="!isUserLoggedIn"
+    class="fa-solid fa-user"
+    slot="end"
+    (click)="handleIconClick()"
+  ></i>
 
-      <img
-        *ngIf="isUserLoggedIn && userProfileImage"
-        [src]="userProfileImage"
-        alt="User Profile"
-        class="user-profile-image"
-        (click)="handleIconClick()"
-        slot="end"
-      />
-    </ion-toolbar>
-  </ion-header>
+  <img
+    *ngIf="isUserLoggedIn && userProfileImage"
+    [src]="userProfileImage"
+    alt="User Profile"
+    class="user-profile-image"
+    (click)="handleIconClick()"
+    slot="end"
+  />
+</ion-toolbar>
 
+<ion-content fullscreen>
   <div *ngIf="isLoading" class="centered-content">
     <ion-spinner></ion-spinner>
   </div>
