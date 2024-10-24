@@ -69,12 +69,16 @@ export class JournalPage implements OnInit {
   public isLoadingNewMeal: boolean = false;
   public selectedUser: string = 'Me';
   public sharedUsers: { uid: string; username: string }[] = [];
+  public filterDate: string = '';
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private http: HttpClient
   ) {
+    const today = new Date();
+    this.filterDate = today.toISOString();
+
     this.pieChartOptions = {
       borderColor: '#030607',
       plugins: {
