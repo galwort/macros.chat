@@ -619,6 +619,21 @@ export class JournalPage implements OnInit {
 
         await addDoc(journalRef, newMeal);
 
+        const mealsDocRef = doc(db, 'meals', mealId);
+        await setDoc(
+          mealsDocRef,
+          {
+            calories: newMeal.calories,
+            carbs: newMeal.carbs,
+            fats: newMeal.fats,
+            prompt: newMeal.prompt,
+            proteins: newMeal.proteins,
+            summary: newMeal.summary,
+            timestamp: newMeal.logTimestamp,
+          },
+          { merge: true }
+        );
+
         this.journalEntries.push({
           ...newMeal,
           id: '',
@@ -682,6 +697,22 @@ export class JournalPage implements OnInit {
           isFavorite: favoriteMeal.isFavorite || false,
         };
         await addDoc(journalRef, newMeal);
+
+        const mealsDocRef = doc(db, 'meals', newMeal.mealId);
+        await setDoc(
+          mealsDocRef,
+          {
+            calories: newMeal.calories,
+            carbs: newMeal.carbs,
+            fats: newMeal.fats,
+            prompt: newMeal.prompt,
+            proteins: newMeal.proteins,
+            summary: newMeal.summary,
+            timestamp: newMeal.logTimestamp,
+          },
+          { merge: true }
+        );
+
         this.journalEntries.push({
           ...newMeal,
           id: '',
