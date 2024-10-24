@@ -13,8 +13,8 @@ ion-toolbar {
 
   i {
     color: var(--theme-primary);
-    font-size: 5vh;
-    padding: 2vh;
+    font-size: min(5vh, 30px);
+    padding: min(2vh, 10px);
 
     &:hover {
       cursor: pointer;
