@@ -1,7 +1,3 @@
-ion-content {
-  --background: var(--theme-background);
-}
-
 ion-toolbar {
   --background: transparent;
   position: absolute;
@@ -27,160 +23,164 @@ ion-toolbar {
   }
 }
 
-.main-content {
-  display: flex;
-  flex-direction: column;
-  background-color: var(--theme-background);
-  padding-top: 20px;
-  position: relative;
-  height: 92vh;
-  margin: 20px;
+ion-content {
+  --background: var(--theme-background);
 
-  h1 {
-    color: var(--theme-primary);
-    font-weight: bold;
-    font-size: 2em;
-    margin-bottom: 2.5px;
-  }
-
-  h2 {
-    color: var(--theme-primary);
-    font-weight: bold;
-    font-size: 1.5em;
-    margin-top: 20px;
-  }
-
-  h3 {
-    color: var(--theme-primary);
-    margin-top: 2px;
-    font-size: 1em;
-  }
-
-  p {
-    color: var(--theme-primary);
-    margin: 2px;
-    font-size: 1em;
-  }
-
-  .user-info {
+  .main-content {
+    height: 100%;
     display: flex;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    align-items: center;
+    flex-direction: column;
+    padding-top: 20px;
+    position: relative;
+    margin: 20px;
+    margin-bottom: 40px;
 
-    .user-profile-image {
-      width: 10vh;
-      height: 10vh;
-      margin-right: 2vh;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid var(--theme-primary);
+    h1 {
+      color: var(--theme-primary);
+      font-weight: bold;
+      font-size: 2em;
+      margin-bottom: 2.5px;
     }
 
-    .user-details {
+    h2 {
+      color: var(--theme-primary);
+      font-weight: bold;
+      font-size: 1.5em;
+      margin-top: 20px;
+    }
+
+    h3 {
+      color: var(--theme-primary);
+      margin-top: 2px;
+      font-size: 1em;
+    }
+
+    p {
+      color: var(--theme-primary);
+      margin: 2px;
+      font-size: 1em;
+    }
+
+    .user-info {
       display: flex;
-      flex-direction: column;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      align-items: center;
 
-      .editable-display-name {
+      .user-profile-image {
+        width: 10vh;
+        height: 10vh;
+        margin-right: 2vh;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid var(--theme-primary);
+      }
+
+      .user-details {
         display: flex;
-        align-items: center;
-        cursor: pointer;
-        width: fit-content;
+        flex-direction: column;
 
-        h2 {
-          margin-right: 4px;
-          transition: color 0.3s;
-          margin-bottom: 0px;
-        }
+        .editable-display-name {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          width: fit-content;
 
-        i {
-          color: var(--theme-background);
-          margin-left: 5px;
-          font-size: 1.2em;
-          transition: color 0.3s;
-        }
+          h2 {
+            margin-right: 4px;
+            transition: color 0.3s;
+            margin-bottom: 0px;
+          }
 
-        &.hovered {
-          h2,
           i {
-            color: var(--theme-accent);
+            color: var(--theme-background);
+            margin-left: 5px;
+            font-size: 1.2em;
+            transition: color 0.3s;
+          }
+
+          &.hovered {
+            h2,
+            i {
+              color: var(--theme-accent);
+            }
+          }
+
+          input {
+            font-size: 1.5em;
+            border: 2px solid var(--theme-primary);
+            border-radius: 5px;
+            padding: 5px;
+            width: auto;
           }
         }
 
-        input {
-          font-size: 1.5em;
-          border: 2px solid var(--theme-primary);
-          border-radius: 5px;
-          padding: 5px;
-          width: auto;
+        .email {
+          margin-top: 5px;
+          font-size: 1em;
+          color: var(--theme-primary);
         }
       }
+    }
 
-      .email {
-        margin-top: 5px;
-        font-size: 1em;
+    .input-container {
+      position: relative;
+      width: min(270px, 80vw);
+      margin-bottom: 10px;
+
+      input {
+        width: 100%;
+        padding: 10px;
+        padding-right: 40px;
+        border-radius: 10px;
+        border: 2px solid var(--theme-primary);
+        background-color: var(--theme-background);
         color: var(--theme-primary);
       }
+
+      i {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--theme-primary);
+        font-size: 1.2em;
+        cursor: pointer;
+
+        &:hover {
+          color: var(--theme-accent);
+        }
+      }
     }
-  }
 
-  .input-container {
-    position: relative;
-    width: 270px;
-    margin-bottom: 10px;
-
-    input {
-      width: 100%;
+    .search-result {
+      border: 1px solid var(--theme-primary);
+      border-radius: 50px;
       padding: 10px;
-      padding-right: 40px;
-      border-radius: 10px;
-      border: 2px solid var(--theme-primary);
+      margin-top: 10px;
       background-color: var(--theme-background);
       color: var(--theme-primary);
-    }
+      width: fit-content;
 
-    i {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--theme-primary);
-      font-size: 1.2em;
-      cursor: pointer;
+      i {
+        margin-left: 5px;
+      }
 
       &:hover {
-        color: var(--theme-accent);
+        cursor: pointer;
+        background-color: var(--theme-primary);
+        color: var(--theme-background);
       }
     }
   }
 
-  .search-result {
-    border: 1px solid var(--theme-primary);
-    border-radius: 50px;
-    padding: 10px;
-    margin-top: 10px;
-    background-color: var(--theme-background);
-    color: var(--theme-primary);
+  ion-button {
+    --background: var(--theme-primary);
+    --color: var(--theme-background);
+    --border-radius: 10px;
+    font-weight: bold;
+    margin-top: 20px;
     width: fit-content;
-
-    i {
-      margin-left: 5px;
-    }
-
-    &:hover {
-      cursor: pointer;
-      background-color: var(--theme-primary);
-      color: var(--theme-background);
-    }
+    --box-shadow: none;
   }
-}
-
-ion-button {
-  --background: var(--theme-primary);
-  --color: var(--theme-background);
-  --border-radius: 10px;
-  font-weight: bold;
-  margin-top: 20px;
-  width: fit-content;
-  --box-shadow: none;
 }

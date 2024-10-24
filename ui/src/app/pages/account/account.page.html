@@ -1,20 +1,14 @@
-<ion-content>
-  <ion-header class="ion-no-border">
-    <ion-toolbar>
-      <img
-        src="assets/strawberry.svg"
-        alt="Home"
-        id="logo"
-        (click)="navigateTo('')"
-      />
-      <i
-        class="fa-solid fa-book"
-        slot="end"
-        (click)="navigateTo('journal')"
-      ></i>
-    </ion-toolbar>
-  </ion-header>
+<ion-toolbar>
+  <img
+    src="assets/strawberry.svg"
+    alt="Home"
+    id="logo"
+    (click)="navigateTo('')"
+  />
+  <i class="fa-solid fa-book" slot="end" (click)="navigateTo('journal')"></i>
+</ion-toolbar>
 
+<ion-content>
   <div class="main-content">
     <h1>Account Settings</h1>
     <div class="user-info">
