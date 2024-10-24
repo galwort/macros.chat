@@ -1,21 +1,19 @@
-ion-content {
-  ion-header {
-    &.ion-no-border {
-      ion-toolbar {
-        --background: transparent;
-        position: absolute;
+ion-toolbar {
+  --background: transparent;
+  position: absolute;
 
-        img {
-          height: 30px;
-          margin: 1vw;
+  img {
+    height: 30px;
+    margin: 1vw;
 
-          &:hover {
-            cursor: pointer;
-          }
-        }
-      }
+    &:hover {
+      cursor: pointer;
     }
   }
+}
+
+ion-content {
+  --background: var(--theme-background);
 
   .split-screen {
     display: flex;
@@ -23,7 +21,6 @@ ion-content {
 
     .left-side {
       flex: 1;
-      background-color: var(--theme-background);
       max-width: 60vw;
       overflow: hidden;
 
@@ -94,7 +91,6 @@ ion-content {
       flex: 1;
       justify-content: center;
       align-items: center;
-      background-color: var(--theme-background);
       overflow: auto;
 
       ion-card {
