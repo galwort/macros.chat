@@ -1,7 +1,6 @@
 ion-toolbar {
   --background: var(--theme-background);
   --color: var(--theme-text);
-  height: 8vh;
 
   i {
     color: var(--theme-primary);
@@ -29,50 +28,52 @@ ion-toolbar {
   }
 }
 
-.centered-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 92vh;
-  background-color: var(--theme-background);
-  padding: 10vw;
+ion-content {
+  --background: var(--theme-background);
 
-  img {
-    height: 130px;
-    margin-bottom: 40px;
-  }
-
-  ion-spinner {
-    height: 130px;
-    width: 130px;
-    margin-bottom: 40px;
-    color: #1a2f3a;
+  .centered-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     background-color: var(--theme-background);
-  }
 
-  ion-item {
-    --background: var(--theme-secondary);
-    --color: var(--theme-primary);
-    --border-radius: 10px;
-    --border-color: var(--theme-primary);
-    --border-width: 8px;
-
-    ion-textarea {
-      max-width: 300px;
-      margin-right: 10px;
-      --placeholder-color: var(--theme-primary);
-      --placeholder-opacity: 1;
+    img {
+      height: 130px;
+      margin-bottom: 40px;
     }
 
-    i {
-      font-size: 30px;
-      color: var(--theme-primary);
+    ion-spinner {
+      height: 130px;
+      width: 130px;
+      margin-bottom: 40px;
+      color: #1a2f3a;
+      background-color: var(--theme-background);
+    }
 
-      &:hover {
-        cursor: pointer;
-        color: var(--theme-accent);
-        border-radius: 20%;
+    ion-item {
+      --background: var(--theme-secondary);
+      --color: var(--theme-primary);
+      --border-radius: 10px;
+      --border-color: var(--theme-primary);
+      --border-width: 8px;
+
+      ion-textarea {
+        max-width: 300px;
+        margin-right: 10px;
+        --placeholder-color: var(--theme-primary);
+        --placeholder-opacity: 1;
+      }
+
+      i {
+        font-size: 30px;
+        color: var(--theme-primary);
+
+        &:hover {
+          cursor: pointer;
+          color: var(--theme-accent);
+          border-radius: 20%;
+        }
       }
     }
   }

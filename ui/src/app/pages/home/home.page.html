@@ -1,28 +1,29 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <i
+      *ngIf="isUserLoggedIn"
+      class="fa-solid fa-book"
+      slot="end"
+      (click)="navigateTo('journal')"
+    ></i>
+    <i
+      *ngIf="!isUserLoggedIn"
+      class="fa-solid fa-user"
+      slot="end"
+      (click)="handleIconClick()"
+    ></i>
+    <img
+      *ngIf="isUserLoggedIn && userProfileImage"
+      [src]="userProfileImage"
+      alt="User Profile"
+      class="user-profile-image"
+      (click)="handleIconClick()"
+      slot="end"
+    />
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
-  <ion-header class="ion-no-border">
-    <ion-toolbar>
-      <i
-        *ngIf="isUserLoggedIn"
-        class="fa-solid fa-book"
-        slot="end"
-        (click)="navigateTo('journal')"
-      ></i>
-      <i
-        *ngIf="!isUserLoggedIn"
-        class="fa-solid fa-user"
-        slot="end"
-        (click)="handleIconClick()"
-      ></i>
-      <img
-        *ngIf="isUserLoggedIn && userProfileImage"
-        [src]="userProfileImage"
-        alt="User Profile"
-        class="user-profile-image"
-        (click)="handleIconClick()"
-        slot="end"
-      />
-    </ion-toolbar>
-  </ion-header>
   <div class="centered-content">
     <img
       *ngIf="!isLoading"
