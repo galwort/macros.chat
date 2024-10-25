@@ -15,14 +15,16 @@ ion-toolbar {
     flex-direction: row;
 
     ion-item {
-      margin-left: 35px;
+      --padding-start: 0px;
       --background: transparent;
       --inner-padding-end: 0px;
+      padding: min(2vh, 10px);
       cursor: pointer;
 
       i {
+        padding: min(2vh, 10px);
         color: var(--theme-primary);
-        font-size: min(4vw, 1.5em);
+        font-size: min(5vh, 30px);
         transition: color 0.3s ease;
       }
 
@@ -33,8 +35,9 @@ ion-toolbar {
 
         ion-datetime-button::part(native),
         ion-select::part(native) {
+          padding: 0;
           background-color: transparent;
-          font-size: min(5vw, 2em);
+          font-size: min(5vh, 30px);
           font-weight: bold;
           color: var(--theme-primary);
           transition: color 0.3s ease;
@@ -61,15 +64,10 @@ ion-toolbar {
 
       .user-filter {
         ion-select {
-          --padding-start: 0;
-          --padding-end: 0;
+          padding: 0;
           --placeholder-color: var(--theme-primary);
           --color: var(--theme-primary);
-          --padding-top: 0;
-          --padding-bottom: 0;
-          margin-left: 12px;
-          margin-right: 12px;
-          font-size: min(5vw, 2em);
+          font-size: min(5vh, 30px);
           font-weight: bold;
 
           &:hover {
@@ -93,9 +91,9 @@ ion-toolbar {
   }
 
   .user-profile-image {
-    width: 6vh;
-    height: 6vh;
-    margin-right: 1.5vh;
+    width: min(6vh, 34px);
+    height: min(6vh, 34px);
+    margin-right: min(1.5vh, 10px);
     border-radius: 50%;
     object-fit: cover;
     cursor: pointer;
