@@ -3,8 +3,41 @@
     src="assets/strawberry.svg"
     alt="Home"
     id="logo"
+    slot="start"
     (click)="navigateTo('')"
   />
+  <div class="filter-container" slot="start">
+    <ion-item lines="none">
+      <div class="date-filter" (click)="openDatePicker()">
+        <i class="fa-regular fa-calendar"></i>
+        <ion-datetime-button datetime="filterDate"></ion-datetime-button>
+      </div>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime
+            id="filterDate"
+            presentation="date"
+            [(ngModel)]="dateSelected"
+            (ionChange)="onDateChange()"
+          ></ion-datetime>
+        </ng-template>
+      </ion-modal>
+    </ion-item>
+    <ion-item lines="none" *ngIf="sharedUsers.length > 0">
+      <div class="user-filter">
+        <i class="fa-solid fa-user-group"></i>
+        <ion-select [(ngModel)]="selectedUser" (ionChange)="onUserChange()">
+          <ion-select-option value="Me">Me</ion-select-option>
+          <ion-select-option
+            *ngFor="let user of sharedUsers"
+            [value]="user.uid"
+          >
+            {{ user.username }}
+          </ion-select-option>
+        </ion-select>
+      </div>
+    </ion-item>
+  </div>
   <i
     class="fa-solid"
     [ngClass]="displayMode === 'numbers' ? 'fa-hashtag' : 'fa-percent'"
@@ -22,39 +55,6 @@
 
 <ion-content fullscreen>
   <div class="main-content" [class.no-entries]="journalEntries.length === 0">
-    <div class="filter-container">
-      <ion-item lines="none">
-        <div class="date-filter" (click)="openDatePicker()">
-          <i class="fa-regular fa-calendar"></i>
-          <ion-datetime-button datetime="filterDate"></ion-datetime-button>
-        </div>
-        <ion-modal [keepContentsMounted]="true">
-          <ng-template>
-            <ion-datetime
-              id="filterDate"
-              presentation="date"
-              [(ngModel)]="dateSelected"
-              (ionChange)="onDateChange()"
-            ></ion-datetime>
-          </ng-template>
-        </ion-modal>
-      </ion-item>
-      <ion-item lines="none" *ngIf="sharedUsers.length > 0">
-        <div class="user-filter">
-          <i class="fa-solid fa-user-group"></i>
-          <ion-select [(ngModel)]="selectedUser" (ionChange)="onUserChange()">
-            <ion-select-option value="Me">Me</ion-select-option>
-            <ion-select-option
-              *ngFor="let user of sharedUsers"
-              [value]="user.uid"
-            >
-              {{ user.username }}
-            </ion-select-option>
-          </ion-select>
-        </div>
-      </ion-item>
-    </div>
-
     <ng-container *ngIf="journalEntries.length > 0; else noEntries">
       <div class="table-wrapper">
         <div class="table-container">
