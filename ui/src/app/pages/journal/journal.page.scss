@@ -106,7 +106,7 @@ ion-toolbar {
 }
 
 ion-content {
-  background-color: var(--theme-background);
+  --background: var(--theme-background);
 
   .main-content {
     height: 100%;
