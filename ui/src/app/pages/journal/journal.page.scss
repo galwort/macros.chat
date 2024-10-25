@@ -2,7 +2,7 @@ ion-toolbar {
   --background: transparent;
 
   img {
-    height: 30px;
+    width: 30px;
     margin: 1vw;
 
     &:hover {
@@ -125,7 +125,9 @@ ion-content {
     }
 
     .table-container {
-      padding: 2rem;
+      padding-top: 20px;
+      padding-left: calc(50px + 1vw);
+      padding-right: calc(50px + 1vw);
       color: var(--theme-primary);
 
       table {
