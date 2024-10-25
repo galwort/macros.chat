@@ -124,244 +124,242 @@ ion-content {
       }
     }
 
-    .table-wrapper {
-      .table-container {
-        padding: 2rem;
-        color: var(--theme-primary);
+    .table-container {
+      padding: 2rem;
+      color: var(--theme-primary);
 
-        table {
-          width: 100%;
-          border-collapse: collapse;
+      table {
+        width: 100%;
+        border-collapse: collapse;
 
-          th,
-          td {
-            padding: 8px;
-            background-color: transparent;
-            border-radius: 0;
-            transition: background-color 0.3s, color 0.3s, border-radius 0.3s;
-          }
+        th,
+        td {
+          padding: 8px;
+          background-color: transparent;
+          border-radius: 0;
+          transition: background-color 0.3s, color 0.3s, border-radius 0.3s;
+        }
 
-          th {
-            text-align: left;
-            color: var(--theme-primary);
-          }
+        th {
+          text-align: left;
+          color: var(--theme-primary);
+        }
 
-          thead {
-            tr {
-              position: relative;
+        thead {
+          tr {
+            position: relative;
 
-              &:after {
-                content: "";
-                position: absolute;
-                left: 10px;
-                right: 10px;
-                bottom: 0;
-                height: 1px;
-                background-color: var(--theme-primary);
-              }
+            &:after {
+              content: "";
+              position: absolute;
+              left: 10px;
+              right: 10px;
+              bottom: 0;
+              height: 1px;
+              background-color: var(--theme-primary);
             }
           }
+        }
 
-          tbody {
-            tr {
-              position: relative;
-              cursor: pointer;
+        tbody {
+          tr {
+            position: relative;
+            cursor: pointer;
 
-              &:after {
-                content: "";
-                position: absolute;
-                left: 10px;
-                right: 10px;
-                bottom: 0;
-                height: 1px;
+            &:after {
+              content: "";
+              position: absolute;
+              left: 10px;
+              right: 10px;
+              bottom: 0;
+              height: 1px;
+              background-color: var(--theme-primary);
+            }
+
+            td.calories {
+              background-color: #32cd3266;
+            }
+
+            td.carbs {
+              background-color: #e3b508aa;
+            }
+
+            td.protein {
+              background-color: #ff634766;
+            }
+
+            td.fats {
+              background-color: #4682b466;
+            }
+
+            &:not(.prompt-row):not(.edit-row):not(.edit-actions-row):hover {
+              td {
+                color: var(--theme-secondary);
+              }
+
+              td:not(.calories):not(.carbs):not(.protein):not(.fats) {
                 background-color: var(--theme-primary);
               }
 
               td.calories {
-                background-color: #32cd3266;
+                background-color: #32cd32;
+                color: #1a2f3a;
               }
 
               td.carbs {
-                background-color: #e3b508aa;
+                background-color: #e3b508;
+                color: #1a2f3a;
               }
 
               td.protein {
-                background-color: #ff634766;
+                background-color: #ff6347;
+                color: #1a2f3a;
               }
 
               td.fats {
-                background-color: #4682b466;
+                background-color: #4682b4;
+                color: #1a2f3a;
               }
 
-              &:not(.prompt-row):not(.edit-row):not(.edit-actions-row):hover {
-                td {
-                  color: var(--theme-secondary);
-                }
-
-                td:not(.calories):not(.carbs):not(.protein):not(.fats) {
-                  background-color: var(--theme-primary);
-                }
-
-                td.calories {
-                  background-color: #32cd32;
-                  color: #1a2f3a;
-                }
-
-                td.carbs {
-                  background-color: #e3b508;
-                  color: #1a2f3a;
-                }
-
-                td.protein {
-                  background-color: #ff6347;
-                  color: #1a2f3a;
-                }
-
-                td.fats {
-                  background-color: #4682b4;
-                  color: #1a2f3a;
-                }
-
-                td:first-child {
-                  border-top-left-radius: 10px;
-                  border-bottom-left-radius: 10px;
-                }
-
-                td:last-child {
-                  border-top-right-radius: 10px;
-                  border-bottom-right-radius: 10px;
-                }
+              td:first-child {
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
               }
 
-              &.prompt-row,
-              &.edit-row,
-              &.edit-actions-row {
+              td:last-child {
+                border-top-right-radius: 10px;
+                border-bottom-right-radius: 10px;
+              }
+            }
+
+            &.prompt-row,
+            &.edit-row,
+            &.edit-actions-row {
+              cursor: default;
+
+              td {
+                background-color: var(--theme-background);
+                color: var(--theme-primary);
+              }
+
+              &:hover td {
+                background-color: var(--theme-background);
+                color: var(--theme-primary);
+                border-radius: 0;
+              }
+
+              .prompt-cell {
+                background-color: var(--theme-background);
+                color: var(--theme-primary);
+                font-style: italic;
+                text-align: center;
+                user-select: text;
                 cursor: default;
 
-                td {
-                  background-color: var(--theme-background);
-                  color: var(--theme-primary);
+                div {
+                  margin-bottom: 10px;
+                  margin-top: 10px;
                 }
 
-                &:hover td {
-                  background-color: var(--theme-background);
-                  color: var(--theme-primary);
-                  border-radius: 0;
-                }
-
-                .prompt-cell {
-                  background-color: var(--theme-background);
-                  color: var(--theme-primary);
-                  font-style: italic;
-                  text-align: center;
-                  user-select: text;
-                  cursor: default;
-
-                  div {
-                    margin-bottom: 10px;
-                    margin-top: 10px;
-                  }
-
-                  .detail-button {
-                    background-color: transparent;
-                    border: 1px solid var(--theme-primary);
-                    color: var(--theme-primary);
-                    cursor: pointer;
-                    text-decoration: none;
-                    padding: 5px 10px;
-                    margin: 5px;
-                    margin-bottom: 10px;
-                    border-radius: 5px;
-                    font-style: normal;
-                    font-size: 1em;
-                    transition: background-color 0.3s, color 0.3s;
-
-                    i {
-                      margin-right: 5px;
-                    }
-
-                    &:hover {
-                      background-color: var(--theme-primary);
-                      color: var(--theme-background);
-                    }
-                  }
-                }
-              }
-
-              &.edit-row {
-                td {
-                  padding: 5px;
-                }
-
-                input[type="text"],
-                input[type="number"],
-                input[type="time"] {
-                  width: 100%;
-                  padding: 5px;
+                .detail-button {
+                  background-color: transparent;
                   border: 1px solid var(--theme-primary);
-                  border-radius: 5px;
                   color: var(--theme-primary);
-                  background-color: var(--theme-background);
+                  cursor: pointer;
+                  text-decoration: none;
+                  padding: 5px 10px;
+                  margin: 5px;
+                  margin-bottom: 10px;
+                  border-radius: 5px;
+                  font-style: normal;
                   font-size: 1em;
+                  transition: background-color 0.3s, color 0.3s;
 
-                  &:focus {
-                    border: 2px solid var(--theme-accent);
-                    outline: none;
+                  i {
+                    margin-right: 5px;
+                  }
+
+                  &:hover {
+                    background-color: var(--theme-primary);
+                    color: var(--theme-background);
                   }
                 }
               }
+            }
 
-              &.edit-actions-row {
-                .prompt-cell {
-                  text-align: center;
+            &.edit-row {
+              td {
+                padding: 5px;
+              }
 
-                  .detail-button {
-                    background-color: transparent;
-                    border: 1px solid var(--theme-primary);
-                    color: var(--theme-primary);
-                    cursor: pointer;
-                    text-decoration: none;
-                    padding: 5px 10px;
-                    margin: 5px;
-                    border-radius: 5px;
-                    font-style: normal;
-                    font-size: 1em;
-                    transition: background-color 0.3s, color 0.3s;
+              input[type="text"],
+              input[type="number"],
+              input[type="time"] {
+                width: 100%;
+                padding: 5px;
+                border: 1px solid var(--theme-primary);
+                border-radius: 5px;
+                color: var(--theme-primary);
+                background-color: var(--theme-background);
+                font-size: 1em;
 
-                    i {
-                      margin-right: 5px;
-                    }
+                &:focus {
+                  border: 2px solid var(--theme-accent);
+                  outline: none;
+                }
+              }
+            }
 
-                    &:hover {
-                      background-color: var(--theme-primary);
-                      color: var(--theme-background);
-                    }
+            &.edit-actions-row {
+              .prompt-cell {
+                text-align: center;
+
+                .detail-button {
+                  background-color: transparent;
+                  border: 1px solid var(--theme-primary);
+                  color: var(--theme-primary);
+                  cursor: pointer;
+                  text-decoration: none;
+                  padding: 5px 10px;
+                  margin: 5px;
+                  border-radius: 5px;
+                  font-style: normal;
+                  font-size: 1em;
+                  transition: background-color 0.3s, color 0.3s;
+
+                  i {
+                    margin-right: 5px;
+                  }
+
+                  &:hover {
+                    background-color: var(--theme-primary);
+                    color: var(--theme-background);
                   }
                 }
               }
             }
           }
+        }
 
-          tfoot {
-            tr {
-              font-weight: bold;
-              color: var(--theme-primary);
+        tfoot {
+          tr {
+            font-weight: bold;
+            color: var(--theme-primary);
 
-              td.calories {
-                background-color: #32cd3266;
-              }
+            td.calories {
+              background-color: #32cd3266;
+            }
 
-              td.carbs {
-                background-color: #e3b508aa;
-              }
+            td.carbs {
+              background-color: #e3b508aa;
+            }
 
-              td.protein {
-                background-color: #ff634766;
-              }
+            td.protein {
+              background-color: #ff634766;
+            }
 
-              td.fats {
-                background-color: #4682b466;
-              }
+            td.fats {
+              background-color: #4682b466;
             }
           }
         }
