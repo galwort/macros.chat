@@ -1,51 +1,48 @@
+ion-toolbar {
+  --background: transparent;
+  position: absolute;
+
+  img {
+    height: 30px;
+    margin: 1vw;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  i {
+    color: var(--theme-primary);
+    font-size: min(5vh, 30px);
+    padding: min(2vh, 10px);
+
+    &:hover {
+      cursor: pointer;
+      color: var(--theme-accent);
+    }
+  }
+
+  .user-profile-image {
+    width: 6vh;
+    height: 6vh;
+    margin-right: 1.5vh;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    border: 4px solid var(--theme-primary);
+
+    &:hover {
+      border: 4px solid var(--theme-accent);
+    }
+  }
+}
+
 ion-content {
   background-color: var(--theme-background);
 
   .layout {
     display: flex;
     height: 100%;
-
-    .sidebar {
-      width: 60px;
-      margin: 7px;
-      height: calc(100% - 14px);
-      background: var(--theme-primary);
-      border-radius: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 20px;
-
-      #logo {
-        height: 36px;
-        cursor: pointer;
-      }
-
-      i {
-        color: var(--theme-secondary);
-        font-size: 5vh;
-        margin-top: 18px;
-
-        &:hover {
-          cursor: pointer;
-          color: var(--theme-accent);
-        }
-      }
-
-      .user-profile-image {
-        width: 5vh;
-        height: 5vh;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-top: 18px;
-        cursor: pointer;
-        border: 4px solid var(--theme-secondary);
-
-        &:hover {
-          border: 4px solid var(--theme-accent);
-        }
-      }
-    }
 
     .main-content {
       flex: 1;

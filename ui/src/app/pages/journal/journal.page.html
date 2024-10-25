@@ -1,24 +1,27 @@
+<ion-toolbar>
+  <img
+    src="assets/strawberry.svg"
+    alt="Home"
+    id="logo"
+    (click)="navigateTo('')"
+  />
+  <i
+    class="fa-solid"
+    [ngClass]="displayMode === 'numbers' ? 'fa-hashtag' : 'fa-percent'"
+    slot="end"
+    (click)="toggleDisplayMode()"
+  ></i>
+  <img
+    [src]="userProfileImage"
+    alt="User Profile"
+    class="user-profile-image"
+    slot="end"
+    (click)="navigateTo('account')"
+  />
+</ion-toolbar>
+
 <ion-content>
   <div class="layout">
-    <div class="sidebar">
-      <img
-        src="assets/strawberry-secondary.svg"
-        alt="Home"
-        id="logo"
-        (click)="navigateTo('')"
-      />
-      <i
-        class="fa-solid"
-        [ngClass]="displayMode === 'numbers' ? 'fa-hashtag' : 'fa-percent'"
-        (click)="toggleDisplayMode()"
-      ></i>
-      <img
-        [src]="userProfileImage"
-        alt="User Profile"
-        class="user-profile-image"
-        (click)="navigateTo('account')"
-      />
-    </div>
     <div class="main-content" [class.no-entries]="journalEntries.length === 0">
       <div class="filter-container">
         <ion-item lines="none">
