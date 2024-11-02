@@ -70,6 +70,15 @@ export class JournalPage implements OnInit {
   public selectedUser: string = 'Me';
   public sharedUsers: { uid: string; username: string }[] = [];
   public filterDate: string = '';
+  public selectedNutrient: 'calories' | 'carbs' | 'proteins' | 'fats' =
+    'calories';
+  public nutrientIcons = {
+    calories: 'fa-fire',
+    carbs: 'fa-bread-slice',
+    proteins: 'fa-fish',
+    fats: 'fa-ice-cream',
+  };
+  public isMobile: boolean = false;
 
   constructor(
     private router: Router,
@@ -78,6 +87,7 @@ export class JournalPage implements OnInit {
   ) {
     const today = new Date();
     this.filterDate = today.toISOString();
+    this.isMobile = window.innerWidth <= 768;
 
     this.pieChartOptions = {
       borderColor: '#030607',
@@ -149,6 +159,16 @@ export class JournalPage implements OnInit {
   private parseDateLocal(dateString: string): Date {
     const [year, month, day] = dateString.split('-').map(Number);
     return new Date(year, month - 1, day);
+  }
+
+  cycleNutrient() {
+    const nutrients = ['calories', 'carbs', 'proteins', 'fats'];
+    const currentIndex = nutrients.indexOf(this.selectedNutrient);
+    this.selectedNutrient = nutrients[(currentIndex + 1) % nutrients.length] as
+      | 'calories'
+      | 'carbs'
+      | 'proteins'
+      | 'fats';
   }
 
   onDateChange() {
