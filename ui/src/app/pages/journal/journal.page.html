@@ -172,7 +172,6 @@
                       (keydown.enter)="saveEntry(entry, $event)"
                     />
                   </td>
-                  <!-- Calories Input -->
                   <td
                     *ngIf="!isMobile || selectedNutrient === 'calories'"
                     class="calories"
@@ -183,7 +182,6 @@
                       (keydown.enter)="saveEntry(entry, $event)"
                     />
                   </td>
-                  <!-- Carbs Input -->
                   <td
                     *ngIf="!isMobile || selectedNutrient === 'carbs'"
                     class="carbs"
@@ -194,7 +192,6 @@
                       (keydown.enter)="saveEntry(entry, $event)"
                     />
                   </td>
-                  <!-- Proteins Input -->
                   <td
                     *ngIf="!isMobile || selectedNutrient === 'proteins'"
                     class="protein"
@@ -205,7 +202,6 @@
                       (keydown.enter)="saveEntry(entry, $event)"
                     />
                   </td>
-                  <!-- Fats Input -->
                   <td
                     *ngIf="!isMobile || selectedNutrient === 'fats'"
                     class="fats"
@@ -224,7 +220,6 @@
                     />
                   </td>
                 </tr>
-                <!-- Edit Actions Row -->
                 <tr class="edit-actions-row">
                   <td [attr.colspan]="getTotalColumns()" class="prompt-cell">
                     <button
