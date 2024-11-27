@@ -39,6 +39,7 @@
     </ion-item>
   </div>
   <i
+    *ngIf="isMobile"
     class="fa-solid"
     [ngClass]="nutrientIcons[selectedNutrient]"
     slot="end"
