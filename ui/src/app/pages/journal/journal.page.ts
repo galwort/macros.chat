@@ -452,6 +452,18 @@ export class JournalPage implements OnInit {
     this.dateModal?.present();
   }
 
+  getTotalColumns(): number {
+    let columns = 2;
+
+    if (!this.isMobile) {
+      columns += 4;
+    } else {
+      columns += 1;
+    }
+
+    return columns;
+  }
+
   editEntry(entry: any, event: any) {
     event.stopPropagation();
     if (this.selectedUser !== 'Me') {

@@ -68,12 +68,18 @@
           <thead>
             <tr>
               <th>Meal Name</th>
-              <th>Calories</th>
-              <th>Carbs {{ displayMode === 'percentages' ? '(%)' : '(g)' }}</th>
-              <th>
+              <th *ngIf="!isMobile || selectedNutrient === 'calories'">
+                Calories
+              </th>
+              <th *ngIf="!isMobile || selectedNutrient === 'carbs'">
+                Carbs {{ displayMode === 'percentages' ? '(%)' : '(g)' }}
+              </th>
+              <th *ngIf="!isMobile || selectedNutrient === 'proteins'">
                 Protein {{ displayMode === 'percentages' ? '(%)' : '(g)' }}
               </th>
-              <th>Fats {{ displayMode === 'percentages' ? '(%)' : '(g)' }}</th>
+              <th *ngIf="!isMobile || selectedNutrient === 'fats'">
+                Fats {{ displayMode === 'percentages' ? '(%)' : '(g)' }}
+              </th>
               <th>Time</th>
             </tr>
           </thead>
@@ -82,8 +88,16 @@
               <ng-container *ngIf="!entry.isEditing">
                 <tr (click)="toggleEntryPrompt(entry)">
                   <td>{{ entry.summary }}</td>
-                  <td class="calories">{{ entry.calories }}</td>
-                  <td class="carbs">
+                  <td
+                    *ngIf="!isMobile || selectedNutrient === 'calories'"
+                    class="calories"
+                  >
+                    {{ entry.calories }}
+                  </td>
+                  <td
+                    *ngIf="!isMobile || selectedNutrient === 'carbs'"
+                    class="carbs"
+                  >
                     <ng-container *ngIf="displayMode === 'numbers'">
                       {{ entry.carbs }}
                     </ng-container>
@@ -91,7 +105,10 @@
                       {{ entry.carbsPercent | number: '1.0-1' }}%
                     </ng-container>
                   </td>
-                  <td class="protein">
+                  <td
+                    *ngIf="!isMobile || selectedNutrient === 'proteins'"
+                    class="protein"
+                  >
                     <ng-container *ngIf="displayMode === 'numbers'">
                       {{ entry.proteins }}
                     </ng-container>
@@ -99,7 +116,10 @@
                       {{ entry.proteinsPercent | number: '1.0-1' }}%
                     </ng-container>
                   </td>
-                  <td class="fats">
+                  <td
+                    *ngIf="!isMobile || selectedNutrient === 'fats'"
+                    class="fats"
+                  >
                     <ng-container *ngIf="displayMode === 'numbers'">
                       {{ entry.fats }}
                     </ng-container>
@@ -152,28 +172,44 @@
                       (keydown.enter)="saveEntry(entry, $event)"
                     />
                   </td>
-                  <td class="calories">
+                  <!-- Calories Input -->
+                  <td
+                    *ngIf="!isMobile || selectedNutrient === 'calories'"
+                    class="calories"
+                  >
                     <input
                       type="number"
                       [(ngModel)]="entry.editValues.calories"
                       (keydown.enter)="saveEntry(entry, $event)"
                     />
                   </td>
-                  <td class="carbs">
+                  <!-- Carbs Input -->
+                  <td
+                    *ngIf="!isMobile || selectedNutrient === 'carbs'"
+                    class="carbs"
+                  >
                     <input
                       type="number"
                       [(ngModel)]="entry.editValues.carbs"
                       (keydown.enter)="saveEntry(entry, $event)"
                     />
                   </td>
-                  <td class="protein">
+                  <!-- Proteins Input -->
+                  <td
+                    *ngIf="!isMobile || selectedNutrient === 'proteins'"
+                    class="protein"
+                  >
                     <input
                       type="number"
                       [(ngModel)]="entry.editValues.proteins"
                       (keydown.enter)="saveEntry(entry, $event)"
                     />
                   </td>
-                  <td class="fats">
+                  <!-- Fats Input -->
+                  <td
+                    *ngIf="!isMobile || selectedNutrient === 'fats'"
+                    class="fats"
+                  >
                     <input
                       type="number"
                       [(ngModel)]="entry.editValues.fats"
@@ -188,8 +224,9 @@
                     />
                   </td>
                 </tr>
+                <!-- Edit Actions Row -->
                 <tr class="edit-actions-row">
-                  <td colspan="6" class="prompt-cell">
+                  <td [attr.colspan]="getTotalColumns()" class="prompt-cell">
                     <button
                       class="detail-button"
                       (click)="saveEntry(entry, $event)"
@@ -203,8 +240,6 @@
                       <i class="fa-solid fa-times"></i>Cancel
                     </button>
                   </td>
-                  <td *ngIf="!isMobile">{{ entry.formattedMealTime }}</td>
-                  <td *ngIf="!isMobile">{{ entry.formattedMealTime }}</td>
                 </tr>
               </ng-container>
             </ng-container>
@@ -212,8 +247,10 @@
           <tfoot>
             <tr>
               <td><strong>Total</strong></td>
-              <td>{{ totalCalories }}</td>
-              <td>
+              <td *ngIf="!isMobile || selectedNutrient === 'calories'">
+                {{ totalCalories }}
+              </td>
+              <td *ngIf="!isMobile || selectedNutrient === 'carbs'">
                 <ng-container *ngIf="displayMode === 'numbers'">
                   {{ totalCarbs }}
                 </ng-container>
@@ -221,7 +258,7 @@
                   {{ totalCarbsPercent | number: '1.0-1' }}%
                 </ng-container>
               </td>
-              <td>
+              <td *ngIf="!isMobile || selectedNutrient === 'proteins'">
                 <ng-container *ngIf="displayMode === 'numbers'">
                   {{ totalProteins }}
                 </ng-container>
@@ -229,7 +266,7 @@
                   {{ totalProteinsPercent | number: '1.0-1' }}%
                 </ng-container>
               </td>
-              <td>
+              <td *ngIf="!isMobile || selectedNutrient === 'fats'">
                 <ng-container *ngIf="displayMode === 'numbers'">
                   {{ totalFats }}
                 </ng-container>
