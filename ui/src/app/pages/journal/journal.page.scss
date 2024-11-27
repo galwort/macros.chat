@@ -514,11 +514,16 @@ ion-content {
 }
 
 @media (max-width: 768px) {
-  .table-container table {
-    width: 100%;
-    th,
-    td {
-      padding: 8px;
+  .table-container {
+    padding-left: 2px !important;
+    padding-right: 2px !important;
+
+    table {
+      width: 100%;
+      th,
+      td {
+        padding: 8px;
+      }
     }
   }
 }
