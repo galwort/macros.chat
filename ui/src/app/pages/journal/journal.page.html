@@ -44,13 +44,14 @@
     </ion-item>
   </div>
   <i
-    *ngIf="isMobile"
+    *ngIf="journalEntries.length > 0 && isMobile"
     class="fa-solid"
     [ngClass]="nutrientIcons[selectedNutrient]"
     slot="end"
     (click)="cycleNutrient()"
   ></i>
   <i
+    *ngIf="journalEntries.length > 0"
     class="fa-solid"
     [ngClass]="displayMode === 'numbers' ? 'fa-hashtag' : 'fa-percent'"
     slot="end"
