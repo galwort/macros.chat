@@ -27,36 +27,29 @@ ion-toolbar {
         font-size: min(5vw, 30px);
         transition: color 0.3s ease;
       }
-
       .date-filter,
       .user-filter {
         display: flex;
         align-items: center;
+        cursor: pointer;
 
-        ion-datetime-button::part(native),
-        ion-select::part(native) {
-          padding: 0;
-          background-color: transparent;
+        i {
+          font-size: min(5vw, 30px);
+          margin-right: 8px;
+          color: var(--theme-primary);
+          transition: color 0.3s ease;
+        }
+
+        span {
           font-size: min(5vw, 30px);
           font-weight: bold;
           color: var(--theme-primary);
           transition: color 0.3s ease;
         }
 
-        ion-select::part(text) {
-          font-weight: bold;
-          color: var(--theme-primary);
-          transition: color 0.3s ease;
-        }
-
         &:hover {
-          i {
-            color: var(--theme-accent);
-          }
-
-          ion-datetime-button::part(native),
-          ion-select::part(native),
-          ion-select::part(text) {
+          i,
+          span {
             color: var(--theme-accent);
           }
         }

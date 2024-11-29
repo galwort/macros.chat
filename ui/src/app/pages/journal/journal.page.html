@@ -10,7 +10,12 @@
     <ion-item lines="none">
       <div class="date-filter" (click)="openDatePicker()">
         <i class="fa-regular fa-calendar"></i>
-        <ion-datetime-button datetime="filterDate"></ion-datetime-button>
+        <span
+          [ngClass]="{ 'desktop-date': !isMobile, 'mobile-date': isMobile }"
+        >
+          {{ isMobile ? (dateSelected | date: 'MM/dd/yy') : (dateSelected |
+          date: 'MMM d, y') }}
+        </span>
       </div>
       <ion-modal [keepContentsMounted]="true">
         <ng-template>
