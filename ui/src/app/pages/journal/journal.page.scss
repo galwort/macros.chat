@@ -510,6 +510,7 @@ ion-content {
 ion-modal {
   --width: fit-content;
   --height: fit-content;
+  padding: 10px;
 }
 
 @media (max-width: 768px) {
