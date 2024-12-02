@@ -27,6 +27,7 @@ ion-toolbar {
         font-size: min(5vw, 30px);
         transition: color 0.3s ease;
       }
+
       .date-filter,
       .user-filter {
         display: flex;
@@ -504,6 +505,11 @@ ion-content {
       }
     }
   }
+}
+
+ion-modal {
+  --width: fit-content;
+  --height: fit-content;
 }
 
 @media (max-width: 768px) {
