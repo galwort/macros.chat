@@ -513,6 +513,11 @@ ion-modal {
         padding: 8px;
       }
 
+      th:nth-child(2),
+      td:nth-child(2) {
+        width: 80px;
+      }
+
       th:last-child,
       td:last-child {
         width: fit-content;
