@@ -139,38 +139,12 @@ ion-content {
         th {
           text-align: left;
           color: var(--theme-primary);
-        }
-
-        thead {
-          tr {
-            position: relative;
-
-            &:after {
-              content: "";
-              position: absolute;
-              left: 10px;
-              right: 10px;
-              bottom: 0;
-              height: 1px;
-              background-color: var(--theme-primary);
-            }
-          }
+          border-bottom: 1px solid var(--theme-primary);
         }
 
         tbody {
           tr {
-            position: relative;
             cursor: pointer;
-
-            &:after {
-              content: "";
-              position: absolute;
-              left: 10px;
-              right: 10px;
-              bottom: 0;
-              height: 1px;
-              background-color: var(--theme-primary);
-            }
 
             td.calories {
               background-color: #32cd3266;
@@ -186,6 +160,10 @@ ion-content {
 
             td.fats {
               background-color: #4682b466;
+            }
+
+            &:not(.prompt-row):not(.edit-row):not(.edit-actions-row) td {
+              border-bottom: 1px solid var(--theme-primary);
             }
 
             &:not(.prompt-row):not(.edit-row):not(.edit-actions-row):hover {
@@ -236,12 +214,7 @@ ion-content {
               td {
                 background-color: var(--theme-background);
                 color: var(--theme-primary);
-              }
-
-              &:hover td {
-                background-color: var(--theme-background);
-                color: var(--theme-primary);
-                border-radius: 0;
+                border-bottom: none;
               }
 
               .prompt-cell {
@@ -286,6 +259,7 @@ ion-content {
             &.edit-row {
               td {
                 padding: 5px;
+                border-bottom: none;
               }
 
               input[type="text"],
@@ -307,6 +281,10 @@ ion-content {
             }
 
             &.edit-actions-row {
+              td {
+                border-bottom: none;
+              }
+
               .prompt-cell {
                 text-align: center;
 
@@ -335,12 +313,21 @@ ion-content {
               }
             }
           }
+
+          tr:last-child:not(.prompt-row):not(.edit-row):not(.edit-actions-row)
+            td {
+            border-bottom: none;
+          }
         }
 
         tfoot {
           tr {
             font-weight: bold;
             color: var(--theme-primary);
+
+            td {
+              border-top: 1px solid var(--theme-primary);
+            }
 
             td.calories {
               background-color: #32cd3266;
@@ -520,6 +507,7 @@ ion-modal {
 
     table {
       width: 100%;
+
       th,
       td {
         padding: 8px;
