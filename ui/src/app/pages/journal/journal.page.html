@@ -22,6 +22,7 @@
           <ion-datetime
             id="filterDate"
             presentation="date"
+            [showDefaultButtons]="true"
             [(ngModel)]="dateSelected"
             (ionChange)="onDateChange()"
           ></ion-datetime>
