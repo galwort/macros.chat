@@ -78,15 +78,11 @@
               <th *ngIf="!isMobile || selectedNutrient === 'calories'">
                 Calories
               </th>
-              <th *ngIf="!isMobile || selectedNutrient === 'carbs'">
-                Carbs {{ displayMode === 'percentages' ? '(%)' : '(g)' }}
-              </th>
+              <th *ngIf="!isMobile || selectedNutrient === 'carbs'">Carbs</th>
               <th *ngIf="!isMobile || selectedNutrient === 'proteins'">
-                Protein {{ displayMode === 'percentages' ? '(%)' : '(g)' }}
+                Protein
               </th>
-              <th *ngIf="!isMobile || selectedNutrient === 'fats'">
-                Fats {{ displayMode === 'percentages' ? '(%)' : '(g)' }}
-              </th>
+              <th *ngIf="!isMobile || selectedNutrient === 'fats'">Fats</th>
               <th>Time</th>
             </tr>
           </thead>
