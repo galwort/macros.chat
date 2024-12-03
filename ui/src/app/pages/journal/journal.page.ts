@@ -140,6 +140,15 @@ export class JournalPage implements OnInit {
         await this.fetchFavoriteMeals();
         this.route.queryParams.subscribe((params) => {
           const userFromUrl = params['user'];
+          const dateFromUrl = params['date'];
+
+          if (dateFromUrl && this.isValidDateFormat(dateFromUrl)) {
+            this.dateSelected = this.convertUrlDateToISOString(dateFromUrl);
+          } else {
+            const date = new Date();
+            this.dateSelected = date.toISOString();
+          }
+
           const matchedUser = this.sharedUsers.find(
             (u) => u.username === userFromUrl
           );
@@ -154,6 +163,25 @@ export class JournalPage implements OnInit {
         console.error('User is not authenticated');
       }
     });
+  }
+
+  private isValidDateFormat(date: string): boolean {
+    const regex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!regex.test(date)) return false;
+
+    const [year, month, day] = date.split('-').map(Number);
+    const testDate = new Date(year, month - 1, day);
+
+    return (
+      testDate.getFullYear() === year &&
+      testDate.getMonth() === month - 1 &&
+      testDate.getDate() === day
+    );
+  }
+
+  private convertUrlDateToISOString(dateStr: string): string {
+    const [year, month, day] = dateStr.split('-');
+    return new Date(+year, +month - 1, +day).toISOString();
   }
 
   private parseDateLocal(dateString: string): Date {
@@ -172,13 +200,28 @@ export class JournalPage implements OnInit {
   }
 
   onDateChange() {
+    const selectedDate = new Date(this.dateSelected);
+    const formattedDate = selectedDate.toISOString().split('T')[0];
+
+    const queryParams: any = {};
+    if (this.selectedUser !== 'Me') {
+      const username = this.sharedUsers.find(
+        (u) => u.uid === this.selectedUser
+      )?.username;
+      if (username) queryParams.user = username;
+    }
+    queryParams.date = formattedDate;
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams,
+      queryParamsHandling: 'merge',
+    });
+
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        const currentUserId = user.uid;
-        this.fetchJournalEntries(currentUserId);
-      } else {
-        console.error('User is not authenticated');
+        this.fetchJournalEntries(user.uid);
       }
     });
   }
@@ -215,35 +258,27 @@ export class JournalPage implements OnInit {
   }
 
   async fetchJournalEntries(currentUserId: string) {
-    const selectedDate = this.parseDateLocal(this.dateSelected);
+    const selectedDate = new Date(this.dateSelected);
+    selectedDate.setHours(0, 0, 0, 0);
+    const nextDay = new Date(selectedDate);
+    nextDay.setDate(nextDay.getDate() + 1);
+
     this.journalEntries = [];
+    this.resetTotals();
 
-    this.totalCalories = 0;
-    this.totalCarbs = 0;
-    this.totalProteins = 0;
-    this.totalFats = 0;
-
-    let targetUserId: string;
-
-    if (this.selectedUser === 'Me') {
-      targetUserId = currentUserId;
-    } else {
-      targetUserId = this.selectedUser;
-    }
+    let targetUserId =
+      this.selectedUser === 'Me' ? currentUserId : this.selectedUser;
 
     try {
       const journalRef = collection(db, `users/${targetUserId}/journal`);
       const querySnapshot = await getDocs(journalRef);
 
-      if (querySnapshot.empty) {
-        console.log('No journal entries found for the user.');
-      } else {
+      if (!querySnapshot.empty) {
         for (const journalDoc of querySnapshot.docs) {
           const journalData = journalDoc.data();
-          const mealTimestampLocal = journalData['mealTimestampLocal'];
-          const mealDate = new Date(mealTimestampLocal);
+          const mealDate = new Date(journalData['mealTimestampLocal']);
 
-          if (this.isSameDate(mealDate, selectedDate)) {
+          if (mealDate >= selectedDate && mealDate < nextDay) {
             const formattedMealTime = mealDate.toLocaleTimeString([], {
               hour: 'numeric',
               minute: '2-digit',
@@ -251,40 +286,46 @@ export class JournalPage implements OnInit {
 
             this.journalEntries.push({
               id: journalDoc.id,
-              summary: journalData['summary'],
-              calories: journalData['calories'],
-              carbs: journalData['carbs'],
-              proteins: journalData['proteins'],
-              fats: journalData['fats'],
-              mealTimestampLocal: mealTimestampLocal,
-              formattedMealTime: formattedMealTime,
-              prompt: journalData['prompt'] || '',
+              ...journalData,
+              formattedMealTime,
               showPrompt: false,
               carbsPercent: 0,
               proteinsPercent: 0,
               fatsPercent: 0,
-              isFavorite: journalData['isFavorite'] || false,
               isEditing: false,
               editValues: null,
             });
 
-            this.totalCalories += journalData['calories'];
-            this.totalCarbs += journalData['carbs'];
-            this.totalProteins += journalData['proteins'];
-            this.totalFats += journalData['fats'];
+            this.updateTotals(journalData);
           }
         }
+
         this.journalEntries.sort(
           (a, b) =>
             new Date(a.mealTimestampLocal).getTime() -
             new Date(b.mealTimestampLocal).getTime()
         );
+
         this.calculateTotalsAndPercentages();
         this.updateChartData();
       }
     } catch (error) {
       console.error('Error fetching journal entries:', error);
     }
+  }
+
+  private resetTotals() {
+    this.totalCalories = 0;
+    this.totalCarbs = 0;
+    this.totalProteins = 0;
+    this.totalFats = 0;
+  }
+
+  private updateTotals(entry: any) {
+    this.totalCalories += entry.calories;
+    this.totalCarbs += entry.carbs;
+    this.totalProteins += entry.proteins;
+    this.totalFats += entry.fats;
   }
 
   private calculateTotalsAndPercentages() {
