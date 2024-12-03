@@ -478,17 +478,14 @@ ion-content {
     }
 
     .no-entries-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      flex: 1;
+      display: block;
+      text-align: center;
       padding-top: 50px;
+      height: fit-content;
 
       .no-meal-image {
         width: 200px;
         height: auto;
-        margin-bottom: 20px;
       }
     }
   }

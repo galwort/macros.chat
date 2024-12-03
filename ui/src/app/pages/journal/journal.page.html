@@ -303,7 +303,7 @@
         ></canvas>
       </div>
       <div class="add-meal" *ngIf="selectedUser === 'Me'">
-        <h2>Add a Meal</h2>
+        <h2 *ngIf="journalEntries.length > 0">Add a Meal</h2>
         <div class="input-wrapper">
           <input
             type="text"
